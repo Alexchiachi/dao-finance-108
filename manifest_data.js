@@ -5,7 +5,7 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "被槓桿撕裂的靈魂：在帳戶歸零的那一夜，照見的人性",
-    "releaseDate": "2026-10-07",
+    "releaseDate": "2026-10-08",
     "isInitialBatch": true,
     "image": "images/001_cover.jpg"
   },
@@ -15,7 +15,7 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "保本的幻術：2008 年那一場雷曼風暴裡，被利息吞噬的尊嚴與救贖",
-    "releaseDate": "2026-10-07",
+    "releaseDate": "2026-10-08",
     "isInitialBatch": true,
     "image": "images/002_cover.jpg"
   },
@@ -25,7 +25,7 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "資訊噪音的慢性毒害：如何戒斷財經新聞，找回大腦的負熵狀態？",
-    "releaseDate": "2026-10-07",
+    "releaseDate": "2026-10-08",
     "isInitialBatch": true,
     "image": "images/003_cover.jpg"
   },
@@ -35,7 +35,7 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "過度交易的心魔：盤面上的每一次手癢，都是小我在索取廉價的存在感",
-    "releaseDate": "2026-10-07",
+    "releaseDate": "2026-10-08",
     "isInitialBatch": true,
     "image": "images/004_cover.jpg"
   },
@@ -45,7 +45,7 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "華爾街最大的商業模式：故意製造複雜性來收費，唯有簡單能守住財富",
-    "releaseDate": "2026-10-07",
+    "releaseDate": "2026-10-08",
     "isInitialBatch": true,
     "image": "images/005_cover.jpg"
   },
@@ -55,7 +55,7 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "財報粉飾背後的貪婪：一個前基金經理人教你用 20 行代碼看透數字謊言",
-    "releaseDate": "2026-10-07",
+    "releaseDate": "2026-10-08",
     "isInitialBatch": true,
     "image": "images/006_cover.jpg"
   },
@@ -65,7 +65,7 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "止損的佛法智慧：承認看錯不是失敗，是把空間優雅地讓位給真實",
-    "releaseDate": "2026-10-07",
+    "releaseDate": "2026-10-08",
     "isInitialBatch": true,
     "image": "images/007_cover.jpg"
   },
@@ -76,7 +76,7 @@ const MANIFEST_DATA = [
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "技術指標的五十道陰影：為什麼畫線越多，內心越慌？",
     "releaseDate": "2026-10-08",
-    "isInitialBatch": false,
+    "isInitialBatch": true,
     "image": "images/008_cover.jpg"
   },
   {
@@ -85,8 +85,8 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "流動性幻覺：當潮水退去時，你手上的資產真的賣得掉嗎？",
-    "releaseDate": "2026-10-09",
-    "isInitialBatch": false,
+    "releaseDate": "2026-10-08",
+    "isInitialBatch": true,
     "image": "images/009_cover.jpg"
   },
   {
@@ -95,8 +95,8 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "羊群效應的陷阱：散戶如何在集體狂熱中成為最後一隻替罪羊",
-    "releaseDate": "2026-10-10",
-    "isInitialBatch": false,
+    "releaseDate": "2026-10-08",
+    "isInitialBatch": true,
     "image": "images/010_cover.jpg"
   },
   {
@@ -105,8 +105,8 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "暴富神話的代價：每一個少年股神背後，都有無數個沉默的深淵",
-    "releaseDate": "2026-10-11",
-    "isInitialBatch": false,
+    "releaseDate": "2026-10-08",
+    "isInitialBatch": true,
     "image": "images/011_cover.jpg"
   },
   {
@@ -115,8 +115,8 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "內線消息的毒餌：當你以為掌握先機時，你往往就是那道主菜",
-    "releaseDate": "2026-10-12",
-    "isInitialBatch": false,
+    "releaseDate": "2026-10-08",
+    "isInitialBatch": true,
     "image": "images/012_cover.jpg"
   },
   {
@@ -125,8 +125,8 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "估值模型的盲區：Excel 算不出人性，精確的數字往往是最大的欺騙",
-    "releaseDate": "2026-10-13",
-    "isInitialBatch": false,
+    "releaseDate": "2026-10-08",
+    "isInitialBatch": true,
     "image": "images/013_cover.jpg"
   },
   {
@@ -135,8 +135,8 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "恐慌拋售的生理機制：當皮質醇接管大腦，如何守住最後的清明？",
-    "releaseDate": "2026-10-14",
-    "isInitialBatch": false,
+    "releaseDate": "2026-10-08",
+    "isInitialBatch": true,
     "image": "images/014_cover.jpg"
   },
   {
@@ -145,8 +145,8 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "偽資產的沉沒成本：為什麼我們總是捨不得砍掉正在腐爛的倉位？",
-    "releaseDate": "2026-10-15",
-    "isInitialBatch": false,
+    "releaseDate": "2026-10-08",
+    "isInitialBatch": true,
     "image": "images/015_cover.jpg"
   },
   {
@@ -155,8 +155,8 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "概念炒作的成住壞空：從元宇宙到每一次泡沫的輪迴宿命",
-    "releaseDate": "2026-10-16",
-    "isInitialBatch": false,
+    "releaseDate": "2026-10-08",
+    "isInitialBatch": true,
     "image": "images/016_cover.jpg"
   },
   {
@@ -165,8 +165,8 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "交易手續費的隱形抽血：頻繁買賣如何慢慢蠶食複利的根基",
-    "releaseDate": "2026-10-17",
-    "isInitialBatch": false,
+    "releaseDate": "2026-10-08",
+    "isInitialBatch": true,
     "image": "images/017_cover.jpg"
   },
   {
@@ -175,8 +175,8 @@ const MANIFEST_DATA = [
     "volName": "第一卷：破妄卷",
     "volSubtitle": "為道日損 · 刺破金融幻象",
     "title": "第一卷結語：為道日損，清空心靈的存儲器才能盛裝真實",
-    "releaseDate": "2026-10-18",
-    "isInitialBatch": false,
+    "releaseDate": "2026-10-08",
+    "isInitialBatch": true,
     "image": "images/018_cover.jpg"
   },
   {
@@ -1080,3 +1080,7 @@ const MANIFEST_DATA = [
     "image": "images/108_cover.jpg"
   }
 ];
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = MANIFEST_DATA;
+}
