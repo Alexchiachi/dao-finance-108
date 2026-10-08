@@ -51,3 +51,12 @@
 ---
 
 *（本文純屬虛構、若有雷同純屬巧合。）*
+
+---
+
+## 🛠️ 前端維護備忘
+
+- **樣式**：Tailwind 已預先編譯為 `assets/tailwind.css`（不再使用 CDN）。修改 `index.html` 的 class 後執行 `npm install && npm run build:css` 並一併提交。
+- **主題色**：定義在 `index.html` 的 `:root`（`--c-paper` 等 RGB 通道值）；「調美感」Issue 只改這幾行，不需重新編譯。
+- **封面圖**：新增 `images/NNN_cover.jpg` 後執行 `python3 tools/optimize_images.py` 產生 `.webp`（Issue 發文工作流已自動執行）；頁面優先載入 `.webp`，缺檔時回退 jpg。
+- **文章網址**：`/#/007` 直接開啟第 007 講（未解鎖者會回到最新一講）。

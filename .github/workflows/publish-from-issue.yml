@@ -55,6 +55,11 @@ jobs:
         run: |
           python3 tools/process_issue.py
 
+      - name: Optimize cover images
+        run: |
+          pip install --quiet pillow
+          python3 tools/optimize_images.py
+
       - name: Commit and Push Changes
         run: |
           git config user.name "github-actions[bot]"

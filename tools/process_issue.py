@@ -26,6 +26,16 @@ def set_github_output(name, value):
             f.write(f"{name}={value}\n")
 
 
+def hex_to_channels(color: str):
+    """#RGB / #RRGGBB / #RRGGBBAA -> 'R G B'（供 CSS rgb(var(--c-x) / a) 使用）"""
+    h = color.lstrip("#")
+    if len(h) in (3, 4):
+        h = "".join(ch * 2 for ch in h)
+    if len(h) not in (6, 8):
+        return None
+    return " ".join(str(int(h[i:i + 2], 16)) for i in (0, 2, 4))
+
+
 def handle_style(title: str, body: str):
     """處理美感與樣式調整指令"""
     print("[Mobile Automation] 偵測到美感微調指令...")
@@ -47,10 +57,11 @@ def handle_style(title: str, body: str):
         match = re.search(pattern, body)
         if match:
             new_color = match.group(1).upper()
-            # 替換 tailwind.config 中的定義
-            old_pattern = rf"({key}:\s*['\"])[^'\"]+(['\"])"
-            if re.search(old_pattern, html_text):
-                html_text = re.sub(old_pattern, rf"\g<1>{new_color}\g<2>", html_text)
+            # 替換 index.html :root 內的 RGB 通道變數（--c-<key>: R G B;）
+            channels = hex_to_channels(new_color)
+            old_pattern = rf"(--c-{key}:\s*)\d+\s+\d+\s+\d+"
+            if channels and re.search(old_pattern, html_text):
+                html_text = re.sub(old_pattern, rf"\g<1>{channels}", html_text)
                 updated_colors.append(f"- **{key}** ({aliases[1]}): `{new_color}`")
 
     if updated_colors:
