@@ -35,6 +35,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Enforce unlock schedule
+        run: python3 tools/schedule.py --write
+
       - name: Update RSS Feed & Sitemap
         run: |
           node tools/update_feed.js

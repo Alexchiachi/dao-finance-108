@@ -15,10 +15,13 @@ import json
 import os
 import re
 import shutil
+import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from schedule import apply_schedule  # noqa: E402
 OUT = ROOT / "_site"
 
 TOP_LEVEL_FILES = ["index.html", "feed.xml", "sitemap.xml", ".nojekyll"]
@@ -51,6 +54,9 @@ def write_js(path: Path, var: str, data):
 def main():
     today = today_utc8()
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
+    fixed = apply_schedule(manifest)  # 以 tools/schedule.py 為準，防止批次腳本寫入錯誤日期
+    if fixed:
+        print(f"[build_public] 警告：manifest 有 {fixed} 講與解鎖日程不符，已依 schedule.py 校正")
     unlocked = [a for a in manifest if a.get("isInitialBatch") or a["releaseDate"] <= today]
     ids = {a["id"] for a in unlocked}
 

@@ -62,3 +62,4 @@
 - **文章網址**：`/#/007` 直接開啟第 007 講（未解鎖者會回到最新一講）。
 - **深色模式**：預設跟隨系統，導航列的月亮／太陽鈕可手動切換並記住。深色配色在 `index.html` 的 `[data-theme="dark"]` 區塊；「調美感」Issue 只改淺色那一組。金句圖卡一律使用淺色宣紙配色。
 - **未解鎖內容不對外**：頁面只列出已解鎖講次（沒有任何未解鎖卡片或日期）。部署時 `tools/build_public.py` 會產生 `_site/`，只含已解鎖講次的目錄、文稿與封面，不含 `articles/` 原稿；`daily-publish.yml` 每天 00:00（UTC+8）重新建置並部署。本機測試可用 `BUILD_DATE=2026-11-05 python3 tools/build_public.py` 模擬日期。
+- **解鎖日程自動校正**：日程規則只寫在 `tools/schedule.py`。每次部署前 `daily-publish.yml` 會執行 `python3 tools/schedule.py --write` 校正 manifest，`build_public.py` 也會再校正一次，所以新增批次腳本即使自己指定了日期也不會影響上線結果。`python3 tools/schedule.py`（不加參數）可檢查是否一致。要讓某一講例外，加到 `OVERRIDES`。
