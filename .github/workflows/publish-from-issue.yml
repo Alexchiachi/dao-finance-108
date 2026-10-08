@@ -1,0 +1,91 @@
+name: Mobile Issue Automation
+
+# 當在手機端開立、編輯或加上標籤的 Issue 時觸發
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: mobile-issue
+  cancel-in-progress: false
+
+jobs:
+  process-issue:
+    # 只要符合標題關鍵字或特定標籤即刻在雲端全自動執行
+    if: >-
+      contains(github.event.issue.labels.*.name, 'publish') ||
+      contains(github.event.issue.labels.*.name, 'style') ||
+      startsWith(github.event.issue.title, '[發文]') ||
+      startsWith(github.event.issue.title, '[第') ||
+      startsWith(github.event.issue.title, '[靈感]') ||
+      startsWith(github.event.issue.title, '[調美感]') ||
+      startsWith(github.event.issue.title, '[美感]') ||
+      startsWith(github.event.issue.title, '[style]') ||
+      startsWith(github.event.issue.title, '【發文】') ||
+      startsWith(github.event.issue.title, '【調美感】')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Mobile Automation Script
+        id: run_script
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          python3 tools/process_issue.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          node tools/update_feed.js
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "📱 手機雲端自轉: ${{ steps.run_script.outputs.action_summary }}"
+            git push origin main
+          fi
+
+      - name: Comment and Close Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let commentMsg = '✅ 雲端指令已全自動處理完畢並發布！';
+            if (fs.existsSync('issue_response.txt')) {
+              commentMsg = fs.readFileSync('issue_response.txt', 'utf8');
+            }
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: commentMsg
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });
