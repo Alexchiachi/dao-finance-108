@@ -115,7 +115,11 @@
     .bead.is-current { box-shadow: 0 0 0 2px rgb(var(--c-seal)), var(--shadow-card); }
 
     /* 文章閱讀 */
-    .prose-zh { line-height: 2; letter-spacing: .01em; }
+    .prose-zh { line-height: 2; letter-spacing: .01em; font-size: calc(17px * var(--fs, 1)); }
+    @media (min-width: 640px) { .prose-zh { font-size: calc(19px * var(--fs, 1)); } }
+    .fs-btn { min-width: 36px; min-height: 32px; padding: 0 10px; border-radius: 8px; border: 0; background: transparent; color: rgb(var(--c-ink) / .7); cursor: pointer; font-family: var(--font-serif, serif); transition: background-color .2s var(--ease); }
+    .fs-btn[aria-pressed="true"] { background: #fff; color: rgb(var(--c-ink)); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+    #read-progress { position: fixed; top: 48px; left: 0; right: 0; height: 2px; z-index: 39; transform-origin: 0 50%; transform: scaleX(0); opacity: 0; background: rgb(var(--c-seal)); transition: opacity .3s var(--ease); pointer-events: none; }
     .prose-zh strong { color: rgb(var(--c-ink)); font-weight: 700; }
     .cover { aspect-ratio: 16 / 9; object-fit: cover; width: 100%; display: block; background: #EFE8DA; }
     .fade-in { animation: fadeIn .5s var(--ease); }
@@ -138,6 +142,8 @@
 
   <a href="#article-stage" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:px-4 focus:py-2 focus:rounded-full">跳到主要內容</a>
 
+  <div id="read-progress" role="progressbar" aria-label="閱讀進度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+
   <!-- ==================== 一、 頂部導航 ==================== -->
   <header class="glass sticky top-0 z-40">
     <nav class="max-w-5xl mx-auto px-5 sm:px-8 h-12 flex items-center justify-between" aria-label="主導航">
@@ -153,7 +159,7 @@
   </header>
 
   <!-- ==================== 二、 卷首序曲（Hero） ==================== -->
-  <section id="top" class="pt-20 pb-16 sm:pt-28 sm:pb-24 bg-gradient-to-b from-paper to-[#F3ECDF]">
+  <section id="top" class="pt-14 pb-10 sm:pt-24 sm:pb-16 bg-gradient-to-b from-paper to-[#F3ECDF]">
     <div class="max-w-4xl mx-auto px-5 sm:px-8 text-center">
       <p class="eyebrow text-seal text-[13px] mb-5">前基金經理人的破妄與善活錄 · 全程去我化</p>
       <h1 class="hero-title font-serif font-black text-ink text-[clamp(2.1rem,6.5vw,4.25rem)] mb-6">
@@ -162,34 +168,34 @@
       <p class="text-[clamp(1rem,2.2vw,1.3rem)] text-ink/70 max-w-2xl mx-auto leading-relaxed balance mb-9">
         一百零八顆智慧念珠，破除一百零八個資本妄念。以冷酷專業穿透財報虛妄，以真實故事照見人性微光。
       </p>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-14">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-10 sm:mb-12">
         <a href="#article-stage" class="btn btn-primary">開始閱讀</a>
         <a href="#beads-section" class="link-arrow">瀏覽 108 講目錄 ›</a>
       </div>
 
       <!-- 資訊卡 -->
-      <dl class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-left">
-        <div class="card-surface rounded-2xl p-5">
-          <dt class="text-[12px] eyebrow text-soft">台灣南投</dt>
-          <dd class="mt-1 font-serif font-bold text-lg text-ink">高山茶樹</dd>
-          <dd class="text-sm text-ink/70">扎根故鄉</dd>
+      <dl class="grid grid-cols-3 gap-2 sm:gap-4 text-left">
+        <div class="card-surface rounded-2xl p-3.5 sm:p-5">
+          <dt class="text-[11px] sm:text-[12px] eyebrow text-soft">台灣南投</dt>
+          <dd class="mt-1 font-serif font-bold text-[15px] sm:text-lg text-ink">高山茶樹</dd>
+          <dd class="text-xs sm:text-sm text-ink/70">扎根故鄉</dd>
         </div>
-        <div class="card-surface rounded-2xl p-5">
-          <dt class="text-[12px] eyebrow text-soft">中國雲南</dt>
-          <dd class="mt-1 font-serif font-bold text-lg text-ink">安寧松林</dd>
-          <dd class="text-sm text-ink/70">慢旅居</dd>
+        <div class="card-surface rounded-2xl p-3.5 sm:p-5">
+          <dt class="text-[11px] sm:text-[12px] eyebrow text-soft">中國雲南</dt>
+          <dd class="mt-1 font-serif font-bold text-[15px] sm:text-lg text-ink">安寧松林</dd>
+          <dd class="text-xs sm:text-sm text-ink/70">慢旅居</dd>
         </div>
-        <div class="card-surface rounded-2xl p-5">
-          <dt class="text-[12px] eyebrow text-soft">自動化自轉</dt>
-          <dd class="mt-1 font-serif font-bold text-lg text-seal">首發 7 講已解鎖</dd>
-          <dd class="text-sm text-ink/70">每日清晨點亮</dd>
+        <div class="card-surface rounded-2xl p-3.5 sm:p-5">
+          <dt class="text-[11px] sm:text-[12px] eyebrow text-soft">自動化自轉</dt>
+          <dd id="hero-unlocked" class="mt-1 font-serif font-bold text-[15px] sm:text-lg text-seal">已解鎖 7 講</dd>
+          <dd class="text-xs sm:text-sm text-ink/70">每日清晨點亮</dd>
         </div>
       </dl>
     </div>
   </section>
 
   <!-- ==================== 三、 當日主講舞台 ==================== -->
-  <main class="flex-1 py-12 sm:py-20">
+  <main class="flex-1 py-8 sm:py-14">
     <div class="max-w-3xl mx-auto px-4 sm:px-8">
 
       <article id="article-stage" class="card-surface rounded-[28px] overflow-hidden">
@@ -216,7 +222,14 @@
         </figure>
 
         <div class="px-6 sm:px-14 pb-10 sm:pb-14">
-          <div id="art-body" class="prose-zh font-serif text-ink space-y-8 text-[17px] sm:text-[19px]">
+          <div class="flex justify-end mb-6">
+            <div class="segmented" role="group" aria-label="文字大小">
+              <button type="button" class="fs-btn text-[13px]" data-fs="0.9" aria-pressed="false" aria-label="文字小">字</button>
+              <button type="button" class="fs-btn text-[16px]" data-fs="1" aria-pressed="true" aria-label="文字中">字</button>
+              <button type="button" class="fs-btn text-[19px]" data-fs="1.2" aria-pressed="false" aria-label="文字大">字</button>
+            </div>
+          </div>
+          <div id="art-body" class="prose-zh font-serif text-ink space-y-8">
             <!-- 內容將由 JavaScript 動態載入 -->
           </div>
 
@@ -333,6 +346,7 @@
       }
       
       const routed = resolveRoute();
+      document.getElementById('hero-unlocked').innerText = `已解鎖 ${manifestData.filter(isUnlocked).length} 講`;
       loadArticle(routed || latestUnlockedId(), { history: (!location.hash || idFromHash()) ? 'replace' : undefined });
       updateTabFade();
       if (routed) document.getElementById('article-stage').scrollIntoView();
@@ -508,6 +522,7 @@
       }
 
       renderBeads();
+      queueProgress();
     }
 
     // 極簡 Markdown 轉 HTML 渲染器
@@ -707,6 +722,34 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') closeQuoteModal();
     });
+
+    // ---------- 閱讀輔助：字級與進度條 ----------
+    const FS_KEY = 'dao108-font-scale';
+    function setFontScale(v, save) {
+      document.documentElement.style.setProperty('--fs', v);
+      document.querySelectorAll('.fs-btn').forEach(b => b.setAttribute('aria-pressed', String(parseFloat(b.dataset.fs) === v)));
+      if (save) { try { localStorage.setItem(FS_KEY, String(v)); } catch (e) {} }
+    }
+    document.querySelectorAll('.fs-btn').forEach(b => b.addEventListener('click', () => setFontScale(parseFloat(b.dataset.fs), true)));
+    try { const saved = parseFloat(localStorage.getItem(FS_KEY)); if ([0.9, 1, 1.2].includes(saved)) setFontScale(saved, false); } catch (e) {}
+
+    const progressEl = document.getElementById('read-progress');
+    let progressTick = false;
+    function updateProgress() {
+      progressTick = false;
+      const body = document.getElementById('art-body');
+      const r = body.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // 以正文為範圍：正文頂端進入畫面中段起算，底端離開畫面中段時為 100%
+      const total = r.height - vh * 0.5;
+      const pct = total > 0 ? Math.min(1, Math.max(0, (vh * 0.5 - r.top) / total)) : 0;
+      progressEl.style.transform = `scaleX(${pct})`;
+      progressEl.style.opacity = (r.top < vh && r.bottom > 0) ? '1' : '0';
+      progressEl.setAttribute('aria-valuenow', String(Math.round(pct * 100)));
+    }
+    const queueProgress = () => { if (!progressTick) { progressTick = true; requestAnimationFrame(updateProgress); } };
+    window.addEventListener('scroll', queueProgress, { passive: true });
+    window.addEventListener('resize', queueProgress);
 
     // 上一頁／下一頁：只處理 #/NNN；其他錨點（#beads-section 等）交給瀏覽器
     window.addEventListener('popstate', () => {
