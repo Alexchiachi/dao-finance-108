@@ -13,6 +13,13 @@ module.exports = {
         moss: c('moss'),
         seal: c('seal'),
         gold: c('gold'),
+        surface: c('surface'),
+        sunken: c('sunken'),
+        wash1: c('wash1'),
+        wash2: c('wash2'),
+        wash3: c('wash3'),
+        wash4: c('wash4'),
+        wash5: c('wash5'),
       },
       fontFamily: {
         serif: ['"Noto Serif TC"', '"Songti TC"', '"Songti SC"', 'serif'],

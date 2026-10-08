@@ -61,7 +61,7 @@ def handle_style(title: str, body: str):
             channels = hex_to_channels(new_color)
             old_pattern = rf"(--c-{key}:\s*)\d+\s+\d+\s+\d+"
             if channels and re.search(old_pattern, html_text):
-                html_text = re.sub(old_pattern, rf"\g<1>{channels}", html_text)
+                html_text = re.sub(old_pattern, rf"\g<1>{channels}", html_text, count=1)  # 只改第一個（淺色）區塊
                 updated_colors.append(f"- **{key}** ({aliases[1]}): `{new_color}`")
 
     if updated_colors:

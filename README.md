@@ -60,3 +60,4 @@
 - **主題色**：定義在 `index.html` 的 `:root`（`--c-paper` 等 RGB 通道值）；「調美感」Issue 只改這幾行，不需重新編譯。
 - **封面圖**：新增 `images/NNN_cover.jpg` 後執行 `python3 tools/optimize_images.py` 產生 `.webp`（Issue 發文工作流已自動執行）；頁面優先載入 `.webp`，缺檔時回退 jpg。
 - **文章網址**：`/#/007` 直接開啟第 007 講（未解鎖者會回到最新一講）。
+- **深色模式**：預設跟隨系統，導航列的月亮／太陽鈕可手動切換並記住。深色配色在 `index.html` 的 `[data-theme="dark"]` 區塊；「調美感」Issue 只改淺色那一組。金句圖卡一律使用淺色宣紙配色。
