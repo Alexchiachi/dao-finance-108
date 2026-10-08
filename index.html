@@ -130,6 +130,11 @@
     .hero-title { letter-spacing: -0.02em; line-height: 1.12; text-wrap: balance; }
     .balance { text-wrap: balance; }
 
+    /* 文章標題：主標（冒號前）大而醒目，副標（冒號後）逐句換行、去掉逗號，字重與色階退一層 */
+    .title-main { display: block; font-weight: 900; font-size: clamp(2rem, 5.6vw, 3.1rem); line-height: 1.18; letter-spacing: -0.01em; text-wrap: balance; line-break: strict; }
+    .title-sub { display: block; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgb(var(--c-tea) / .3); width: fit-content; max-width: 100%; }
+    .title-line { display: block; font-weight: 500; font-size: clamp(1.05rem, 2.7vw, 1.4rem); line-height: 1.75; letter-spacing: .04em; text-wrap: balance; line-break: strict; color: color-mix(in srgb, rgb(var(--c-ink)) 72%, transparent); }
+
     .seal-stamp {
       display: inline-flex; align-items: center; justify-content: center;
       border: 1.5px solid rgb(var(--c-seal)); color: rgb(var(--c-seal));
@@ -240,7 +245,7 @@
     <div class="max-w-4xl mx-auto px-5 sm:px-8 text-center">
       <p class="eyebrow text-seal text-[13px] mb-5">前基金經理人的破妄與善活錄 · 全程去我化</p>
       <h1 class="hero-title font-serif font-black text-ink text-[clamp(2.1rem,6.5vw,4.25rem)] mb-6">
-        當金融遇見老莊、<br class="hidden sm:inline">代碼與雙基地風土
+        <span class="block">當金融遇見老莊</span><span class="block">代碼與雙基地風土</span>
       </h1>
       <p class="text-[clamp(1rem,2.2vw,1.3rem)] text-ink/70 max-w-2xl mx-auto leading-relaxed balance mb-9">
         一百零八顆智慧念珠，破除一百零八個資本妄念。以冷酷專業穿透財報虛妄，以真實故事照見人性微光。
@@ -286,7 +291,7 @@
             <time id="art-release-date" class="text-soft">2026-10-08</time>
           </div>
 
-          <h2 id="art-title" class="hero-title font-serif font-bold text-ink text-[clamp(1.6rem,4.2vw,2.5rem)] mb-8">
+          <h2 id="art-title" class="font-serif text-ink mb-9">
             被槓桿撕裂的靈魂：在帳戶歸零的那一夜，照見的人性
           </h2>
         </div>
@@ -556,6 +561,28 @@
       return art && isUnlocked(art) ? id : null;
     }
 
+    // 標題排版：「主標：副標」→ 主標一行大字；副標依「，、」逐句換行並去掉標點
+    function renderTitle(el, title) {
+      const i = title.indexOf('：');
+      const main = i > 0 ? title.slice(0, i) : title;
+      const sub = i > 0 ? title.slice(i + 1) : '';
+      el.textContent = '';
+      const m = document.createElement('span');
+      m.className = 'title-main'; m.textContent = main;
+      el.appendChild(m);
+      const lines = sub.split(/[，、]/).map(t => t.trim()).filter(Boolean);
+      if (lines.length) {
+        const wrap = document.createElement('span');
+        wrap.className = 'title-sub';
+        lines.forEach(t => {
+          const l = document.createElement('span');
+          l.className = 'title-line'; l.textContent = t;
+          wrap.appendChild(l);
+        });
+        el.appendChild(wrap);
+      }
+    }
+
     function loadArticle(id, { history: mode } = {}) {
       currentArticleId = id;
       const art = manifestData.find(a => a.id === id);
@@ -570,7 +597,7 @@
       document.getElementById('art-id-badge').innerText = `第 ${String(art.id).padStart(3, '0')} 講`;
       document.getElementById('art-release-date').innerText = art.releaseDate;
       document.getElementById('art-colophon-date').innerText = art.releaseDate;
-      document.getElementById('art-title').innerText = art.title;
+      renderTitle(document.getElementById('art-title'), art.title);
       const img = document.getElementById('art-cover-img');
       // 優先載入壓縮後的 .webp；若尚未產生則回退原 jpg
       img.onerror = () => { img.onerror = null; img.src = art.image; };
