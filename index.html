@@ -237,7 +237,7 @@
               <button id="prev-btn" type="button" onclick="stepArticle(-1)" class="btn btn-ghost flex-1 sm:flex-none">‹ 上一講</button>
               <button id="next-btn" type="button" onclick="stepArticle(1)" class="btn btn-ghost flex-1 sm:flex-none">下一講 ›</button>
             </div>
-            <button type="button" onclick="openQuoteModal()" class="btn btn-primary">生成今日金句卡</button>
+            <button type="button" onclick="openQuoteModal()" class="btn btn-primary">製作金句圖卡</button>
           </div>
         </div>
       </article>
@@ -293,16 +293,16 @@
   </footer>
 
   <!-- ==================== 六、 金句卡片彈窗 ==================== -->
-  <div id="quote-modal" class="fixed inset-0 bg-ink/50 z-50 flex items-center justify-center p-4" style="-webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true" onclick="if(event.target===this)closeQuoteModal()">
-    <div class="sheet bg-paper rounded-[28px] max-w-md w-full p-7 sm:p-10 text-center relative shadow-2xl">
-      <button type="button" onclick="closeQuoteModal()" aria-label="關閉" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-ink/10 hover:bg-ink/20 text-ink/70 text-sm transition">✕</button>
-      <span id="modal-title" class="seal-stamp mb-5">大道至簡 · 每日金句</span>
-      <blockquote id="modal-quote-text" class="font-serif text-xl sm:text-2xl text-ink leading-relaxed my-6 balance"></blockquote>
-      <p class="text-[13px] text-soft mb-7">
-        <span id="modal-quote-source">第一講 · 被槓桿撕裂的靈魂</span><br>
-        <span class="text-[11px] text-ink/70">台灣南投 · 中國雲南 雙基地真實</span>
-      </p>
-      <button type="button" onclick="closeQuoteModal()" class="btn btn-primary w-full">收存清涼，回到生活</button>
+  <div id="quote-modal" class="fixed inset-0 bg-ink/50 z-50 flex items-center justify-center p-4 overflow-y-auto" style="-webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true" onclick="if(event.target===this)closeQuoteModal()">
+    <div class="sheet bg-paper rounded-[28px] max-w-sm w-full p-5 sm:p-6 text-center relative shadow-2xl my-auto">
+      <button type="button" onclick="closeQuoteModal()" aria-label="關閉" class="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-ink/10 hover:bg-ink/20 text-ink/70 text-sm transition">✕</button>
+      <h2 id="modal-title" class="text-[13px] eyebrow text-soft mb-4">金句圖卡</h2>
+      <canvas id="quote-canvas" width="1080" height="1350" role="img" aria-label="金句圖卡預覽" class="w-full h-auto rounded-2xl shadow-lg bg-white"></canvas>
+      <div class="mt-5 grid gap-2">
+        <button id="dl-btn" type="button" onclick="downloadQuoteCard()" class="btn btn-primary w-full">下載圖片</button>
+        <button id="share-btn" type="button" onclick="shareQuoteCard()" class="btn btn-ghost w-full" hidden>分享</button>
+      </div>
+      <p id="card-note" class="mt-3 text-xs text-soft min-h-[1em]" aria-live="polite"></p>
     </div>
   </div>
 
@@ -533,19 +533,168 @@
     }
 
     let lastFocus = null;
-    function openQuoteModal() {
+    const DEFAULT_QUOTE = "在資本的驚濤駭浪裡，守住身心的清寧，是任何人都奪不走的無價資產。";
+
+    // ---------- 金句圖卡（Canvas，1080×1350，適合社群貼文） ----------
+    const cssRgb = (name, a = 1) => `rgb(${getComputedStyle(document.documentElement).getPropertyValue('--c-' + name).trim()} / ${a})`;
+
+    // 中文斷行：逐字量測，避免標點落在行首
+    const NO_LINE_START = '，。、；：！？）」』》〉．…—,.;:!?)]';
+    function wrapCJK(ctx, text, maxW) {
+      const lines = []; let line = '';
+      for (const ch of text) {
+        if (line && ctx.measureText(line + ch).width > maxW && !NO_LINE_START.includes(ch)) {
+          lines.push(line); line = '';
+        }
+        line += ch;
+      }
+      if (line) lines.push(line);
+      return lines;
+    }
+
+    function drawSeal(ctx, x, y, size, text) {
+      ctx.save();
+      ctx.strokeStyle = ctx.fillStyle = cssRgb('seal');
+      ctx.lineWidth = 3;
+      ctx.strokeRect(x, y, size, size);
+      ctx.font = `700 ${size * 0.34}px "Noto Serif TC", "Songti TC", serif`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      const chars = [...text], rows = Math.ceil(chars.length / 2);
+      chars.forEach((ch, i) => {   // 兩字一列，由右至左直排，仿印章
+        const col = Math.floor(i / rows), row = i % rows;
+        ctx.fillText(ch, x + size * (col === 0 ? 0.7 : 0.3), y + size * (row + 0.5) / rows);
+      });
+      ctx.restore();
+    }
+
+    function drawQuoteCard(canvas, { quote, art, cover }) {
+      const W = 1080, H = 1350, PAD = 110;
+      const ctx = canvas.getContext('2d');
+      const serif = '"Noto Serif TC", "Songti TC", "Songti SC", serif';
+
+      // 宣紙底色與淡淡的墨暈
+      ctx.fillStyle = cssRgb('paper'); ctx.fillRect(0, 0, W, H);
+      const wash = ctx.createRadialGradient(W * 0.85, H * 0.15, 0, W * 0.85, H * 0.15, 700);
+      wash.addColorStop(0, cssRgb('tea', 0.16)); wash.addColorStop(1, cssRgb('tea', 0));
+      ctx.fillStyle = wash; ctx.fillRect(0, 0, W, H);
+
+      // 封面（上方橫幅，底部漸隱入紙色）
+      let top = 150;
+      if (cover) {
+        const bh = 540, r = Math.max(W / cover.width, bh / cover.height);
+        ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, bh); ctx.clip();   // 避免縮放後的封面超出橫幅
+        ctx.drawImage(cover, (W - cover.width * r) / 2, (bh - cover.height * r) / 2, cover.width * r, cover.height * r);
+        ctx.restore();
+        const fade = ctx.createLinearGradient(0, bh - 220, 0, bh);
+        fade.addColorStop(0, cssRgb('paper', 0)); fade.addColorStop(1, cssRgb('paper', 1));
+        ctx.fillStyle = fade; ctx.fillRect(0, bh - 220, W, 220);
+        top = bh + 20;
+      }
+
+      // 外框
+      ctx.strokeStyle = cssRgb('tea', 0.35); ctx.lineWidth = 2;
+      ctx.strokeRect(40, 40, W - 80, H - 80);
+
+      // 金句：自動調整字級直到放得下
+      const footerTop = 1090, areaH = footerTop - top - 40;
+      ctx.fillStyle = cssRgb('ink'); ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+      let size = 64, lines, lh;
+      for (; size >= 36; size -= 2) {
+        ctx.font = `700 ${size}px ${serif}`;
+        lines = wrapCJK(ctx, quote, W - PAD * 2);
+        lh = size * 1.75;
+        if (lines.length * lh <= areaH) break;
+      }
+      const blockH = lines.length * lh;
+      const y = top + (areaH - blockH) / 2 + size * 1.2;
+      ctx.font = `900 ${size * 2.2}px ${serif}`;
+      ctx.fillStyle = cssRgb('seal', 0.28);
+      ctx.fillText('「', PAD - 18, y - size * 0.35);
+      ctx.fillStyle = cssRgb('ink'); ctx.font = `700 ${size}px ${serif}`;
+      lines.forEach((ln, i) => ctx.fillText(ln, PAD, y + i * lh));
+
+      // 頁尾
+      ctx.strokeStyle = cssRgb('tea', 0.4); ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(PAD, footerTop); ctx.lineTo(W - PAD, footerTop); ctx.stroke();
+
+      ctx.fillStyle = cssRgb('seal'); ctx.font = `700 28px ${serif}`;
+      ctx.fillText(`第 ${String(art.id).padStart(3, '0')} 講`, PAD, footerTop + 62);
+      ctx.fillStyle = cssRgb('ink'); ctx.font = `500 30px ${serif}`;
+      const t = wrapCJK(ctx, art.title.split('：')[0], W - PAD * 2 - 170).slice(0, 2);
+      t.forEach((ln, i) => ctx.fillText(ln, PAD, footerTop + 108 + i * 44));
+      ctx.fillStyle = cssRgb('tea'); ctx.font = `400 24px ${serif}`;
+      ctx.fillText('大道至簡・金融一百零八講', PAD, H - 90);
+      drawSeal(ctx, W - PAD - 120, footerTop + 34, 120, '大道至簡');
+    }
+
+    function loadCover(art) {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+        img.src = art.image.replace(/\.jpe?g$/i, '.webp');
+      });
+    }
+
+    async function renderQuoteCard() {
       const art = manifestData.find(a => a.id === currentArticleId);
       const quote = (typeof ARTICLES_DATA !== 'undefined' && ARTICLES_DATA[currentArticleId])
-        ? ARTICLES_DATA[currentArticleId].quote
-        : "在資本的驚濤駭浪裡，守住身心的清寧，是任何人都奪不走的無價資產。";
+        ? ARTICLES_DATA[currentArticleId].quote : DEFAULT_QUOTE;
+      const canvas = document.getElementById('quote-canvas');
+      canvas.setAttribute('aria-label', `金句圖卡：${quote}`);
+      try { await Promise.all(['700', '900', '500', '400'].map(w => document.fonts.load(`${w} 40px "Noto Serif TC"`, quote + art.title))); } catch (e) {}
+      const cover = await loadCover(art);
+      drawQuoteCard(canvas, { quote, art, cover });
+      return { canvas, quote, art, cover };
+    }
 
-      document.getElementById('modal-quote-text').innerText = `「${quote}」`;
-      document.getElementById('modal-quote-source').innerText = `第 ${currentArticleId} 講 · ${art.title}`;
+    // 若封面造成 canvas 污染（例如 file:// 開啟），改畫不含封面的版本
+    async function cardBlob() {
+      const { canvas, quote, art } = await renderQuoteCard();
+      const toBlob = () => new Promise((res, rej) => {
+        try { canvas.toBlob(b => b ? res(b) : rej(new Error('empty')), 'image/png'); } catch (e) { rej(e); }
+      });
+      try { return await toBlob(); }
+      catch (e) {
+        canvas.width = canvas.width;   // 重設畫布以清除污染狀態
+        drawQuoteCard(canvas, { quote, art, cover: null });
+        return await toBlob();
+      }
+    }
+
+    const cardFileName = () => `dao-finance-108-${String(currentArticleId).padStart(3, '0')}.png`;
+    const setCardNote = msg => { document.getElementById('card-note').innerText = msg; };
+
+    async function downloadQuoteCard() {
+      try {
+        const blob = await cardBlob();
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob); a.download = cardFileName();
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+        setCardNote('已儲存圖片');
+      } catch (e) { setCardNote('無法產生圖片，請改用截圖'); }
+    }
+
+    async function shareQuoteCard() {
+      try {
+        const blob = await cardBlob();
+        const file = new File([blob], cardFileName(), { type: 'image/png' });
+        await navigator.share({ files: [file], title: '大道至簡・金融一百零八講', url: location.href });
+      } catch (e) { if (e.name !== 'AbortError') setCardNote('此裝置無法直接分享，請改用下載'); }
+    }
+
+    async function openQuoteModal() {
       const m = document.getElementById('quote-modal');
       lastFocus = document.activeElement;
+      setCardNote('');
       m.classList.add('open');
       m.setAttribute('aria-hidden', 'false');
       m.querySelector('.btn-primary').focus();
+      // 支援檔案分享的裝置才顯示「分享」
+      const probe = new File([''], 'a.png', { type: 'image/png' });
+      document.getElementById('share-btn').hidden = !(navigator.canShare && navigator.canShare({ files: [probe] }));
+      await renderQuoteCard();
     }
 
     function closeQuoteModal() {
