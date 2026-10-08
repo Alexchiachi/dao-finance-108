@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#A8543A"/>
+  <rect x="5" y="5" width="54" height="54" rx="10" fill="none" stroke="#FAF6EF" stroke-opacity=".55" stroke-width="2"/>
+  <text x="32" y="44" text-anchor="middle" font-size="36" font-weight="700" fill="#FAF6EF" font-family="'Songti TC','Noto Serif TC','Songti SC','PingFang TC','WenQuanYi Zen Hei',serif">簡</text>
+</svg>

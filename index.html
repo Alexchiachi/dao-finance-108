@@ -7,6 +7,10 @@
   <meta name="description" content="當金融遇見老莊、代碼與雙基地風土。以冷酷專業刺破金融虛妄，以人性故事看見黑暗與微光，以老莊耗散回歸第一性原理，以矽基理性觀照碳基生命，以南投與雲南雙基地真實風土安頓身心。">
   
   <meta name="theme-color" content="#FAF6EF">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="alternate" type="application/rss+xml" title="大道至簡・金融一百零八講 RSS" href="feed.xml">
   <meta property="og:title" content="大道至簡・金融一百零八講">
   <meta property="og:description" content="一百零八顆智慧念珠，破除一百零八個資本妄念。">
   <link rel="canonical" href="https://alexchiachi.github.io/dao-finance-108/">
@@ -89,7 +93,7 @@
       cursor: pointer; transition: background-color .25s var(--ease), color .25s var(--ease), box-shadow .25s var(--ease);
     }
     .vol-tab:hover { color: rgb(var(--c-ink)); }
-    .vol-tab[aria-selected="true"] { background: #fff; color: rgb(var(--c-ink)); box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 0 0 .5px rgba(0,0,0,.04); }
+    .vol-tab[aria-pressed="true"] { background: #fff; color: rgb(var(--c-ink)); box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 0 0 .5px rgba(0,0,0,.04); }
     .scroll-x { overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
     .scroll-x::-webkit-scrollbar { display: none; }
     /* 邊緣淡出：提示分卷選單可橫向滑動（僅手機） */
@@ -254,14 +258,14 @@
       </div>
 
       <div id="tabs-scroll" class="scroll-x fade-edges -mx-5 px-5 sm:mx-0 sm:px-0 mb-6 sm:flex sm:justify-center">
-        <div class="segmented" id="volume-tabs" role="tablist" aria-label="分卷篩選">
-          <button type="button" role="tab" aria-selected="true" onclick="filterVolume(0)" class="vol-tab">全部</button>
-          <button type="button" role="tab" aria-selected="false" onclick="filterVolume(1)" class="vol-tab">破妄卷</button>
-          <button type="button" role="tab" aria-selected="false" onclick="filterVolume(2)" class="vol-tab">真容卷</button>
-          <button type="button" role="tab" aria-selected="false" onclick="filterVolume(3)" class="vol-tab">節氣卷</button>
-          <button type="button" role="tab" aria-selected="false" onclick="filterVolume(4)" class="vol-tab">守御卷</button>
-          <button type="button" role="tab" aria-selected="false" onclick="filterVolume(5)" class="vol-tab">無我卷</button>
-          <button type="button" role="tab" aria-selected="false" onclick="filterVolume(6)" class="vol-tab">善活卷</button>
+        <div class="segmented" id="volume-tabs" role="group" aria-label="分卷篩選">
+          <button type="button" aria-pressed="true" onclick="filterVolume(0)" class="vol-tab">全部</button>
+          <button type="button" aria-pressed="false" onclick="filterVolume(1)" class="vol-tab">破妄卷</button>
+          <button type="button" aria-pressed="false" onclick="filterVolume(2)" class="vol-tab">真容卷</button>
+          <button type="button" aria-pressed="false" onclick="filterVolume(3)" class="vol-tab">節氣卷</button>
+          <button type="button" aria-pressed="false" onclick="filterVolume(4)" class="vol-tab">守御卷</button>
+          <button type="button" aria-pressed="false" onclick="filterVolume(5)" class="vol-tab">無我卷</button>
+          <button type="button" aria-pressed="false" onclick="filterVolume(6)" class="vol-tab">善活卷</button>
         </div>
       </div>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1 mb-8 text-[13px] text-soft" aria-live="polite">
@@ -419,7 +423,7 @@
     function filterVolume(vol) {
       selectedVolume = vol;
       document.querySelectorAll('.vol-tab').forEach((btn, idx) => {
-        btn.setAttribute('aria-selected', idx === vol ? 'true' : 'false');
+        btn.setAttribute('aria-pressed', idx === vol ? 'true' : 'false');
       });
       const tab = document.querySelectorAll('.vol-tab')[vol];
       if (tab) tab.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
@@ -452,7 +456,7 @@
     const SITE_TITLE = '大道至簡・金融一百零八講';
     const articleHash = id => `#/${String(id).padStart(3, '0')}`;
     function idFromHash() {
-      const m = location.hash.match(/^#\/(\d{1,3})$/);
+      const m = location.hash.match(/^#(?:\/|article-)(\d{1,3})$/); // 相容舊版 #article-N 連結
       return m ? parseInt(m[1], 10) : null;
     }
     function resolveRoute() {
