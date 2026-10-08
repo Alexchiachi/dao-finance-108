@@ -62,6 +62,8 @@
       border-bottom: 0.5px solid rgba(42, 37, 32, 0.12);
     }
     .card-surface { background: #fff; box-shadow: var(--shadow-card); }
+    /* 小字用的深茶色：對比 ≥ 4.5:1（原 tea 色在淺底上不足） */
+    .text-soft { color: #6F5736; }
     .eyebrow { letter-spacing: .08em; font-weight: 600; }
     .hero-title { letter-spacing: -0.02em; line-height: 1.12; text-wrap: balance; }
     .balance { text-wrap: balance; }
@@ -167,19 +169,19 @@
       <!-- 資訊卡 -->
       <dl class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-left">
         <div class="card-surface rounded-2xl p-5">
-          <dt class="text-[12px] eyebrow text-tea">台灣南投</dt>
+          <dt class="text-[12px] eyebrow text-soft">台灣南投</dt>
           <dd class="mt-1 font-serif font-bold text-lg text-ink">高山茶樹</dd>
-          <dd class="text-sm text-ink/60">扎根故鄉</dd>
+          <dd class="text-sm text-ink/70">扎根故鄉</dd>
         </div>
         <div class="card-surface rounded-2xl p-5">
-          <dt class="text-[12px] eyebrow text-tea">中國雲南</dt>
+          <dt class="text-[12px] eyebrow text-soft">中國雲南</dt>
           <dd class="mt-1 font-serif font-bold text-lg text-ink">安寧松林</dd>
-          <dd class="text-sm text-ink/60">慢旅居</dd>
+          <dd class="text-sm text-ink/70">慢旅居</dd>
         </div>
         <div class="card-surface rounded-2xl p-5">
-          <dt class="text-[12px] eyebrow text-tea">自動化自轉</dt>
+          <dt class="text-[12px] eyebrow text-soft">自動化自轉</dt>
           <dd class="mt-1 font-serif font-bold text-lg text-seal">首發 7 講已解鎖</dd>
-          <dd class="text-sm text-ink/60">每日清晨點亮</dd>
+          <dd class="text-sm text-ink/70">每日清晨點亮</dd>
         </div>
       </dl>
     </div>
@@ -192,12 +194,12 @@
       <article id="article-stage" class="card-surface rounded-[28px] overflow-hidden">
 
         <div class="px-6 sm:px-14 pt-8 sm:pt-12">
-          <div class="flex flex-wrap items-center justify-between gap-2 text-[13px] text-tea mb-5">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-[13px] text-soft mb-5">
             <div class="flex items-center gap-2">
               <span id="art-vol-badge" class="px-2.5 py-1 bg-seal/10 text-seal rounded-full font-semibold">第一卷：破妄卷</span>
               <span id="art-id-badge" class="font-semibold">第 001 講</span>
             </div>
-            <time id="art-release-date" class="text-tea/80">2026-10-08</time>
+            <time id="art-release-date" class="text-soft">2026-10-08</time>
           </div>
 
           <h2 id="art-title" class="hero-title font-serif font-bold text-ink text-[clamp(1.6rem,4.2vw,2.5rem)] mb-8">
@@ -209,7 +211,7 @@
           <div class="overflow-hidden rounded-2xl">
             <img id="art-cover-img" src="images/001_cover.jpg" alt="宣紙水墨封面" width="1280" height="720" decoding="async" fetchpriority="high" class="cover">
           </div>
-          <figcaption class="mt-3 text-center text-xs text-tea/80">宣紙水墨意象 · 台灣南投與中國雲南雙基地風土</figcaption>
+          <figcaption class="mt-3 text-center text-xs text-soft">宣紙水墨意象 · 台灣南投與中國雲南雙基地風土</figcaption>
         </figure>
 
         <div class="px-6 sm:px-14 pb-10 sm:pb-14">
@@ -217,13 +219,13 @@
             <!-- 內容將由 JavaScript 動態載入 -->
           </div>
 
-          <div class="mt-12 pt-6 border-t border-ink/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-tea">
+          <div class="mt-12 pt-6 border-t border-ink/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-soft">
             <div class="flex items-center gap-2">
-              <span class="text-tea/70">發布日期</span>
+              <span class="text-soft">發布日期</span>
               <span id="art-colophon-date" class="font-medium text-ink">2026-10-07</span>
             </div>
             <div class="flex items-center gap-2.5">
-              <span class="text-tea/70">署名</span>
+              <span class="text-soft">署名</span>
               <span class="font-serif font-bold text-ink tracking-wider text-sm">大道至簡</span>
               <span class="seal-stamp">簡家旗</span>
             </div>
@@ -249,7 +251,7 @@
       <div class="text-center mb-10 sm:mb-12">
         <p class="eyebrow text-seal text-[13px] mb-3">宏大秩序 · 時間膠囊</p>
         <h3 class="hero-title font-serif font-black text-ink text-[clamp(1.75rem,4.5vw,3rem)]">百八念珠 · 六卷次第</h3>
-        <p class="text-sm sm:text-base text-ink/60 mt-4 max-w-xl mx-auto balance">
+        <p class="text-sm sm:text-base text-ink/70 mt-4 max-w-xl mx-auto balance">
           108 篇已預先編譯入庫，系統每日午夜依時間自動點亮解鎖。
         </p>
       </div>
@@ -265,7 +267,7 @@
           <button type="button" role="tab" aria-selected="false" onclick="filterVolume(6)" class="vol-tab">善活卷</button>
         </div>
       </div>
-      <p id="vol-caption" class="text-center text-[13px] text-tea mb-8" aria-live="polite">全部 108 講</p>
+      <p id="vol-caption" class="text-center text-[13px] text-soft mb-8" aria-live="polite">全部 108 講</p>
 
       <div id="beads-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <!-- 由 JavaScript 動態渲染 -->
@@ -275,14 +277,14 @@
   </section>
 
   <!-- ==================== 五、 頁尾 ==================== -->
-  <footer class="bg-paper py-12 text-center text-xs text-tea">
+  <footer class="bg-paper py-12 text-center text-xs text-soft">
     <div class="max-w-2xl mx-auto px-5 space-y-3">
       <span class="seal-stamp">大道至簡</span>
       <p class="leading-relaxed font-serif text-[13px]">
         立基於台灣南投山林與中國雲南安寧。<br>
         不造永久之物，設條件，自發運轉，完成即退場。
       </p>
-      <p class="text-ink/40 text-[11px]">文章純屬虛構、若有雷同純屬巧合</p>
+      <p class="text-ink/70 text-[11px]">文章純屬虛構、若有雷同純屬巧合</p>
     </div>
   </footer>
 
@@ -292,9 +294,9 @@
       <button type="button" onclick="closeQuoteModal()" aria-label="關閉" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-ink/10 hover:bg-ink/20 text-ink/70 text-sm transition">✕</button>
       <span id="modal-title" class="seal-stamp mb-5">大道至簡 · 每日金句</span>
       <blockquote id="modal-quote-text" class="font-serif text-xl sm:text-2xl text-ink leading-relaxed my-6 balance"></blockquote>
-      <p class="text-[13px] text-tea mb-7">
+      <p class="text-[13px] text-soft mb-7">
         <span id="modal-quote-source">第一講 · 被槓桿撕裂的靈魂</span><br>
-        <span class="text-[11px] text-ink/50">台灣南投 · 中國雲南 雙基地真實</span>
+        <span class="text-[11px] text-ink/70">台灣南投 · 中國雲南 雙基地真實</span>
       </p>
       <button type="button" onclick="closeQuoteModal()" class="btn btn-primary w-full">收存清涼，回到生活</button>
     </div>
@@ -304,7 +306,7 @@
   <script src="articles_data.js"></script>
   <script>
     let manifestData = typeof MANIFEST_DATA !== 'undefined' ? MANIFEST_DATA : [];
-    let currentArticleId = 1;
+    let currentArticleId = 0;
     let selectedVolume = 0;
 
     // 時間膠囊錨點：以訪客真實時間判斷解鎖
@@ -325,8 +327,15 @@
         }
       }
       
-      renderBeads();
-      loadArticle(1);
+      loadArticle(latestUnlockedId());
+    }
+
+    // 預設開啟最新一講：優先取「已解鎖且文稿已入庫」者
+    function latestUnlockedId() {
+      const hasBody = a => typeof ARTICLES_DATA !== 'undefined' && ARTICLES_DATA[a.id];
+      const open = manifestData.filter(isUnlocked);
+      const pick = open.filter(hasBody).pop() || open.pop() || manifestData[0];
+      return pick ? pick.id : 1;
     }
 
     function isUnlocked(article) {
@@ -366,17 +375,17 @@
         const idPad = String(art.id).padStart(3, '0');
         card.innerHTML = `
           <div>
-            <div class="flex items-center justify-between text-xs text-tea mb-2">
+            <div class="flex items-center justify-between text-xs text-soft mb-2">
               <span class="font-semibold">第 ${idPad} 講 · ${art.volName.split('：')[1]}</span>
               ${unlocked
                 ? '<span class="text-seal font-semibold">已解鎖</span>'
-                : `<span class="text-ink/40">${art.releaseDate} 解鎖</span>`}
+                : `<span class="text-ink/70">${art.releaseDate} 解鎖</span>`}
             </div>
-            <h4 class="font-serif font-bold text-[15px] ${unlocked ? 'text-ink' : 'text-ink/50'} line-clamp-3 leading-snug">${art.title}</h4>
+            <h4 class="font-serif font-bold text-[15px] ${unlocked ? 'text-ink' : 'text-ink/70'} line-clamp-3 leading-snug">${art.title}</h4>
           </div>
           <div class="mt-4 flex items-center justify-between text-xs">
-            <span class="text-tea/80">${art.isInitialBatch ? '首發篇章' : '定時解鎖'}</span>
-            ${unlocked ? '<span class="text-seal font-medium">閱讀 ›</span>' : '<span class="text-ink/40">靜候天時</span>'}
+            <span class="text-soft">${art.isInitialBatch ? '首發篇章' : '定時解鎖'}</span>
+            ${unlocked ? '<span class="text-seal font-medium">閱讀 ›</span>' : '<span class="text-ink/70">靜候天時</span>'}
           </div>
         `;
 
@@ -430,8 +439,8 @@
       } else {
         bodyEl.innerHTML = `
           <div class="p-8 text-center bg-paper rounded-2xl">
-            <p class="text-tea font-serif text-sm">【本篇文稿已預先入庫，解鎖條件：${art.releaseDate}】</p>
-            <p class="text-ink/60 text-xs mt-2">即便主理人電腦未開啟，到了日期當日 00:00 自動對外發布展示。</p>
+            <p class="text-soft font-serif text-sm">【本篇文稿已預先入庫，解鎖條件：${art.releaseDate}】</p>
+            <p class="text-ink/70 text-xs mt-2">即便主理人電腦未開啟，到了日期當日 00:00 自動對外發布展示。</p>
           </div>
         `;
       }
@@ -446,15 +455,17 @@
       // 剝除內文結尾落款（統一由下方專屬落款區塊高雅渲染）
       clean = clean.replace(/\n+---\n+\*\*發布日期\*\*：[^\n]+\s*\n+\*\*署名\*\*：[^\n]+/g, '');
       
+      clean = clean.replace(/^[ \t]*-{3,}[ \t]*$/gm, '').replace(/\n{3,}/g, '\n\n');
+
       return clean
         .replace(/### 【破妄鏡】/g, '<div class="my-8 p-6 sm:p-7 bg-[#F4EDE0] rounded-2xl"><h3 class="text-seal text-sm eyebrow mb-3 font-sans">破妄鏡</h3><div class="text-ink/90 leading-[2] font-serif">')
-        .replace(/### 【真實的人性故事】/g, '</div></div><div class="my-8 p-6 sm:p-7 bg-[#FBF8F2] ring-1 ring-tea/15 rounded-2xl"><h3 class="text-tea text-sm eyebrow mb-3 font-sans">真實的人性故事</h3><div class="text-ink space-y-4 leading-[2] font-serif">')
-        .replace(/### 【見真鏡】/g, '</div></div><div class="my-8 p-6 sm:p-7 bg-[#F6F1E7] rounded-2xl"><h3 class="text-tea text-sm eyebrow mb-3 font-sans">見真鏡</h3><div class="text-ink/90 leading-[2] font-serif">')
+        .replace(/### 【真實的人性故事】/g, '</div></div><div class="my-8 p-6 sm:p-7 bg-[#FBF8F2] ring-1 ring-tea/15 rounded-2xl"><h3 class="text-soft text-sm eyebrow mb-3 font-sans">真實的人性故事</h3><div class="text-ink space-y-4 leading-[2] font-serif">')
+        .replace(/### 【見真鏡】/g, '</div></div><div class="my-8 p-6 sm:p-7 bg-[#F6F1E7] rounded-2xl"><h3 class="text-soft text-sm eyebrow mb-3 font-sans">見真鏡</h3><div class="text-ink/90 leading-[2] font-serif">')
         .replace(/### 【AI 視角】/g, '</div></div><div class="my-8 p-6 sm:p-7 bg-stone-100 rounded-2xl"><h3 class="text-stone-600 text-sm eyebrow mb-3 font-sans">AI 視角</h3><div class="text-stone-800 leading-[2] font-serif">')
         .replace(/### 【生活行】/g, '</div></div><div class="my-8 p-6 sm:p-7 bg-[#EEF2EB] rounded-2xl"><h3 class="text-moss text-sm eyebrow mb-3 font-sans">生活行</h3><div class="text-ink/90 leading-[2] font-serif">')
-        .replace(/\*\（本文純屬虛構[^\*]*\）\*/g, '</div></div><div class="mt-8 text-center text-xs text-tea/60 italic font-serif">（本文純屬虛構、若有雷同純屬巧合。）</div>')
+        .replace(/\*\（本文純屬虛構[^\*]*\）\*/g, '</div></div><div class="mt-8 text-center text-xs text-soft italic font-serif">（本文純屬虛構、若有雷同純屬巧合。）</div>')
         .replace(/\*\*([^\*]+)\*\*/g, '<strong class="font-bold text-ink">$1</strong>')
-        .replace(/\*([^\*]+)\*/g, '<em class="italic text-tea">$1</em>')
+        .replace(/\*([^\*]+)\*/g, '<em class="italic text-soft">$1</em>')
         .replace(/\n\n/g, '<p class="my-4"></p>')
         .replace(/\n/g, '<br>');
     }
