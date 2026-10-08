@@ -169,8 +169,8 @@ const titles = [
   "終卷結語：大道至簡，在資本的大風大浪裡過清涼圓滿的一生"
 ];
 
-// 第 1–36 講為首發（2026-10-08 起已解鎖）；第 37 講起自 2026-10-09 起每天解鎖一篇
-const FIRST_DAILY_ID = 37;
+// 第 1–8 講於 2026-10-08 已解鎖；第 9 講起自 2026-10-09 起每天解鎖一篇
+const FIRST_DAILY_ID = 9;
 const FIRST_DAILY_DATE = Date.UTC(2026, 9, 9); // 以 UTC 計算日期，避免時區造成差一天
 
 const manifest = titles.map((title, idx) => {
@@ -188,7 +188,7 @@ const manifest = titles.map((title, idx) => {
     volSubtitle: volObj.subtitle,
     title: title,
     releaseDate: dateStr,
-    isInitialBatch: id < FIRST_DAILY_ID,
+    isInitialBatch: id <= 7,
     image: `images/${String(id).padStart(3, '0')}_cover.jpg`
   };
 });
