@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大道至簡・金融一百零八講｜前基金經理人的破妄與善活錄</title>
+  <meta name="description" content="當金融遇見老莊、代碼與雙基地風土。以冷酷專業刺破金融虛妄，以人性故事看見黑暗與微光，以老莊耗散回歸第一性原理，以矽基理性觀照碳基生命，以南投與雲南雙基地真實風土安頓身心。">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paper: '#FAF6EF',
+            ink: '#2A2520',
+            tea: '#8B6F47',
+            moss: '#5C7A5A',
+            seal: '#A8543A',
+            gold: '#C5A059'
+          },
+          fontFamily: {
+            serif: ['"Noto Serif TC"', 'Songti SC', 'SimSun', 'serif'],
+            sans: ['"Noto Sans TC"', 'PingFang SC', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    body {
+      background-color: #FAF6EF;
+      color: #2A2520;
+      background-image: radial-gradient(#2A2520 0.5px, transparent 0.5px);
+      background-size: 24px 24px;
+      background-position: -0.5px -0.5px;
+    }
+    .rice-paper-border {
+      box-shadow: 0 4px 20px -2px rgba(42, 37, 32, 0.08), 0 0 0 1px rgba(139, 111, 71, 0.15);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(139, 111, 71, 0.05);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(168, 84, 58, 0.3);
+      border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(168, 84, 58, 0.6);
+    }
+    .seal-stamp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid #A8543A;
+      color: #A8543A;
+      padding: 2px 6px;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      border-radius: 2px;
+      font-weight: 700;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body class="font-sans min-h-screen flex flex-col selection:bg-seal selection:text-white">
+
+  <!-- ==================== 一、 頂部導航與世界觀標註 ==================== -->
+  <header class="border-b border-tea/20 bg-paper/90 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <span class="seal-stamp text-xs font-serif">大道至簡</span>
+        <span class="font-serif font-bold text-lg text-ink tracking-wider">金融一百零八講</span>
+      </div>
+      <div class="text-xs text-tea font-serif hidden sm:flex items-center space-x-2">
+        <span class="w-2 h-2 rounded-full bg-moss inline-block animate-pulse"></span>
+        <span>台灣南投 · 中國雲南 雙基地真實</span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <a href="#beads-section" class="text-xs px-3 py-1.5 border border-tea/30 rounded text-tea hover:border-seal hover:text-seal transition">
+          百八念珠目錄
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== 二、 卷首序曲（Hero Section） ==================== -->
+  <section class="py-16 sm:py-20 border-b border-tea/15 bg-gradient-to-b from-paper to-[#F5EFE3]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <div class="inline-block mb-4 px-3 py-1 bg-tea/10 border border-tea/20 rounded-full text-xs text-tea font-serif tracking-widest">
+        前基金經理人的破妄與善活錄 · 全程去我化
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-serif font-black text-ink tracking-tight leading-tight sm:leading-snug mb-6">
+        當金融遇見老莊、代碼與雙基地風土
+      </h1>
+      <p class="text-base sm:text-lg text-ink/80 max-w-2xl mx-auto font-serif leading-relaxed mb-8">
+        一百零八顆智慧念珠，破除一百零八個資本妄念。<br class="hidden sm:inline">
+        以冷酷專業穿透財報虛妄，以真實故事照見人性微光，以純粹理性安頓身心。
+      </p>
+      
+      <!-- 雙基地真實標籤 -->
+      <div class="flex flex-wrap justify-center items-center gap-4 text-xs font-serif text-tea">
+        <div class="flex items-center space-x-1.5 bg-paper px-3 py-1.5 rounded-md border border-tea/20 shadow-sm">
+          <span>🌿 台灣南投</span>
+          <span class="text-ink/40">|</span>
+          <span class="text-ink/70">高山茶樹 · 扎根故鄉</span>
+        </div>
+        <div class="flex items-center space-x-1.5 bg-paper px-3 py-1.5 rounded-md border border-tea/20 shadow-sm">
+          <span>🌲 中國雲南</span>
+          <span class="text-ink/40">|</span>
+          <span class="text-ink/70">安寧松林 · 慢旅居</span>
+        </div>
+        <div class="flex items-center space-x-1.5 bg-paper px-3 py-1.5 rounded-md border border-tea/20 shadow-sm">
+          <span>⏳ 自動化自轉</span>
+          <span class="text-ink/40">|</span>
+          <span class="text-seal font-semibold">首發 7 講已解鎖 · 每日清晨點亮</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 三、 當日主講舞台（Article Stage） ==================== -->
+  <main class="flex-1 py-12 sm:py-16">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      
+      <!-- 文章容器 -->
+      <article id="article-stage" class="bg-paper rice-paper-border rounded-xl p-6 sm:p-12 relative transition-all duration-300">
+        
+        <!-- 文章頂部元數據 -->
+        <div class="flex items-center justify-between border-b border-tea/20 pb-4 mb-8 text-xs font-serif text-tea">
+          <div class="flex items-center space-x-2">
+            <span id="art-vol-badge" class="px-2 py-0.5 bg-seal/10 text-seal rounded border border-seal/30 font-semibold">第一卷：破妄卷</span>
+            <span id="art-id-badge" class="font-bold">第 001 講</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span id="art-release-date" class="text-tea/80">2026-10-08</span>
+            <span class="seal-stamp text-[10px]">已解鎖</span>
+          </div>
+        </div>
+
+        <!-- 篇名 -->
+        <h2 id="art-title" class="text-2xl sm:text-3xl font-serif font-bold text-ink leading-snug mb-8 tracking-wide">
+          被槓桿撕裂的靈魂：在帳戶歸零的那一夜，照見的人性
+        </h2>
+
+        <!-- 專屬水墨宣紙封面圖 -->
+        <div class="mb-10 overflow-hidden rounded-lg border border-tea/20 shadow-sm bg-stone-100">
+          <img id="art-cover-img" src="images/001_cover.jpg" alt="封面配圖" class="w-full h-auto object-cover transform hover:scale-[1.01] transition duration-500">
+          <div class="p-2 text-center text-xs font-serif text-tea/70 bg-paper/80 border-t border-tea/10">
+            宣紙水墨意象 · 台灣南投與中國雲南雙基地風土
+          </div>
+        </div>
+
+        <!-- 核心文案內容渲染區 -->
+        <div id="art-body" class="font-serif leading-relaxed text-ink space-y-8 text-base sm:text-lg">
+          <!-- 內容將由 JavaScript 動態載入 -->
+        </div>
+
+        <!-- 文章底部的互動按鈕：產生金句卡片 -->
+        <div class="mt-12 pt-8 border-t border-tea/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="text-xs text-tea font-serif">
+            💡 本文依據《dao-finance-writer》標準生成，全文嚴格去我化
+          </div>
+          <button onclick="openQuoteModal()" class="w-full sm:w-auto px-5 py-2.5 bg-seal text-paper text-xs font-serif rounded shadow hover:bg-seal/90 transition flex items-center justify-center space-x-2">
+            <span>🎴</span>
+            <span>生成今日宣紙金句卡</span>
+          </button>
+        </div>
+
+      </article>
+
+    </div>
+  </main>
+
+  <!-- ==================== 四、 百八念珠全景卷軸（108 Beads Timeline） ==================== -->
+  <section id="beads-section" class="py-16 bg-[#F5EFE3] border-t border-tea/20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      
+      <div class="text-center mb-10">
+        <span class="seal-stamp text-xs mb-2">宏大秩序 · 時間膠囊</span>
+        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-ink">
+          百八念珠 · 六卷次第全景
+        </h3>
+        <p class="text-xs sm:text-sm text-tea font-serif mt-2">
+          所有 108 篇已預先編譯入庫。即使作者電腦關閉，系統每日午夜根據時間自動點亮解鎖。
+        </p>
+      </div>
+
+      <!-- 六卷分類標籤 -->
+      <div class="flex flex-wrap justify-center gap-2 mb-8" id="volume-tabs">
+        <button onclick="filterVolume(0)" class="vol-tab active px-3 py-1.5 text-xs font-serif rounded border border-seal bg-seal text-white transition">
+          全部 (108)
+        </button>
+        <button onclick="filterVolume(1)" class="vol-tab px-3 py-1.5 text-xs font-serif rounded border border-tea/30 bg-paper text-ink hover:border-seal transition">
+          一 · 破妄卷 (1–18)
+        </button>
+        <button onclick="filterVolume(2)" class="vol-tab px-3 py-1.5 text-xs font-serif rounded border border-tea/30 bg-paper text-ink hover:border-seal transition">
+          二 · 真容卷 (19–36)
+        </button>
+        <button onclick="filterVolume(3)" class="vol-tab px-3 py-1.5 text-xs font-serif rounded border border-tea/30 bg-paper text-ink hover:border-seal transition">
+          三 · 節氣卷 (37–54)
+        </button>
+        <button onclick="filterVolume(4)" class="vol-tab px-3 py-1.5 text-xs font-serif rounded border border-tea/30 bg-paper text-ink hover:border-seal transition">
+          四 · 守御卷 (55–72)
+        </button>
+        <button onclick="filterVolume(5)" class="vol-tab px-3 py-1.5 text-xs font-serif rounded border border-tea/30 bg-paper text-ink hover:border-seal transition">
+          五 · 無我卷 (73–90)
+        </button>
+        <button onclick="filterVolume(6)" class="vol-tab px-3 py-1.5 text-xs font-serif rounded border border-tea/30 bg-paper text-ink hover:border-seal transition">
+          六 · 善活卷 (91–108)
+        </button>
+      </div>
+
+      <!-- 108 念珠卡片網格 -->
+      <div id="beads-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- 由 JavaScript 動態渲染 108 篇念珠卡片 -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 五、 頁尾（Footer） ==================== -->
+  <footer class="border-t border-tea/20 bg-paper py-10 text-center font-serif text-xs text-tea">
+    <div class="max-w-2xl mx-auto px-4 space-y-3">
+      <div class="seal-stamp text-xs">大道至簡</div>
+      <p class="leading-relaxed">
+        立基於台灣南投山林與中國雲南安寧。<br>
+        不造永久之物，設條件，自發運轉，完成即退場。
+      </p>
+      <p class="text-ink/40 text-[10px]">
+        全系列文章與圖片由 AI 依據真實投研與老莊文法編譯 · 文章純屬虛構、若有雷同純屬巧合
+      </p>
+    </div>
+  </footer>
+
+  <!-- ==================== 六、 金句卡片彈窗（Modal） ==================== -->
+  <div id="quote-modal" class="fixed inset-0 bg-ink/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-paper rice-paper-border rounded-xl max-w-md w-full p-6 sm:p-8 text-center relative border border-tea/30">
+      <button onclick="closeQuoteModal()" class="absolute top-4 right-4 text-tea hover:text-seal text-lg">✕</button>
+      <div class="seal-stamp text-xs mb-4">大道至簡 · 每日金句</div>
+      <div id="modal-quote-text" class="font-serif text-lg text-ink leading-relaxed my-6 px-4 italic border-l-2 border-r-2 border-seal/30 py-2">
+        <!-- 金句內容 -->
+      </div>
+      <div class="text-xs font-serif text-tea mb-6">
+        <span id="modal-quote-source">第一講 · 被槓桿撕裂的靈魂</span><br>
+        <span class="text-[10px] text-ink/50">台灣南投 · 中國雲南 雙基地真實</span>
+      </div>
+      <button onclick="closeQuoteModal()" class="px-6 py-2 bg-ink text-paper text-xs rounded hover:bg-seal transition font-serif">
+        收存清涼，回到生活
+      </button>
+    </div>
+  </div>
+
+  <!-- 引用外部文章數據與 Manifest -->
+  <script src="manifest_data.js"></script>
+  <script src="articles_data.js"></script>
+  <script>
+    let manifestData = typeof MANIFEST_DATA !== 'undefined' ? MANIFEST_DATA : [];
+    let currentArticleId = 1;
+    let selectedVolume = 0;
+
+    // 時間膠囊錨點：以訪客真實時間判斷解鎖
+    function getTodayString() {
+      // 取得 UTC+8 當天日期
+      const now = new Date();
+      const utc8 = new Date(now.getTime() + (now.getTimezoneOffset() + 480) * 60000);
+      return utc8.toISOString().split('T')[0];
+    }
+
+    async function init() {
+      if (manifestData.length === 0) {
+        try {
+          const res = await fetch('manifest.json');
+          manifestData = await res.json();
+        } catch (e) {
+          console.warn("無法取得遠端 manifest.json，使用本地回退", e);
+        }
+      }
+      
+      renderBeads();
+      loadArticle(1);
+    }
+
+    function isUnlocked(article) {
+      if (article.isInitialBatch) return true; // 前 7 篇立即解鎖
+      const today = getTodayString();
+      return today >= article.releaseDate; // 到了發布日期自動解鎖
+    }
+
+    function renderBeads() {
+      const grid = document.getElementById('beads-grid');
+      grid.innerHTML = '';
+
+      const filtered = selectedVolume === 0 
+        ? manifestData 
+        : manifestData.filter(a => a.vol === selectedVolume);
+
+      filtered.forEach(art => {
+        const unlocked = isUnlocked(art);
+        const card = document.createElement('div');
+        
+        card.className = `p-4 rounded-lg border transition-all duration-200 flex flex-col justify-between ${
+          unlocked 
+            ? 'bg-paper border-tea/30 hover:border-seal cursor-pointer hover:shadow-md' 
+            : 'bg-[#F2ECE1] border-tea/15 opacity-60'
+        } ${art.id === currentArticleId ? 'ring-2 ring-seal bg-[#FAF4E8]' : ''}`;
+
+        if (unlocked) {
+          card.onclick = () => {
+            loadArticle(art.id);
+            document.getElementById('article-stage').scrollIntoView({ behavior: 'smooth' });
+          };
+        }
+
+        const idPad = String(art.id).padStart(3, '0');
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between text-[11px] font-serif text-tea mb-1.5">
+              <span>第 ${idPad} 講 · ${art.volName.split('：')[1]}</span>
+              ${unlocked 
+                ? '<span class="text-seal font-semibold">● 已解鎖</span>' 
+                : `<span class="text-ink/40">${art.releaseDate} 解鎖</span>`}
+            </div>
+            <h4 class="font-serif font-bold text-sm text-ink line-clamp-2 leading-snug">
+              ${art.title}
+            </h4>
+          </div>
+          <div class="mt-3 pt-2 border-t border-tea/10 flex items-center justify-between text-[10px] font-serif">
+            <span class="text-tea/80">${art.isInitialBatch ? '首發篇章' : '定時解鎖'}</span>
+            ${unlocked ? '<span class="text-seal hover:underline">點擊研讀 →</span>' : '<span class="text-ink/40">靜候天時</span>'}
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    function filterVolume(vol) {
+      selectedVolume = vol;
+      document.querySelectorAll('.vol-tab').forEach((btn, idx) => {
+        if (idx === vol) {
+          btn.className = "vol-tab active px-3 py-1.5 text-xs font-serif rounded border border-seal bg-seal text-white transition";
+        } else {
+          btn.className = "vol-tab px-3 py-1.5 text-xs font-serif rounded border border-tea/30 bg-paper text-ink hover:border-seal transition";
+        }
+      });
+      renderBeads();
+    }
+
+    function loadArticle(id) {
+      currentArticleId = id;
+      const art = manifestData.find(a => a.id === id);
+      if (!art) return;
+
+      document.getElementById('art-vol-badge').innerText = art.volName;
+      document.getElementById('art-id-badge').innerText = `第 ${String(art.id).padStart(3, '0')} 講`;
+      document.getElementById('art-release-date').innerText = art.releaseDate;
+      document.getElementById('art-title').innerText = art.title;
+      document.getElementById('art-cover-img').src = art.image;
+
+      // 載入文章內容
+      const bodyEl = document.getElementById('art-body');
+      if (typeof ARTICLES_DATA !== 'undefined' && ARTICLES_DATA[id]) {
+        const fullContent = ARTICLES_DATA[id].content;
+        bodyEl.innerHTML = parseMarkdownToHtml(fullContent);
+      } else {
+        bodyEl.innerHTML = `
+          <div class="p-8 text-center border border-dashed border-tea/30 rounded-lg">
+            <p class="text-tea font-serif text-sm">【本篇文稿已預先入庫，解鎖條件：${art.releaseDate}】</p>
+            <p class="text-ink/60 text-xs mt-2">即便主理人電腦未開啟，到了日期當日 00:00 自動對外發布展示。</p>
+          </div>
+        `;
+      }
+
+      renderBeads();
+    }
+
+    // 極簡 Markdown 轉 HTML 渲染器
+    function parseMarkdownToHtml(md) {
+      // 剝除前兩行標題與封面圖（避免與舞台重複）
+      let clean = md.replace(/^#\s+[^\n]+\n+##\s+[^\n]+\n+!\[[^\]]*\]\([^\)]*\)\n+/g, '');
+      
+      return clean
+        .replace(/### 【破妄鏡】/g, '<div class="my-6 p-5 bg-[#F4EDE0] border-l-4 border-seal rounded-r-lg"><h3 class="font-bold text-seal text-lg mb-2 font-serif flex items-center"><span>🪞 【破妄鏡】</span></h3><div class="text-ink/90 leading-relaxed font-serif">')
+        .replace(/### 【真實的人性故事】/g, '</div></div><div class="my-6 p-5 bg-paper border border-tea/20 rounded-lg shadow-sm"><h3 class="font-bold text-ink text-lg mb-3 font-serif flex items-center"><span class="text-tea mr-2">📜</span> 【真實的人性故事】</h3><div class="space-y-4 text-ink leading-relaxed font-serif">')
+        .replace(/### 【見真鏡】/g, '</div></div><div class="my-6 p-5 bg-[#F6F1E7] border-l-4 border-tea rounded-r-lg"><h3 class="font-bold text-tea text-lg mb-2 font-serif flex items-center"><span>☯️ 【見真鏡】</span></h3><div class="text-ink/90 leading-relaxed font-serif">')
+        .replace(/### 【AI 視角】/g, '</div></div><div class="my-6 p-5 bg-stone-50 border border-stone-300 rounded-lg"><h3 class="font-bold text-stone-700 text-lg mb-2 font-serif flex items-center"><span>⚡ 【AI 視角】</span></h3><div class="text-stone-800 leading-relaxed font-serif">')
+        .replace(/### 【生活行】/g, '</div></div><div class="my-6 p-5 bg-[#EEF2EB] border-l-4 border-moss rounded-r-lg"><h3 class="font-bold text-moss text-lg mb-2 font-serif flex items-center"><span>🍵 【生活行】</span></h3><div class="text-ink/90 leading-relaxed font-serif">')
+        .replace(/\*\（本文純屬虛構[^\*]*\）\*/g, '</div></div><div class="mt-8 text-center text-xs text-tea/60 italic font-serif">（本文純屬虛構、若有雷同純屬巧合。）</div>')
+        .replace(/\*\*([^\*]+)\*\*/g, '<strong class="font-bold text-ink">$1</strong>')
+        .replace(/\*([^\*]+)\*/g, '<em class="italic text-tea">$1</em>')
+        .replace(/\n\n/g, '<p class="my-3"></p>')
+        .replace(/\n/g, '<br>');
+    }
+
+    function openQuoteModal() {
+      const art = manifestData.find(a => a.id === currentArticleId);
+      const quote = (typeof ARTICLES_DATA !== 'undefined' && ARTICLES_DATA[currentArticleId]) 
+        ? ARTICLES_DATA[currentArticleId].quote 
+        : "在資本的驚濤駭浪裡，守住身心的清寧，是任何人都奪不走的無價資產。";
+      
+      document.getElementById('modal-quote-text').innerText = `「${quote}」`;
+      document.getElementById('modal-quote-source').innerText = `第 ${currentArticleId} 講 · ${art.title}`;
+      document.getElementById('quote-modal').classList.remove('hidden');
+    }
+
+    function closeQuoteModal() {
+      document.getElementById('quote-modal').classList.add('hidden');
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>

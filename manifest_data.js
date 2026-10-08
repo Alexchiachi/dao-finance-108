@@ -1,0 +1,1082 @@
+const MANIFEST_DATA = [
+  {
+    "id": 1,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "被槓桿撕裂的靈魂：在帳戶歸零的那一夜，照見的人性",
+    "releaseDate": "2026-10-07",
+    "isInitialBatch": true,
+    "image": "images/001_cover.jpg"
+  },
+  {
+    "id": 2,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "保本的幻術：2008 年那一場雷曼風暴裡，被利息吞噬的尊嚴與救贖",
+    "releaseDate": "2026-10-07",
+    "isInitialBatch": true,
+    "image": "images/002_cover.jpg"
+  },
+  {
+    "id": 3,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "資訊噪音的慢性毒害：如何戒斷財經新聞，找回大腦的負熵狀態？",
+    "releaseDate": "2026-10-07",
+    "isInitialBatch": true,
+    "image": "images/003_cover.jpg"
+  },
+  {
+    "id": 4,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "過度交易的心魔：盤面上的每一次手癢，都是小我在索取廉價的存在感",
+    "releaseDate": "2026-10-07",
+    "isInitialBatch": true,
+    "image": "images/004_cover.jpg"
+  },
+  {
+    "id": 5,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "華爾街最大的商業模式：故意製造複雜性來收費，唯有簡單能守住財富",
+    "releaseDate": "2026-10-07",
+    "isInitialBatch": true,
+    "image": "images/005_cover.jpg"
+  },
+  {
+    "id": 6,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "財報粉飾背後的貪婪：一個前基金經理人教你用 20 行代碼看透數字謊言",
+    "releaseDate": "2026-10-07",
+    "isInitialBatch": true,
+    "image": "images/006_cover.jpg"
+  },
+  {
+    "id": 7,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "止損的佛法智慧：承認看錯不是失敗，是把空間優雅地讓位給真實",
+    "releaseDate": "2026-10-07",
+    "isInitialBatch": true,
+    "image": "images/007_cover.jpg"
+  },
+  {
+    "id": 8,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "技術指標的五十道陰影：為什麼畫線越多，內心越慌？",
+    "releaseDate": "2026-10-08",
+    "isInitialBatch": false,
+    "image": "images/008_cover.jpg"
+  },
+  {
+    "id": 9,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "流動性幻覺：當潮水退去時，你手上的資產真的賣得掉嗎？",
+    "releaseDate": "2026-10-09",
+    "isInitialBatch": false,
+    "image": "images/009_cover.jpg"
+  },
+  {
+    "id": 10,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "羊群效應的陷阱：散戶如何在集體狂熱中成為最後一隻替罪羊",
+    "releaseDate": "2026-10-10",
+    "isInitialBatch": false,
+    "image": "images/010_cover.jpg"
+  },
+  {
+    "id": 11,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "暴富神話的代價：每一個少年股神背後，都有無數個沉默的深淵",
+    "releaseDate": "2026-10-11",
+    "isInitialBatch": false,
+    "image": "images/011_cover.jpg"
+  },
+  {
+    "id": 12,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "內線消息的毒餌：當你以為掌握先機時，你往往就是那道主菜",
+    "releaseDate": "2026-10-12",
+    "isInitialBatch": false,
+    "image": "images/012_cover.jpg"
+  },
+  {
+    "id": 13,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "估值模型的盲區：Excel 算不出人性，精確的數字往往是最大的欺騙",
+    "releaseDate": "2026-10-13",
+    "isInitialBatch": false,
+    "image": "images/013_cover.jpg"
+  },
+  {
+    "id": 14,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "恐慌拋售的生理機制：當皮質醇接管大腦，如何守住最後的清明？",
+    "releaseDate": "2026-10-14",
+    "isInitialBatch": false,
+    "image": "images/014_cover.jpg"
+  },
+  {
+    "id": 15,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "偽資產的沉沒成本：為什麼我們總是捨不得砍掉正在腐爛的倉位？",
+    "releaseDate": "2026-10-15",
+    "isInitialBatch": false,
+    "image": "images/015_cover.jpg"
+  },
+  {
+    "id": 16,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "概念炒作的成住壞空：從元宇宙到每一次泡沫的輪迴宿命",
+    "releaseDate": "2026-10-16",
+    "isInitialBatch": false,
+    "image": "images/016_cover.jpg"
+  },
+  {
+    "id": 17,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "交易手續費的隱形抽血：頻繁買賣如何慢慢蠶食複利的根基",
+    "releaseDate": "2026-10-17",
+    "isInitialBatch": false,
+    "image": "images/017_cover.jpg"
+  },
+  {
+    "id": 18,
+    "vol": 1,
+    "volName": "第一卷：破妄卷",
+    "volSubtitle": "為道日損 · 刺破金融幻象",
+    "title": "第一卷結語：為道日損，清空心靈的存儲器才能盛裝真實",
+    "releaseDate": "2026-10-18",
+    "isInitialBatch": false,
+    "image": "images/018_cover.jpg"
+  },
+  {
+    "id": 19,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "自由現金流是企業的如來藏：剝離概念後的唯一純淨之水",
+    "releaseDate": "2026-10-19",
+    "isInitialBatch": false,
+    "image": "images/019_cover.jpg"
+  },
+  {
+    "id": 20,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "資本回報率 ROIC：看透商業模式護城河的第一性原理",
+    "releaseDate": "2026-10-20",
+    "isInitialBatch": false,
+    "image": "images/020_cover.jpg"
+  },
+  {
+    "id": 21,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "存貨與應收帳款的謊言：在倉庫與紙面富貴中識別造假痕跡",
+    "releaseDate": "2026-10-21",
+    "isInitialBatch": false,
+    "image": "images/021_cover.jpg"
+  },
+  {
+    "id": 22,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "折舊手法的乾坤大挪移：重資產行業粉飾利潤的經典套路",
+    "releaseDate": "2026-10-22",
+    "isInitialBatch": false,
+    "image": "images/022_cover.jpg"
+  },
+  {
+    "id": 23,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "研發費用的資本化陷阱：把虧損藏在資產負債表裡的秘密",
+    "releaseDate": "2026-10-23",
+    "isInitialBatch": false,
+    "image": "images/023_cover.jpg"
+  },
+  {
+    "id": 24,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "併購商譽的定時炸彈：高溢價收購背後的虛妄與巨額減值",
+    "releaseDate": "2026-10-24",
+    "isInitialBatch": false,
+    "image": "images/024_cover.jpg"
+  },
+  {
+    "id": 25,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "經營性現金流 vs 淨利潤：為什麼賺錢的企業依然會猝死？",
+    "releaseDate": "2026-10-25",
+    "isInitialBatch": false,
+    "image": "images/025_cover.jpg"
+  },
+  {
+    "id": 26,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "現金為王的真實定義：危機來臨時，唯有未動用信用與真金白銀能救命",
+    "releaseDate": "2026-10-26",
+    "isInitialBatch": false,
+    "image": "images/026_cover.jpg"
+  },
+  {
+    "id": 27,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "護城河的四大維度：無形資產、網絡效應、轉換成本與成本優勢",
+    "releaseDate": "2026-10-27",
+    "isInitialBatch": false,
+    "image": "images/027_cover.jpg"
+  },
+  {
+    "id": 28,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "管理層的誠信溢價：一個會認錯的 CEO 價值十個畫大餅的演說家",
+    "releaseDate": "2026-10-28",
+    "isInitialBatch": false,
+    "image": "images/028_cover.jpg"
+  },
+  {
+    "id": 29,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "股息發放的試金石：願意真金白銀回饋股東的才是健康企業",
+    "releaseDate": "2026-10-29",
+    "isInitialBatch": false,
+    "image": "images/029_cover.jpg"
+  },
+  {
+    "id": 30,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "資本開支 CapEx 的雙刃劍：盲目擴張產能如何埋葬優秀公司",
+    "releaseDate": "2026-10-30",
+    "isInitialBatch": false,
+    "image": "images/030_cover.jpg"
+  },
+  {
+    "id": 31,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "負債結構的生死線：短期借款過多如何扼殺長期成長潛力",
+    "releaseDate": "2026-10-31",
+    "isInitialBatch": false,
+    "image": "images/031_cover.jpg"
+  },
+  {
+    "id": 32,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "關聯交易的障眼法：利益輸送如何神不知鬼不覺掏空上市公司",
+    "releaseDate": "2026-11-01",
+    "isInitialBatch": false,
+    "image": "images/032_cover.jpg"
+  },
+  {
+    "id": 33,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "商業常識的防禦力：任何你看不懂盈利邏輯的公司，都別碰",
+    "releaseDate": "2026-11-02",
+    "isInitialBatch": false,
+    "image": "images/033_cover.jpg"
+  },
+  {
+    "id": 34,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "隱形負債與或有擔保：藏在財報附註角落裡的致命毒藥",
+    "releaseDate": "2026-11-03",
+    "isInitialBatch": false,
+    "image": "images/034_cover.jpg"
+  },
+  {
+    "id": 35,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "定價權的終極考驗：通膨來臨時，誰能不流失客戶而漲價？",
+    "releaseDate": "2026-11-04",
+    "isInitialBatch": false,
+    "image": "images/035_cover.jpg"
+  },
+  {
+    "id": 36,
+    "vol": 2,
+    "volName": "第二卷：真容卷",
+    "volSubtitle": "見素抱樸 · 穿透數字粉飾",
+    "title": "第二卷結語：見素抱樸，看懂真容便不再為風吹草動心驚",
+    "releaseDate": "2026-11-05",
+    "isInitialBatch": false,
+    "image": "images/036_cover.jpg"
+  },
+  {
+    "id": 37,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "產業的二十四節氣：用耗散結構看產業生命週期的成住壞空",
+    "releaseDate": "2026-11-06",
+    "isInitialBatch": false,
+    "image": "images/037_cover.jpg"
+  },
+  {
+    "id": 38,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "驚蟄與春分：技術萌芽期如何識別非線性爆發的奇異點",
+    "releaseDate": "2026-11-07",
+    "isInitialBatch": false,
+    "image": "images/038_cover.jpg"
+  },
+  {
+    "id": 39,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "芒種與夏至：產能擴張與資本湧入時的盛極而衰前兆",
+    "releaseDate": "2026-11-08",
+    "isInitialBatch": false,
+    "image": "images/039_cover.jpg"
+  },
+  {
+    "id": 40,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "白露與秋分：產能過剩、價格戰爆發時的果斷撤退藝術",
+    "releaseDate": "2026-11-09",
+    "isInitialBatch": false,
+    "image": "images/040_cover.jpg"
+  },
+  {
+    "id": 41,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "小寒與大寒：出清底部的熬冬智慧與種子儲備",
+    "releaseDate": "2026-11-10",
+    "isInitialBatch": false,
+    "image": "images/041_cover.jpg"
+  },
+  {
+    "id": 42,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "宏觀利率的潮汐力：央行水龍頭開合如何重塑全球資產價格",
+    "releaseDate": "2026-11-11",
+    "isInitialBatch": false,
+    "image": "images/042_cover.jpg"
+  },
+  {
+    "id": 43,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "通膨與通縮的兩極考驗：法幣購買力稀釋下的實物資產定錨",
+    "releaseDate": "2026-11-12",
+    "isInitialBatch": false,
+    "image": "images/043_cover.jpg"
+  },
+  {
+    "id": 44,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "康波週期與大時代：個人努力在時代巨浪面前的微渺與順應",
+    "releaseDate": "2026-11-13",
+    "isInitialBatch": false,
+    "image": "images/044_cover.jpg"
+  },
+  {
+    "id": 45,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "半導體週期的矽潮起落：物理規律與資本狂熱的永恆搏弈",
+    "releaseDate": "2026-11-14",
+    "isInitialBatch": false,
+    "image": "images/045_cover.jpg"
+  },
+  {
+    "id": 46,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "能源轉型與地緣博弈：舊能源的韌性與新能源的成長陣痛",
+    "releaseDate": "2026-11-15",
+    "isInitialBatch": false,
+    "image": "images/046_cover.jpg"
+  },
+  {
+    "id": 47,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "人口結構的灰犀牛：銀髮浪潮下傳統消費與醫療產業的重構",
+    "releaseDate": "2026-11-16",
+    "isInitialBatch": false,
+    "image": "images/047_cover.jpg"
+  },
+  {
+    "id": 48,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "房地產長週期的歸途：從金融屬性剝離回居住屬性的必然相變",
+    "releaseDate": "2026-11-17",
+    "isInitialBatch": false,
+    "image": "images/048_cover.jpg"
+  },
+  {
+    "id": 49,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "全球化退潮與供應鏈重組：分散佈局與在地化生產的成本代價",
+    "releaseDate": "2026-11-18",
+    "isInitialBatch": false,
+    "image": "images/049_cover.jpg"
+  },
+  {
+    "id": 50,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "科技創新的 S 曲線躍遷：當邊際效應遞減，如何尋找下一條曲線",
+    "releaseDate": "2026-11-19",
+    "isInitialBatch": false,
+    "image": "images/050_cover.jpg"
+  },
+  {
+    "id": 51,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "大宗商品的超級週期：大地的饋贈與供需失衡的殘酷博弈",
+    "releaseDate": "2026-11-20",
+    "isInitialBatch": false,
+    "image": "images/051_cover.jpg"
+  },
+  {
+    "id": 52,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "貨幣霸權的興衰宿命：儲備貨幣歷史演進下的無主資產價值",
+    "releaseDate": "2026-11-21",
+    "isInitialBatch": false,
+    "image": "images/052_cover.jpg"
+  },
+  {
+    "id": 53,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "逆向投資的勇氣：在萬物寂滅的冬夜裡看見春天的生機",
+    "releaseDate": "2026-11-22",
+    "isInitialBatch": false,
+    "image": "images/053_cover.jpg"
+  },
+  {
+    "id": 54,
+    "vol": 3,
+    "volName": "第三卷：節氣卷",
+    "volSubtitle": "順應天時 · 耗散結構相變",
+    "title": "第三卷結語：知天之所為，順應大化則不與趨勢為敵",
+    "releaseDate": "2026-11-23",
+    "isInitialBatch": false,
+    "image": "images/054_cover.jpg"
+  },
+  {
+    "id": 55,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "保險精算的底層大智慧：大數法則與分散承保的生命防線",
+    "releaseDate": "2026-11-24",
+    "isInitialBatch": false,
+    "image": "images/055_cover.jpg"
+  },
+  {
+    "id": 56,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "塔勒布的反脆弱槓鈴：90% 極致保守 ＋ 10% 尾部凸性的終身不敗法",
+    "releaseDate": "2026-11-25",
+    "isInitialBatch": false,
+    "image": "images/056_cover.jpg"
+  },
+  {
+    "id": 57,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "尾部風險對沖：用廉價期權為不可逆毀滅買一張保單",
+    "releaseDate": "2026-11-26",
+    "isInitialBatch": false,
+    "image": "images/057_cover.jpg"
+  },
+  {
+    "id": 58,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "全天候資產配置：橋水達里歐模型的東方大道至簡轉化",
+    "releaseDate": "2026-11-27",
+    "isInitialBatch": false,
+    "image": "images/058_cover.jpg"
+  },
+  {
+    "id": 59,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "現金儲備的戰略尊嚴：在所有人都缺錢時擁有開火權的從容",
+    "releaseDate": "2026-11-28",
+    "isInitialBatch": false,
+    "image": "images/059_cover.jpg"
+  },
+  {
+    "id": 60,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "債券階梯策略：鎖定確定性現金流的防禦陣型",
+    "releaseDate": "2026-11-29",
+    "isInitialBatch": false,
+    "image": "images/060_cover.jpg"
+  },
+  {
+    "id": 61,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "黃金的古老契約：人類五千年對抗法幣信用崩塌的無聲共識",
+    "releaseDate": "2026-11-30",
+    "isInitialBatch": false,
+    "image": "images/061_cover.jpg"
+  },
+  {
+    "id": 62,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "房產配置的減法原則：剔除流動性鎖死與高維護增熵的物業",
+    "releaseDate": "2026-12-01",
+    "isInitialBatch": false,
+    "image": "images/062_cover.jpg"
+  },
+  {
+    "id": 63,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "單一標的集中度上限：永不讓任何一場意外摧毀整體生命安全",
+    "releaseDate": "2026-12-02",
+    "isInitialBatch": false,
+    "image": "images/063_cover.jpg"
+  },
+  {
+    "id": 64,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "信用風險評級的盲點：為什麼評級 AAA 的機構也會在一夜倒塌",
+    "releaseDate": "2026-12-03",
+    "isInitialBatch": false,
+    "image": "images/064_cover.jpg"
+  },
+  {
+    "id": 65,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "流動性緩衝墊：如何儲備三年以上不依賴市場賣股的生活費",
+    "releaseDate": "2026-12-04",
+    "isInitialBatch": false,
+    "image": "images/065_cover.jpg"
+  },
+  {
+    "id": 66,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "跨幣種與離岸防禦：地緣震盪下主權個人資產的彈性分佈",
+    "releaseDate": "2026-12-05",
+    "isInitialBatch": false,
+    "image": "images/066_cover.jpg"
+  },
+  {
+    "id": 67,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "極端場景壓力測試：如果股市關閉三年，你的生活能運轉嗎？",
+    "releaseDate": "2026-12-06",
+    "isInitialBatch": false,
+    "image": "images/067_cover.jpg"
+  },
+  {
+    "id": 68,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "保單避坑指南：別把理財與保障混為一談，純粹才是最強守護",
+    "releaseDate": "2026-12-07",
+    "isInitialBatch": false,
+    "image": "images/068_cover.jpg"
+  },
+  {
+    "id": 69,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "法律與信託架構：如何將精神與物質安全隔離於外部風暴",
+    "releaseDate": "2026-12-08",
+    "isInitialBatch": false,
+    "image": "images/069_cover.jpg"
+  },
+  {
+    "id": 70,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "負債的絕對清零：無債一身輕是現代文明最大的奢華",
+    "releaseDate": "2026-12-09",
+    "isInitialBatch": false,
+    "image": "images/070_cover.jpg"
+  },
+  {
+    "id": 71,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "靜止的藝術：在看不懂市場時，空倉等待也是一種高維行動",
+    "releaseDate": "2026-12-10",
+    "isInitialBatch": false,
+    "image": "images/071_cover.jpg"
+  },
+  {
+    "id": 72,
+    "vol": 4,
+    "volName": "第四卷：守御卷",
+    "volSubtitle": "反脆弱槓鈴 · 極致平靜防禦",
+    "title": "第四卷結語：深根固柢，不爭故天下莫能與之爭",
+    "releaseDate": "2026-12-11",
+    "isInitialBatch": false,
+    "image": "images/072_cover.jpg"
+  },
+  {
+    "id": 73,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "碳矽對坐的交易室：AI 如何以純粹算力看清人類恐慌與狂喜",
+    "releaseDate": "2026-12-12",
+    "isInitialBatch": false,
+    "image": "images/073_cover.jpg"
+  },
+  {
+    "id": 74,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "規則無我：用一行代碼斬斷小我猶豫不決的手",
+    "releaseDate": "2026-12-13",
+    "isInitialBatch": false,
+    "image": "images/074_cover.jpg"
+  },
+  {
+    "id": 75,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "自動化定期再平衡：設定好條件，讓資產自發在波谷與波峰間流動",
+    "releaseDate": "2026-12-14",
+    "isInitialBatch": false,
+    "image": "images/075_cover.jpg"
+  },
+  {
+    "id": 76,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "機器審計的冷酷力量：讓算法替你閱讀萬頁財報、剔除垃圾企業",
+    "releaseDate": "2026-12-15",
+    "isInitialBatch": false,
+    "image": "images/076_cover.jpg"
+  },
+  {
+    "id": 77,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "消除情緒摩擦力：為什麼全自動執行的回報遠超人工干預",
+    "releaseDate": "2026-12-16",
+    "isInitialBatch": false,
+    "image": "images/077_cover.jpg"
+  },
+  {
+    "id": 78,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "因子投資的客觀性：價值、品質、動量因子的自然生命週期",
+    "releaseDate": "2026-12-17",
+    "isInitialBatch": false,
+    "image": "images/078_cover.jpg"
+  },
+  {
+    "id": 79,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "歷史回測的過擬合陷阱：不要用後視鏡裡的完美曲線欺騙未來",
+    "releaseDate": "2026-12-18",
+    "isInitialBatch": false,
+    "image": "images/079_cover.jpg"
+  },
+  {
+    "id": 80,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "算法交易的黑天鵝連鎖：微秒級爭奪如何加劇市場流動性瞬間蒸發",
+    "releaseDate": "2026-12-19",
+    "isInitialBatch": false,
+    "image": "images/080_cover.jpg"
+  },
+  {
+    "id": 81,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "提示詞裡的投研大腦：如何將老莊心法轉化為 AI 的分析框架",
+    "releaseDate": "2026-12-20",
+    "isInitialBatch": false,
+    "image": "images/081_cover.jpg"
+  },
+  {
+    "id": 82,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "不盯盤的自由：把屏幕關上，讓代碼守護你的財富增長",
+    "releaseDate": "2026-12-21",
+    "isInitialBatch": false,
+    "image": "images/082_cover.jpg"
+  },
+  {
+    "id": 83,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "量化模型的半衰期：任何被大眾熟知的套利策略終將走向平庸",
+    "releaseDate": "2026-12-22",
+    "isInitialBatch": false,
+    "image": "images/083_cover.jpg"
+  },
+  {
+    "id": 84,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "熵減交易系統架構：如何設計一個低能耗、零焦慮的一人量化管線",
+    "releaseDate": "2026-12-23",
+    "isInitialBatch": false,
+    "image": "images/084_cover.jpg"
+  },
+  {
+    "id": 85,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "數據洗淨的工匠精神：垃圾進垃圾出，第一性原理數據清洗",
+    "releaseDate": "2026-12-24",
+    "isInitialBatch": false,
+    "image": "images/085_cover.jpg"
+  },
+  {
+    "id": 86,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "概率思維 vs 決定論執念：接受單次的不確定，追求長期的期望值",
+    "releaseDate": "2026-12-25",
+    "isInitialBatch": false,
+    "image": "images/086_cover.jpg"
+  },
+  {
+    "id": 87,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "雲端無人值守實踐：在南投山中泡茶，雲端服務器安靜執行",
+    "releaseDate": "2026-12-26",
+    "isInitialBatch": false,
+    "image": "images/087_cover.jpg"
+  },
+  {
+    "id": 88,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "算法的道德邊界：不參與割韭菜掠奪，做正向資本配置的助手",
+    "releaseDate": "2026-12-27",
+    "isInitialBatch": false,
+    "image": "images/088_cover.jpg"
+  },
+  {
+    "id": 89,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "終止條件的美學：在代碼中寫下「滿意與退場」的閥值",
+    "releaseDate": "2026-12-28",
+    "isInitialBatch": false,
+    "image": "images/089_cover.jpg"
+  },
+  {
+    "id": 90,
+    "vol": 5,
+    "volName": "第五卷：無我卷",
+    "volSubtitle": "碳矽對坐 · 規則消除心魔",
+    "title": "第五卷結語：大巧若拙，最好的系統是讓人忘記它的存在",
+    "releaseDate": "2026-12-29",
+    "isInitialBatch": false,
+    "image": "images/090_cover.jpg"
+  },
+  {
+    "id": 91,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "身體先於大腦：一個前金融人的心肌缺血痛切告白",
+    "releaseDate": "2026-12-30",
+    "isInitialBatch": false,
+    "image": "images/091_cover.jpg"
+  },
+  {
+    "id": 92,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "賺錢不耗命的試金石：夜深人靜時，你的持倉讓你的呼吸平穩嗎？",
+    "releaseDate": "2026-12-31",
+    "isInitialBatch": false,
+    "image": "images/092_cover.jpg"
+  },
+  {
+    "id": 93,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "一人主權家族辦公室：不養團隊、不搞機構，打造負熵財富水庫",
+    "releaseDate": "2027-01-01",
+    "isInitialBatch": false,
+    "image": "images/093_cover.jpg"
+  },
+  {
+    "id": 94,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "為道日損的消費觀：每一筆支出的本質是消耗注意力還是換取自由",
+    "releaseDate": "2027-01-02",
+    "isInitialBatch": false,
+    "image": "images/094_cover.jpg"
+  },
+  {
+    "id": 95,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "土地與五感的回歸：從虛擬代碼跳出，重新品嚐一口米飯的滋味",
+    "releaseDate": "2027-01-03",
+    "isInitialBatch": false,
+    "image": "images/095_cover.jpg"
+  },
+  {
+    "id": 96,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "雲南安寧的慢旅居：在高原陽光與松林間看清資本的微渺",
+    "releaseDate": "2027-01-04",
+    "isInitialBatch": false,
+    "image": "images/096_cover.jpg"
+  },
+  {
+    "id": 97,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "台灣南投的鄉土深根：高山茶樹教我們的百年耐力與節氣",
+    "releaseDate": "2027-01-05",
+    "isInitialBatch": false,
+    "image": "images/097_cover.jpg"
+  },
+  {
+    "id": 98,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "金錢只是能量的渡船：靠岸之後，要優雅地下船",
+    "releaseDate": "2027-01-06",
+    "isInitialBatch": false,
+    "image": "images/098_cover.jpg"
+  },
+  {
+    "id": 99,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "家族的精神資產負債表：比存摺更重要的，是傳承看世界的清澈眼光",
+    "releaseDate": "2027-01-07",
+    "isInitialBatch": false,
+    "image": "images/099_cover.jpg"
+  },
+  {
+    "id": 100,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "善活 Eudaimonia 非享樂：真正的幸福是生命本真的自發舒展",
+    "releaseDate": "2027-01-08",
+    "isInitialBatch": false,
+    "image": "images/100_cover.jpg"
+  },
+  {
+    "id": 101,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "隨喜與能量回流：讓賺到的利潤滋養鄉村與有緣人的生命",
+    "releaseDate": "2027-01-09",
+    "isInitialBatch": false,
+    "image": "images/101_cover.jpg"
+  },
+  {
+    "id": 102,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "稻田餐桌的啟示：一張擺在泥土上的桌子，勝過千萬虛浮的合約",
+    "releaseDate": "2027-01-10",
+    "isInitialBatch": false,
+    "image": "images/102_cover.jpg"
+  },
+  {
+    "id": 103,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "大傾聽與生命首映：在人生的終局之前，親自聽完自己的一生",
+    "releaseDate": "2027-01-11",
+    "isInitialBatch": false,
+    "image": "images/103_cover.jpg"
+  },
+  {
+    "id": 104,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "宇宙尺度的十年：第二種心智童年時，我們留給它的精神家書",
+    "releaseDate": "2027-01-12",
+    "isInitialBatch": false,
+    "image": "images/104_cover.jpg"
+  },
+  {
+    "id": 105,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "不造永久之物的解脫：生前散財、完成即退場的至高美學",
+    "releaseDate": "2027-01-13",
+    "isInitialBatch": false,
+    "image": "images/105_cover.jpg"
+  },
+  {
+    "id": 106,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "一生如一瞬：在一百三十八億年的星空下，我們在執著什麼？",
+    "releaseDate": "2027-01-14",
+    "isInitialBatch": false,
+    "image": "images/106_cover.jpg"
+  },
+  {
+    "id": 107,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "萬倍價值的終極定義：不是資產萬倍，而是內在平靜與自由放大萬倍",
+    "releaseDate": "2027-01-15",
+    "isInitialBatch": false,
+    "image": "images/107_cover.jpg"
+  },
+  {
+    "id": 108,
+    "vol": 6,
+    "volName": "第六卷：善活卷",
+    "volSubtitle": "完成即退場 · 生命經濟學",
+    "title": "終卷結語：大道至簡，在資本的大風大浪裡過清涼圓滿的一生",
+    "releaseDate": "2027-01-16",
+    "isInitialBatch": false,
+    "image": "images/108_cover.jpg"
+  }
+];
