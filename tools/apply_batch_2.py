@@ -7,6 +7,7 @@ from pathlib import Path
 from generate_batch2_part1 import ARTICLES_PART1
 from generate_batch2_part2 import ARTICLES_PART2
 from generate_batch2_part3 import ARTICLES_PART3
+from schedule import apply_schedule
 
 ROOT = Path("/Users/chienchiachi/dao-finance-108")
 ARTICLES_DIR = ROOT / "articles"
@@ -77,11 +78,8 @@ manifest_path = ROOT / "manifest.json"
 with open(manifest_path, "r", encoding="utf-8") as f:
     manifest = json.load(f)
 
-for item in manifest:
-    # 1 to 36 are now unlocked as Initial Batch
-    if item["id"] <= 36:
-        item["isInitialBatch"] = True
-        item["releaseDate"] = "2026-10-08"
+# 解鎖日程統一由 tools/schedule.py 決定（1–8 講已解鎖，第 9 講起每天一篇），此處不再自行指定
+apply_schedule(manifest)
 
 with open(manifest_path, "w", encoding="utf-8") as f:
     json.dump(manifest, f, ensure_ascii=False, indent=2)
