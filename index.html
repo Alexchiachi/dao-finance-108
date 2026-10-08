@@ -188,7 +188,6 @@
     .bead.is-open { cursor: pointer; }
     .bead.is-open:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
     .bead.is-open:active { transform: scale(.985); }
-    .bead.is-locked { background: rgb(var(--c-surface) / .55); box-shadow: none; cursor: default; }
     .bead.is-current { box-shadow: 0 0 0 2px rgb(var(--c-seal)), var(--shadow-card); }
 
     /* 文章閱讀 */
@@ -348,7 +347,7 @@
         <p class="eyebrow text-seal text-[13px] mb-3">宏大秩序 · 時間膠囊</p>
         <h3 class="hero-title font-serif font-black text-ink text-[clamp(1.75rem,4.5vw,3rem)]">百八念珠 · 六卷次第</h3>
         <p class="text-sm sm:text-base text-ink/70 mt-4 max-w-xl mx-auto balance">
-          108 篇已預先編譯入庫，系統每日午夜依時間自動點亮解鎖。
+          共 108 講，每天清晨點亮一講。
         </p>
       </div>
 
@@ -363,10 +362,7 @@
           <button type="button" aria-pressed="false" onclick="filterVolume(6)" class="vol-tab">善活卷</button>
         </div>
       </div>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1 mb-8 text-[13px] text-soft" aria-live="polite">
-        <p id="vol-caption">全部 108 講</p>
-        <button id="lock-toggle" type="button" onclick="toggleLocked()" aria-pressed="false" class="link-arrow !text-[13px]"></button>
-      </div>
+      <p id="vol-caption" class="text-center mb-8 text-[13px] text-soft" aria-live="polite">全部</p>
 
       <div id="beads-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <!-- 由 JavaScript 動態渲染 -->
@@ -407,7 +403,6 @@
     let manifestData = typeof MANIFEST_DATA !== 'undefined' ? MANIFEST_DATA : [];
     let currentArticleId = 0;
     let selectedVolume = 0;
-    let showLocked = false;
 
     // 時間膠囊錨點：以訪客真實時間判斷解鎖
     function getTodayString() {
@@ -450,68 +445,53 @@
 
     const VOL_LABELS = ['全部', '第一卷 · 破妄卷（1–18）', '第二卷 · 真容卷（19–36）', '第三卷 · 節氣卷（37–54）', '第四卷 · 守御卷（55–72）', '第五卷 · 無我卷（73–90）', '第六卷 · 善活卷（91–108）'];
 
+    const VOL_TOTALS = [108, 18, 18, 18, 18, 18, 18];
+
+    // 只列出已解鎖的講次；未解鎖的完全不顯示（正式站的資料檔也已由 tools/build_public.py 濾除）
     function renderBeads() {
       const grid = document.getElementById('beads-grid');
       grid.innerHTML = '';
 
-      const inVolume = selectedVolume === 0
+      const list = (selectedVolume === 0
         ? manifestData
-        : manifestData.filter(a => a.vol === selectedVolume);
-      const lockedList = inVolume.filter(a => !isUnlocked(a));
-      const filtered = showLocked ? inVolume : inVolume.filter(isUnlocked);
+        : manifestData.filter(a => a.vol === selectedVolume)).filter(isUnlocked);
 
-      // 統計與切換按鈕
-      const total = inVolume.length;
       document.getElementById('vol-caption').innerText =
-        `${VOL_LABELS[selectedVolume]} · 已解鎖 ${total - lockedList.length} / ${total}`;
-      const tg = document.getElementById('lock-toggle');
-      tg.hidden = lockedList.length === 0;
-      tg.setAttribute('aria-pressed', String(showLocked));
-      tg.innerText = showLocked ? '收合未解鎖 ‹' : `顯示 ${lockedList.length} 講未解鎖 ›`;
+        `${VOL_LABELS[selectedVolume]} · 已解鎖 ${list.length} / ${VOL_TOTALS[selectedVolume]}`;
 
-      if (filtered.length === 0) {
-        const next = lockedList.map(a => a.releaseDate).sort()[0];
+      if (list.length === 0) {
         grid.innerHTML = `<div class="col-span-full text-center py-14 text-soft text-sm">
           <p class="font-serif text-lg text-ink mb-1">本卷尚待點亮</p>
-          <p>預計 ${next} 起陸續解鎖</p></div>`;
+          <p>每天清晨解鎖新的一講</p></div>`;
         return;
       }
 
-      filtered.forEach(art => {
-        const unlocked = isUnlocked(art);
-        const card = document.createElement(unlocked ? 'button' : 'div');
-        if (unlocked) card.type = 'button';
-
-        card.className = `bead card-surface rounded-2xl p-5 flex flex-col justify-between min-h-[132px] ${
-          unlocked ? 'is-open' : 'is-locked'
-        } ${art.id === currentArticleId ? 'is-current' : ''}`;
-
-        if (unlocked) {
-          card.setAttribute('aria-label', `閱讀第 ${art.id} 講：${art.title}`);
-          if (art.id === currentArticleId) card.setAttribute('aria-current', 'true');
-          card.onclick = () => {
-            loadArticle(art.id, { history: 'push' });
-            document.getElementById('article-stage').scrollIntoView({ behavior: 'smooth' });
-          };
-        }
+      list.forEach(art => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = `bead card-surface is-open rounded-2xl p-5 flex flex-col justify-between min-h-[132px] ${
+          art.id === currentArticleId ? 'is-current' : ''}`;
+        card.setAttribute('aria-label', `閱讀第 ${art.id} 講：${art.title}`);
+        if (art.id === currentArticleId) card.setAttribute('aria-current', 'true');
+        card.onclick = () => {
+          loadArticle(art.id, { history: 'push' });
+          document.getElementById('article-stage').scrollIntoView({ behavior: 'smooth' });
+        };
 
         const idPad = String(art.id).padStart(3, '0');
         card.innerHTML = `
           <div>
             <div class="flex items-center justify-between text-xs text-soft mb-2">
               <span class="font-semibold">第 ${idPad} 講 · ${art.volName.split('：')[1]}</span>
-              ${unlocked
-                ? '<span class="text-seal font-semibold">已解鎖</span>'
-                : `<span class="text-ink/70">${art.releaseDate} 解鎖</span>`}
+              <span class="text-seal font-semibold">已解鎖</span>
             </div>
-            <h4 class="font-serif font-bold text-[15px] ${unlocked ? 'text-ink' : 'text-ink/70'} line-clamp-3 leading-snug">${art.title}</h4>
+            <h4 class="font-serif font-bold text-[15px] text-ink line-clamp-3 leading-snug">${art.title}</h4>
           </div>
           <div class="mt-4 flex items-center justify-between text-xs">
-            <span class="text-soft">${art.isInitialBatch ? '首發篇章' : '定時解鎖'}</span>
-            ${unlocked ? '<span class="text-seal font-medium">閱讀 ›</span>' : '<span class="text-ink/70">靜候天時</span>'}
+            <span class="text-soft">${art.isInitialBatch ? '首發篇章' : art.releaseDate}</span>
+            <span class="text-seal font-medium">閱讀 ›</span>
           </div>
         `;
-
         grid.appendChild(card);
       });
     }
@@ -523,11 +503,6 @@
       });
       const tab = document.querySelectorAll('.vol-tab')[vol];
       if (tab) tab.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
-      renderBeads();
-    }
-
-    function toggleLocked() {
-      showLocked = !showLocked;
       renderBeads();
     }
 
@@ -584,9 +559,9 @@
     }
 
     function loadArticle(id, { history: mode } = {}) {
-      currentArticleId = id;
       const art = manifestData.find(a => a.id === id);
-      if (!art) return;
+      if (!art || !isUnlocked(art)) return;   // 未解鎖的講次一律不開啟
+      currentArticleId = id;
 
       if (mode && idFromHash() !== id) {
         history[mode === 'replace' ? 'replaceState' : 'pushState'](null, '', articleHash(id));
@@ -619,8 +594,7 @@
       } else {
         bodyEl.innerHTML = `
           <div class="p-8 text-center bg-paper rounded-2xl">
-            <p class="text-soft font-serif text-sm">【本篇文稿已預先入庫，解鎖條件：${art.releaseDate}】</p>
-            <p class="text-ink/70 text-xs mt-2">即便主理人電腦未開啟，到了日期當日 00:00 自動對外發布展示。</p>
+            <p class="text-soft font-serif text-sm">本講文稿整理中，稍後補上。</p>
           </div>
         `;
       }

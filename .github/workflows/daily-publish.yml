@@ -39,6 +39,9 @@ jobs:
         run: |
           node tools/update_feed.js
 
+      - name: Build public site (unlocked content only)
+        run: python3 tools/build_public.py
+
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
         with:
@@ -47,7 +50,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
