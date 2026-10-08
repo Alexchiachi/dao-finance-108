@@ -6,11 +6,16 @@
   <title>大道至簡・金融一百零八講｜前基金經理人的破妄與善活錄</title>
   <meta name="description" content="當金融遇見老莊、代碼與雙基地風土。以冷酷專業刺破金融虛妄，以人性故事看見黑暗與微光，以老莊耗散回歸第一性原理，以矽基理性觀照碳基生命，以南投與雲南雙基地真實風土安頓身心。">
   
+  <meta name="theme-color" content="#FAF6EF">
+  <meta property="og:title" content="大道至簡・金融一百零八講">
+  <meta property="og:description" content="一百零八顆智慧念珠，破除一百零八個資本妄念。">
+  <meta property="og:image" content="images/001_cover.jpg">
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-  
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -26,256 +31,275 @@
             gold: '#C5A059'
           },
           fontFamily: {
-            serif: ['"Noto Serif TC"', 'Songti SC', 'SimSun', 'serif'],
-            sans: ['"Noto Sans TC"', 'PingFang SC', 'sans-serif'],
+            serif: ['"Noto Serif TC"', 'Songti TC', 'Songti SC', 'serif'],
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"PingFang TC"', '"Noto Sans TC"', 'system-ui', 'sans-serif'],
           }
         }
       }
     }
   </script>
-  
+
   <style>
+    :root {
+      --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+      --spring: cubic-bezier(0.32, 0.72, 0, 1);
+      --shadow-card: 0 1px 2px rgba(42,37,32,.04), 0 8px 30px rgba(42,37,32,.06);
+      --shadow-lift: 0 2px 4px rgba(42,37,32,.05), 0 18px 44px rgba(42,37,32,.12);
+    }
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; -webkit-text-size-adjust: 100%; }
     body {
       background-color: #FAF6EF;
       color: #2A2520;
-      background-image: radial-gradient(#2A2520 0.5px, transparent 0.5px);
-      background-size: 24px 24px;
-      background-position: -0.5px -0.5px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
-    .rice-paper-border {
-      box-shadow: 0 4px 20px -2px rgba(42, 37, 32, 0.08), 0 0 0 1px rgba(139, 111, 71, 0.15);
+    /* 毛玻璃導航 */
+    .glass {
+      background: rgba(250, 246, 239, 0.72);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 0.5px solid rgba(42, 37, 32, 0.12);
     }
-    .custom-scrollbar::-webkit-scrollbar {
-      height: 6px;
-      width: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: rgba(139, 111, 71, 0.05);
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: rgba(168, 84, 58, 0.3);
-      border-radius: 3px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: rgba(168, 84, 58, 0.6);
-    }
+    .card-surface { background: #fff; box-shadow: var(--shadow-card); }
+    .eyebrow { letter-spacing: .08em; font-weight: 600; }
+    .hero-title { letter-spacing: -0.02em; line-height: 1.12; text-wrap: balance; }
+    .balance { text-wrap: balance; }
+
     .seal-stamp {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 1.5px solid #A8543A;
-      color: #A8543A;
-      padding: 2px 6px;
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      border-radius: 2px;
-      font-weight: 700;
-      line-height: 1;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1.5px solid #A8543A; color: #A8543A;
+      padding: 3px 7px; font-size: 0.75rem; letter-spacing: 0.1em;
+      border-radius: 4px; font-weight: 700; line-height: 1;
+    }
+
+    /* 按鈕：Apple 膠囊樣式 */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+      min-height: 44px; padding: 0 1.4rem; border-radius: 999px;
+      font-size: .9375rem; font-weight: 500; cursor: pointer; border: 0;
+      transition: transform .25s var(--ease), background-color .25s var(--ease), box-shadow .25s var(--ease);
+    }
+    .btn:active { transform: scale(.97); }
+    .btn-primary { background: #A8543A; color: #fff; }
+    .btn-primary:hover { background: #944630; }
+    .btn-ghost { background: rgba(139,111,71,.12); color: #2A2520; }
+    .btn-ghost:hover { background: rgba(139,111,71,.2); }
+    .link-arrow { color: #A8543A; font-size: 1rem; font-weight: 500; }
+    .link-arrow:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+    /* 分段控制 */
+    .segmented { display: inline-flex; gap: 2px; padding: 3px; background: rgba(139,111,71,.12); border-radius: 12px; }
+    .vol-tab {
+      white-space: nowrap; min-height: 36px; padding: 0 14px; border-radius: 9px;
+      font-size: .8125rem; font-weight: 500; color: rgba(42,37,32,.7); background: transparent; border: 0;
+      cursor: pointer; transition: background-color .25s var(--ease), color .25s var(--ease), box-shadow .25s var(--ease);
+    }
+    .vol-tab:hover { color: #2A2520; }
+    .vol-tab[aria-selected="true"] { background: #fff; color: #2A2520; box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 0 0 .5px rgba(0,0,0,.04); }
+    .scroll-x { overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .scroll-x::-webkit-scrollbar { display: none; }
+
+    /* 念珠卡片 */
+    .bead {
+      text-align: left; width: 100%; border: 0; font: inherit; color: inherit;
+      transition: transform .4s var(--spring), box-shadow .4s var(--spring);
+    }
+    .bead.is-open { cursor: pointer; }
+    .bead.is-open:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+    .bead.is-open:active { transform: scale(.985); }
+    .bead.is-locked { background: rgba(255,255,255,.55); box-shadow: none; cursor: default; }
+    .bead.is-current { box-shadow: 0 0 0 2px #A8543A, var(--shadow-card); }
+
+    /* 文章閱讀 */
+    .prose-zh { line-height: 2; letter-spacing: .01em; }
+    .prose-zh strong { color: #2A2520; font-weight: 700; }
+    .cover { aspect-ratio: 16 / 9; object-fit: cover; width: 100%; display: block; background: #EFE8DA; }
+    .fade-in { animation: fadeIn .5s var(--ease); }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    /* 彈窗 */
+    #quote-modal { opacity: 0; pointer-events: none; transition: opacity .3s var(--ease); }
+    #quote-modal.open { opacity: 1; pointer-events: auto; }
+    #quote-modal .sheet { transform: scale(.94) translateY(12px); transition: transform .4s var(--spring); }
+    #quote-modal.open .sheet { transform: none; }
+
+    :focus-visible { outline: 3px solid rgba(168,84,58,.55); outline-offset: 2px; border-radius: 8px; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
     }
   </style>
 </head>
 <body class="font-sans min-h-screen flex flex-col selection:bg-seal selection:text-white">
 
-  <!-- ==================== 一、 頂部導航與世界觀標註 ==================== -->
-  <header class="border-b border-tea/20 bg-paper/90 backdrop-blur sticky top-0 z-40">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <span class="seal-stamp text-xs font-serif">大道至簡</span>
-        <span class="font-serif font-bold text-lg text-ink tracking-wider">金融一百零八講</span>
+  <a href="#article-stage" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:px-4 focus:py-2 focus:rounded-full">跳到主要內容</a>
+
+  <!-- ==================== 一、 頂部導航 ==================== -->
+  <header class="glass sticky top-0 z-40">
+    <nav class="max-w-5xl mx-auto px-5 sm:px-8 h-12 flex items-center justify-between" aria-label="主導航">
+      <a href="#top" class="flex items-center gap-2.5">
+        <span class="seal-stamp font-serif">大道至簡</span>
+        <span class="font-semibold text-[15px] text-ink tracking-wide">金融一百零八講</span>
+      </a>
+      <div class="flex items-center gap-5 text-[13px]">
+        <a href="#article-stage" class="text-ink/70 hover:text-ink transition hidden sm:inline">今日講次</a>
+        <a href="#beads-section" class="text-ink/70 hover:text-ink transition">念珠目錄</a>
       </div>
-      <div class="text-xs text-tea font-serif hidden sm:flex items-center space-x-2">
-        <span class="w-2 h-2 rounded-full bg-moss inline-block animate-pulse"></span>
-        <span>台灣南投 · 中國雲南 雙基地真實</span>
-      </div>
-      <div class="flex items-center space-x-2">
-        <a href="#beads-section" class="text-xs px-3 py-1.5 border border-tea/30 rounded text-tea hover:border-seal hover:text-seal transition">
-          百八念珠目錄
-        </a>
-      </div>
-    </div>
+    </nav>
   </header>
 
-  <!-- ==================== 二、 卷首序曲（Hero Section） ==================== -->
-  <section class="py-16 sm:py-20 border-b border-tea/15 bg-gradient-to-b from-paper to-[#F5EFE3]">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-      <div class="inline-block mb-4 px-3 py-1 bg-tea/10 border border-tea/20 rounded-full text-xs text-tea font-serif tracking-widest">
-        前基金經理人的破妄與善活錄 · 全程去我化
-      </div>
-      <h1 class="text-3xl sm:text-5xl font-serif font-black text-ink tracking-tight leading-tight sm:leading-snug mb-6">
-        當金融遇見老莊、代碼與雙基地風土
+  <!-- ==================== 二、 卷首序曲（Hero） ==================== -->
+  <section id="top" class="pt-20 pb-16 sm:pt-28 sm:pb-24 bg-gradient-to-b from-paper to-[#F3ECDF]">
+    <div class="max-w-4xl mx-auto px-5 sm:px-8 text-center">
+      <p class="eyebrow text-seal text-[13px] mb-5">前基金經理人的破妄與善活錄 · 全程去我化</p>
+      <h1 class="hero-title font-serif font-black text-ink text-[clamp(2.1rem,6.5vw,4.25rem)] mb-6">
+        當金融遇見老莊、<br class="hidden sm:inline">代碼與雙基地風土
       </h1>
-      <p class="text-base sm:text-lg text-ink/80 max-w-2xl mx-auto font-serif leading-relaxed mb-8">
-        一百零八顆智慧念珠，破除一百零八個資本妄念。<br class="hidden sm:inline">
-        以冷酷專業穿透財報虛妄，以真實故事照見人性微光，以純粹理性安頓身心。
+      <p class="text-[clamp(1rem,2.2vw,1.3rem)] text-ink/70 max-w-2xl mx-auto leading-relaxed balance mb-9">
+        一百零八顆智慧念珠，破除一百零八個資本妄念。以冷酷專業穿透財報虛妄，以真實故事照見人性微光。
       </p>
-      
-      <!-- 雙基地真實標籤 -->
-      <div class="flex flex-wrap justify-center items-center gap-4 text-xs font-serif text-tea">
-        <div class="flex items-center space-x-1.5 bg-paper px-3 py-1.5 rounded-md border border-tea/20 shadow-sm">
-          <span>🌿 台灣南投</span>
-          <span class="text-ink/40">|</span>
-          <span class="text-ink/70">高山茶樹 · 扎根故鄉</span>
-        </div>
-        <div class="flex items-center space-x-1.5 bg-paper px-3 py-1.5 rounded-md border border-tea/20 shadow-sm">
-          <span>🌲 中國雲南</span>
-          <span class="text-ink/40">|</span>
-          <span class="text-ink/70">安寧松林 · 慢旅居</span>
-        </div>
-        <div class="flex items-center space-x-1.5 bg-paper px-3 py-1.5 rounded-md border border-tea/20 shadow-sm">
-          <span>⏳ 自動化自轉</span>
-          <span class="text-ink/40">|</span>
-          <span class="text-seal font-semibold">首發 7 講已解鎖 · 每日清晨點亮</span>
-        </div>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-14">
+        <a href="#article-stage" class="btn btn-primary">開始閱讀</a>
+        <a href="#beads-section" class="link-arrow">瀏覽 108 講目錄 ›</a>
       </div>
+
+      <!-- 資訊卡 -->
+      <dl class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-left">
+        <div class="card-surface rounded-2xl p-5">
+          <dt class="text-[12px] eyebrow text-tea">台灣南投</dt>
+          <dd class="mt-1 font-serif font-bold text-lg text-ink">高山茶樹</dd>
+          <dd class="text-sm text-ink/60">扎根故鄉</dd>
+        </div>
+        <div class="card-surface rounded-2xl p-5">
+          <dt class="text-[12px] eyebrow text-tea">中國雲南</dt>
+          <dd class="mt-1 font-serif font-bold text-lg text-ink">安寧松林</dd>
+          <dd class="text-sm text-ink/60">慢旅居</dd>
+        </div>
+        <div class="card-surface rounded-2xl p-5">
+          <dt class="text-[12px] eyebrow text-tea">自動化自轉</dt>
+          <dd class="mt-1 font-serif font-bold text-lg text-seal">首發 7 講已解鎖</dd>
+          <dd class="text-sm text-ink/60">每日清晨點亮</dd>
+        </div>
+      </dl>
     </div>
   </section>
 
-  <!-- ==================== 三、 當日主講舞台（Article Stage） ==================== -->
-  <main class="flex-1 py-12 sm:py-16">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6">
-      
-      <!-- 文章容器 -->
-      <article id="article-stage" class="bg-paper rice-paper-border rounded-xl p-6 sm:p-12 relative transition-all duration-300">
-        
-        <!-- 文章頂部元數據 -->
-        <div class="flex items-center justify-between border-b border-tea/20 pb-4 mb-8 text-xs font-serif text-tea">
-          <div class="flex items-center space-x-2">
-            <span id="art-vol-badge" class="px-2 py-0.5 bg-seal/10 text-seal rounded border border-seal/30 font-semibold">第一卷：破妄卷</span>
-            <span id="art-id-badge" class="font-bold">第 001 講</span>
+  <!-- ==================== 三、 當日主講舞台 ==================== -->
+  <main class="flex-1 py-12 sm:py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-8">
+
+      <article id="article-stage" class="card-surface rounded-[28px] overflow-hidden">
+
+        <div class="px-6 sm:px-14 pt-8 sm:pt-12">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-[13px] text-tea mb-5">
+            <div class="flex items-center gap-2">
+              <span id="art-vol-badge" class="px-2.5 py-1 bg-seal/10 text-seal rounded-full font-semibold">第一卷：破妄卷</span>
+              <span id="art-id-badge" class="font-semibold">第 001 講</span>
+            </div>
+            <time id="art-release-date" class="text-tea/80">2026-10-08</time>
           </div>
-          <div class="flex items-center space-x-2">
-            <span id="art-release-date" class="text-tea/80">2026-10-08</span>
-            <span class="seal-stamp text-[10px]">已解鎖</span>
-          </div>
+
+          <h2 id="art-title" class="hero-title font-serif font-bold text-ink text-[clamp(1.6rem,4.2vw,2.5rem)] mb-8">
+            被槓桿撕裂的靈魂：在帳戶歸零的那一夜，照見的人性
+          </h2>
         </div>
 
-        <!-- 篇名 -->
-        <h2 id="art-title" class="text-2xl sm:text-3xl font-serif font-bold text-ink leading-snug mb-8 tracking-wide">
-          被槓桿撕裂的靈魂：在帳戶歸零的那一夜，照見的人性
-        </h2>
+        <figure class="px-4 sm:px-10 mb-10">
+          <div class="overflow-hidden rounded-2xl">
+            <img id="art-cover-img" src="images/001_cover.jpg" alt="宣紙水墨封面" width="1280" height="720" decoding="async" fetchpriority="high" class="cover">
+          </div>
+          <figcaption class="mt-3 text-center text-xs text-tea/80">宣紙水墨意象 · 台灣南投與中國雲南雙基地風土</figcaption>
+        </figure>
 
-        <!-- 專屬水墨宣紙封面圖 -->
-        <div class="mb-10 overflow-hidden rounded-lg border border-tea/20 shadow-sm bg-stone-100">
-          <img id="art-cover-img" src="images/001_cover.jpg" alt="封面配圖" class="w-full h-auto object-cover transform hover:scale-[1.01] transition duration-500">
-          <div class="p-2 text-center text-xs font-serif text-tea/70 bg-paper/80 border-t border-tea/10">
-            宣紙水墨意象 · 台灣南投與中國雲南雙基地風土
+        <div class="px-6 sm:px-14 pb-10 sm:pb-14">
+          <div id="art-body" class="prose-zh font-serif text-ink space-y-8 text-[17px] sm:text-[19px]">
+            <!-- 內容將由 JavaScript 動態載入 -->
+          </div>
+
+          <div class="mt-12 pt-6 border-t border-ink/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-tea">
+            <div class="flex items-center gap-2">
+              <span class="text-tea/70">發布日期</span>
+              <span id="art-colophon-date" class="font-medium text-ink">2026-10-07</span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <span class="text-tea/70">署名</span>
+              <span class="font-serif font-bold text-ink tracking-wider text-sm">大道至簡</span>
+              <span class="seal-stamp">簡家旗</span>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <div class="flex gap-2">
+              <button id="prev-btn" type="button" onclick="stepArticle(-1)" class="btn btn-ghost flex-1 sm:flex-none">‹ 上一講</button>
+              <button id="next-btn" type="button" onclick="stepArticle(1)" class="btn btn-ghost flex-1 sm:flex-none">下一講 ›</button>
+            </div>
+            <button type="button" onclick="openQuoteModal()" class="btn btn-primary">生成今日金句卡</button>
           </div>
         </div>
-
-        <!-- 核心文案內容渲染區 -->
-        <div id="art-body" class="font-serif leading-relaxed text-ink space-y-8 text-base sm:text-lg">
-          <!-- 內容將由 JavaScript 動態載入 -->
-        </div>
-
-        <!-- 文章底部落款：發布日期與作者署名 -->
-        <div class="mt-12 pt-6 border-t border-tea/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-serif text-tea">
-          <div class="flex items-center space-x-2">
-            <span class="text-tea/70">📅 發布日期：</span>
-            <span id="art-colophon-date" class="font-medium text-ink">2026-10-07</span>
-          </div>
-          <div class="flex items-center space-x-2.5">
-            <span class="text-tea/70">署名：</span>
-            <span class="font-serif font-bold text-ink tracking-wider text-sm">大道至簡</span>
-            <span class="seal-stamp text-xs">簡家旗</span>
-          </div>
-        </div>
-
-        <!-- 文章底部的互動按鈕：產生金句卡片 -->
-        <div class="mt-6 pt-6 border-t border-tea/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="text-xs text-tea font-serif">
-            大道至簡 · 台灣南投與中國雲南雙基地真實
-          </div>
-          <button onclick="openQuoteModal()" class="w-full sm:w-auto px-5 py-2.5 bg-seal text-paper text-xs font-serif rounded shadow hover:bg-seal/90 transition flex items-center justify-center space-x-2">
-            <span>🎴</span>
-            <span>生成今日宣紙金句卡</span>
-          </button>
-        </div>
-
       </article>
 
     </div>
   </main>
 
-  <!-- ==================== 四、 百八念珠全景卷軸（108 Beads Timeline） ==================== -->
-  <section id="beads-section" class="py-16 bg-[#F5EFE3] border-t border-tea/20">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      
-      <div class="text-center mb-10">
-        <span class="seal-stamp text-xs mb-2">宏大秩序 · 時間膠囊</span>
-        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-ink">
-          百八念珠 · 六卷次第全景
-        </h3>
-        <p class="text-xs sm:text-sm text-tea font-serif mt-2">
-          所有 108 篇已預先編譯入庫。即使作者電腦關閉，系統每日午夜根據時間自動點亮解鎖。
+  <!-- ==================== 四、 百八念珠目錄 ==================== -->
+  <section id="beads-section" class="py-16 sm:py-24 bg-[#F3ECDF]">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+
+      <div class="text-center mb-10 sm:mb-12">
+        <p class="eyebrow text-seal text-[13px] mb-3">宏大秩序 · 時間膠囊</p>
+        <h3 class="hero-title font-serif font-black text-ink text-[clamp(1.75rem,4.5vw,3rem)]">百八念珠 · 六卷次第</h3>
+        <p class="text-sm sm:text-base text-ink/60 mt-4 max-w-xl mx-auto balance">
+          108 篇已預先編譯入庫，系統每日午夜依時間自動點亮解鎖。
         </p>
       </div>
 
-      <!-- 六卷分類標籤 -->
-      <div class="flex flex-wrap justify-center gap-2 mb-8" id="volume-tabs">
-        <button onclick="filterVolume(0)" class="vol-tab active px-3 py-1.5 text-xs font-serif rounded border border-seal bg-seal text-white transition">
-          全部 (108)
-        </button>
-        <button onclick="filterVolume(1)" class="vol-tab px-3 py-1.5 text-xs font-serif rounded border border-tea/30 bg-paper text-ink hover:border-seal transition">
-          一 · 破妄卷 (1–18)
-        </button>
-        <button onclick="filterVolume(2)" class="vol-tab px-3 py-1.5 text-xs font-serif rounded border border-tea/30 bg-paper text-ink hover:border-seal transition">
-          二 · 真容卷 (19–36)
-        </button>
-        <button onclick="filterVolume(3)" class="vol-tab px-3 py-1.5 text-xs font-serif rounded border border-tea/30 bg-paper text-ink hover:border-seal transition">
-          三 · 節氣卷 (37–54)
-        </button>
-        <button onclick="filterVolume(4)" class="vol-tab px-3 py-1.5 text-xs font-serif rounded border border-tea/30 bg-paper text-ink hover:border-seal transition">
-          四 · 守御卷 (55–72)
-        </button>
-        <button onclick="filterVolume(5)" class="vol-tab px-3 py-1.5 text-xs font-serif rounded border border-tea/30 bg-paper text-ink hover:border-seal transition">
-          五 · 無我卷 (73–90)
-        </button>
-        <button onclick="filterVolume(6)" class="vol-tab px-3 py-1.5 text-xs font-serif rounded border border-tea/30 bg-paper text-ink hover:border-seal transition">
-          六 · 善活卷 (91–108)
-        </button>
+      <div class="scroll-x -mx-5 px-5 sm:mx-0 sm:px-0 mb-8 sm:flex sm:justify-center">
+        <div class="segmented" id="volume-tabs" role="tablist" aria-label="分卷篩選">
+          <button type="button" role="tab" aria-selected="true" onclick="filterVolume(0)" class="vol-tab">全部</button>
+          <button type="button" role="tab" aria-selected="false" onclick="filterVolume(1)" class="vol-tab">破妄卷</button>
+          <button type="button" role="tab" aria-selected="false" onclick="filterVolume(2)" class="vol-tab">真容卷</button>
+          <button type="button" role="tab" aria-selected="false" onclick="filterVolume(3)" class="vol-tab">節氣卷</button>
+          <button type="button" role="tab" aria-selected="false" onclick="filterVolume(4)" class="vol-tab">守御卷</button>
+          <button type="button" role="tab" aria-selected="false" onclick="filterVolume(5)" class="vol-tab">無我卷</button>
+          <button type="button" role="tab" aria-selected="false" onclick="filterVolume(6)" class="vol-tab">善活卷</button>
+        </div>
       </div>
+      <p id="vol-caption" class="text-center text-[13px] text-tea mb-8" aria-live="polite">全部 108 講</p>
 
-      <!-- 108 念珠卡片網格 -->
       <div id="beads-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- 由 JavaScript 動態渲染 108 篇念珠卡片 -->
+        <!-- 由 JavaScript 動態渲染 -->
       </div>
 
     </div>
   </section>
 
-  <!-- ==================== 五、 頁尾（Footer） ==================== -->
-  <footer class="border-t border-tea/20 bg-paper py-10 text-center font-serif text-xs text-tea">
-    <div class="max-w-2xl mx-auto px-4 space-y-3">
-      <div class="seal-stamp text-xs">大道至簡</div>
-      <p class="leading-relaxed">
+  <!-- ==================== 五、 頁尾 ==================== -->
+  <footer class="bg-paper py-12 text-center text-xs text-tea">
+    <div class="max-w-2xl mx-auto px-5 space-y-3">
+      <span class="seal-stamp">大道至簡</span>
+      <p class="leading-relaxed font-serif text-[13px]">
         立基於台灣南投山林與中國雲南安寧。<br>
         不造永久之物，設條件，自發運轉，完成即退場。
       </p>
-      <p class="text-ink/40 text-[10px]">
-        文章純屬虛構、若有雷同純屬巧合
-      </p>
+      <p class="text-ink/40 text-[11px]">文章純屬虛構、若有雷同純屬巧合</p>
     </div>
   </footer>
 
-  <!-- ==================== 六、 金句卡片彈窗（Modal） ==================== -->
-  <div id="quote-modal" class="fixed inset-0 bg-ink/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-paper rice-paper-border rounded-xl max-w-md w-full p-6 sm:p-8 text-center relative border border-tea/30">
-      <button onclick="closeQuoteModal()" class="absolute top-4 right-4 text-tea hover:text-seal text-lg">✕</button>
-      <div class="seal-stamp text-xs mb-4">大道至簡 · 每日金句</div>
-      <div id="modal-quote-text" class="font-serif text-lg text-ink leading-relaxed my-6 px-4 italic border-l-2 border-r-2 border-seal/30 py-2">
-        <!-- 金句內容 -->
-      </div>
-      <div class="text-xs font-serif text-tea mb-6">
+  <!-- ==================== 六、 金句卡片彈窗 ==================== -->
+  <div id="quote-modal" class="fixed inset-0 bg-ink/50 z-50 flex items-center justify-center p-4" style="-webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true" onclick="if(event.target===this)closeQuoteModal()">
+    <div class="sheet bg-paper rounded-[28px] max-w-md w-full p-7 sm:p-10 text-center relative shadow-2xl">
+      <button type="button" onclick="closeQuoteModal()" aria-label="關閉" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-ink/10 hover:bg-ink/20 text-ink/70 text-sm transition">✕</button>
+      <span id="modal-title" class="seal-stamp mb-5">大道至簡 · 每日金句</span>
+      <blockquote id="modal-quote-text" class="font-serif text-xl sm:text-2xl text-ink leading-relaxed my-6 balance"></blockquote>
+      <p class="text-[13px] text-tea mb-7">
         <span id="modal-quote-source">第一講 · 被槓桿撕裂的靈魂</span><br>
-        <span class="text-[10px] text-ink/50">台灣南投 · 中國雲南 雙基地真實</span>
-      </div>
-      <button onclick="closeQuoteModal()" class="px-6 py-2 bg-ink text-paper text-xs rounded hover:bg-seal transition font-serif">
-        收存清涼，回到生活
-      </button>
+        <span class="text-[11px] text-ink/50">台灣南投 · 中國雲南 雙基地真實</span>
+      </p>
+      <button type="button" onclick="closeQuoteModal()" class="btn btn-primary w-full">收存清涼，回到生活</button>
     </div>
   </div>
 
-  <!-- 引用外部文章數據與 Manifest -->
   <script src="manifest_data.js"></script>
   <script src="articles_data.js"></script>
   <script>
@@ -311,25 +335,28 @@
       return today >= article.releaseDate; // 到了發布日期自動解鎖
     }
 
+    const VOL_LABELS = ['全部 108 講', '第一卷 · 破妄卷（1–18）', '第二卷 · 真容卷（19–36）', '第三卷 · 節氣卷（37–54）', '第四卷 · 守御卷（55–72）', '第五卷 · 無我卷（73–90）', '第六卷 · 善活卷（91–108）'];
+
     function renderBeads() {
       const grid = document.getElementById('beads-grid');
       grid.innerHTML = '';
 
-      const filtered = selectedVolume === 0 
-        ? manifestData 
+      const filtered = selectedVolume === 0
+        ? manifestData
         : manifestData.filter(a => a.vol === selectedVolume);
 
       filtered.forEach(art => {
         const unlocked = isUnlocked(art);
-        const card = document.createElement('div');
-        
-        card.className = `p-4 rounded-lg border transition-all duration-200 flex flex-col justify-between ${
-          unlocked 
-            ? 'bg-paper border-tea/30 hover:border-seal cursor-pointer hover:shadow-md' 
-            : 'bg-[#F2ECE1] border-tea/15 opacity-60'
-        } ${art.id === currentArticleId ? 'ring-2 ring-seal bg-[#FAF4E8]' : ''}`;
+        const card = document.createElement(unlocked ? 'button' : 'div');
+        if (unlocked) card.type = 'button';
+
+        card.className = `bead card-surface rounded-2xl p-5 flex flex-col justify-between min-h-[132px] ${
+          unlocked ? 'is-open' : 'is-locked'
+        } ${art.id === currentArticleId ? 'is-current' : ''}`;
 
         if (unlocked) {
+          card.setAttribute('aria-label', `閱讀第 ${art.id} 講：${art.title}`);
+          if (art.id === currentArticleId) card.setAttribute('aria-current', 'true');
           card.onclick = () => {
             loadArticle(art.id);
             document.getElementById('article-stage').scrollIntoView({ behavior: 'smooth' });
@@ -339,19 +366,17 @@
         const idPad = String(art.id).padStart(3, '0');
         card.innerHTML = `
           <div>
-            <div class="flex items-center justify-between text-[11px] font-serif text-tea mb-1.5">
-              <span>第 ${idPad} 講 · ${art.volName.split('：')[1]}</span>
-              ${unlocked 
-                ? '<span class="text-seal font-semibold">● 已解鎖</span>' 
+            <div class="flex items-center justify-between text-xs text-tea mb-2">
+              <span class="font-semibold">第 ${idPad} 講 · ${art.volName.split('：')[1]}</span>
+              ${unlocked
+                ? '<span class="text-seal font-semibold">已解鎖</span>'
                 : `<span class="text-ink/40">${art.releaseDate} 解鎖</span>`}
             </div>
-            <h4 class="font-serif font-bold text-sm text-ink line-clamp-2 leading-snug">
-              ${art.title}
-            </h4>
+            <h4 class="font-serif font-bold text-[15px] ${unlocked ? 'text-ink' : 'text-ink/50'} line-clamp-3 leading-snug">${art.title}</h4>
           </div>
-          <div class="mt-3 pt-2 border-t border-tea/10 flex items-center justify-between text-[10px] font-serif">
+          <div class="mt-4 flex items-center justify-between text-xs">
             <span class="text-tea/80">${art.isInitialBatch ? '首發篇章' : '定時解鎖'}</span>
-            ${unlocked ? '<span class="text-seal hover:underline">點擊研讀 →</span>' : '<span class="text-ink/40">靜候天時</span>'}
+            ${unlocked ? '<span class="text-seal font-medium">閱讀 ›</span>' : '<span class="text-ink/40">靜候天時</span>'}
           </div>
         `;
 
@@ -362,13 +387,18 @@
     function filterVolume(vol) {
       selectedVolume = vol;
       document.querySelectorAll('.vol-tab').forEach((btn, idx) => {
-        if (idx === vol) {
-          btn.className = "vol-tab active px-3 py-1.5 text-xs font-serif rounded border border-seal bg-seal text-white transition";
-        } else {
-          btn.className = "vol-tab px-3 py-1.5 text-xs font-serif rounded border border-tea/30 bg-paper text-ink hover:border-seal transition";
-        }
+        btn.setAttribute('aria-selected', idx === vol ? 'true' : 'false');
       });
+      document.getElementById('vol-caption').innerText = VOL_LABELS[vol];
       renderBeads();
+    }
+
+    function stepArticle(delta) {
+      const ids = manifestData.filter(isUnlocked).map(a => a.id);
+      const i = ids.indexOf(currentArticleId) + delta;
+      if (i < 0 || i >= ids.length) return;
+      loadArticle(ids[i]);
+      document.getElementById('article-stage').scrollIntoView({ behavior: 'smooth' });
     }
 
     function loadArticle(id) {
@@ -381,16 +411,25 @@
       document.getElementById('art-release-date').innerText = art.releaseDate;
       document.getElementById('art-colophon-date').innerText = art.releaseDate;
       document.getElementById('art-title').innerText = art.title;
-      document.getElementById('art-cover-img').src = art.image;
+      const img = document.getElementById('art-cover-img');
+      img.src = art.image;
+      img.alt = `第 ${art.id} 講封面：${art.title}`;
+
+      const unlockedIds = manifestData.filter(isUnlocked).map(a => a.id);
+      const pos = unlockedIds.indexOf(id);
+      document.getElementById('prev-btn').disabled = pos <= 0;
+      document.getElementById('next-btn').disabled = pos < 0 || pos >= unlockedIds.length - 1;
+      document.querySelectorAll('#prev-btn, #next-btn').forEach(b => b.classList.toggle('opacity-40', b.disabled));
 
       // 載入文章內容
       const bodyEl = document.getElementById('art-body');
       if (typeof ARTICLES_DATA !== 'undefined' && ARTICLES_DATA[id]) {
         const fullContent = ARTICLES_DATA[id].content;
         bodyEl.innerHTML = parseMarkdownToHtml(fullContent);
+        bodyEl.classList.remove('fade-in'); void bodyEl.offsetWidth; bodyEl.classList.add('fade-in');
       } else {
         bodyEl.innerHTML = `
-          <div class="p-8 text-center border border-dashed border-tea/30 rounded-lg">
+          <div class="p-8 text-center bg-paper rounded-2xl">
             <p class="text-tea font-serif text-sm">【本篇文稿已預先入庫，解鎖條件：${art.releaseDate}】</p>
             <p class="text-ink/60 text-xs mt-2">即便主理人電腦未開啟，到了日期當日 00:00 自動對外發布展示。</p>
           </div>
@@ -408,32 +447,44 @@
       clean = clean.replace(/\n+---\n+\*\*發布日期\*\*：[^\n]+\s*\n+\*\*署名\*\*：[^\n]+/g, '');
       
       return clean
-        .replace(/### 【破妄鏡】/g, '<div class="my-6 p-5 bg-[#F4EDE0] border-l-4 border-seal rounded-r-lg"><h3 class="font-bold text-seal text-lg mb-2 font-serif flex items-center"><span>🪞 【破妄鏡】</span></h3><div class="text-ink/90 leading-relaxed font-serif">')
-        .replace(/### 【真實的人性故事】/g, '</div></div><div class="my-6 p-5 bg-paper border border-tea/20 rounded-lg shadow-sm"><h3 class="font-bold text-ink text-lg mb-3 font-serif flex items-center"><span class="text-tea mr-2">📜</span> 【真實的人性故事】</h3><div class="space-y-4 text-ink leading-relaxed font-serif">')
-        .replace(/### 【見真鏡】/g, '</div></div><div class="my-6 p-5 bg-[#F6F1E7] border-l-4 border-tea rounded-r-lg"><h3 class="font-bold text-tea text-lg mb-2 font-serif flex items-center"><span>☯️ 【見真鏡】</span></h3><div class="text-ink/90 leading-relaxed font-serif">')
-        .replace(/### 【AI 視角】/g, '</div></div><div class="my-6 p-5 bg-stone-50 border border-stone-300 rounded-lg"><h3 class="font-bold text-stone-700 text-lg mb-2 font-serif flex items-center"><span>⚡ 【AI 視角】</span></h3><div class="text-stone-800 leading-relaxed font-serif">')
-        .replace(/### 【生活行】/g, '</div></div><div class="my-6 p-5 bg-[#EEF2EB] border-l-4 border-moss rounded-r-lg"><h3 class="font-bold text-moss text-lg mb-2 font-serif flex items-center"><span>🍵 【生活行】</span></h3><div class="text-ink/90 leading-relaxed font-serif">')
+        .replace(/### 【破妄鏡】/g, '<div class="my-8 p-6 sm:p-7 bg-[#F4EDE0] rounded-2xl"><h3 class="text-seal text-sm eyebrow mb-3 font-sans">破妄鏡</h3><div class="text-ink/90 leading-[2] font-serif">')
+        .replace(/### 【真實的人性故事】/g, '</div></div><div class="my-8 p-6 sm:p-7 bg-[#FBF8F2] ring-1 ring-tea/15 rounded-2xl"><h3 class="text-tea text-sm eyebrow mb-3 font-sans">真實的人性故事</h3><div class="text-ink space-y-4 leading-[2] font-serif">')
+        .replace(/### 【見真鏡】/g, '</div></div><div class="my-8 p-6 sm:p-7 bg-[#F6F1E7] rounded-2xl"><h3 class="text-tea text-sm eyebrow mb-3 font-sans">見真鏡</h3><div class="text-ink/90 leading-[2] font-serif">')
+        .replace(/### 【AI 視角】/g, '</div></div><div class="my-8 p-6 sm:p-7 bg-stone-100 rounded-2xl"><h3 class="text-stone-600 text-sm eyebrow mb-3 font-sans">AI 視角</h3><div class="text-stone-800 leading-[2] font-serif">')
+        .replace(/### 【生活行】/g, '</div></div><div class="my-8 p-6 sm:p-7 bg-[#EEF2EB] rounded-2xl"><h3 class="text-moss text-sm eyebrow mb-3 font-sans">生活行</h3><div class="text-ink/90 leading-[2] font-serif">')
         .replace(/\*\（本文純屬虛構[^\*]*\）\*/g, '</div></div><div class="mt-8 text-center text-xs text-tea/60 italic font-serif">（本文純屬虛構、若有雷同純屬巧合。）</div>')
         .replace(/\*\*([^\*]+)\*\*/g, '<strong class="font-bold text-ink">$1</strong>')
         .replace(/\*([^\*]+)\*/g, '<em class="italic text-tea">$1</em>')
-        .replace(/\n\n/g, '<p class="my-3"></p>')
+        .replace(/\n\n/g, '<p class="my-4"></p>')
         .replace(/\n/g, '<br>');
     }
 
+    let lastFocus = null;
     function openQuoteModal() {
       const art = manifestData.find(a => a.id === currentArticleId);
-      const quote = (typeof ARTICLES_DATA !== 'undefined' && ARTICLES_DATA[currentArticleId]) 
-        ? ARTICLES_DATA[currentArticleId].quote 
+      const quote = (typeof ARTICLES_DATA !== 'undefined' && ARTICLES_DATA[currentArticleId])
+        ? ARTICLES_DATA[currentArticleId].quote
         : "在資本的驚濤駭浪裡，守住身心的清寧，是任何人都奪不走的無價資產。";
-      
+
       document.getElementById('modal-quote-text').innerText = `「${quote}」`;
       document.getElementById('modal-quote-source').innerText = `第 ${currentArticleId} 講 · ${art.title}`;
-      document.getElementById('quote-modal').classList.remove('hidden');
+      const m = document.getElementById('quote-modal');
+      lastFocus = document.activeElement;
+      m.classList.add('open');
+      m.setAttribute('aria-hidden', 'false');
+      m.querySelector('.btn-primary').focus();
     }
 
     function closeQuoteModal() {
-      document.getElementById('quote-modal').classList.add('hidden');
+      const m = document.getElementById('quote-modal');
+      m.classList.remove('open');
+      m.setAttribute('aria-hidden', 'true');
+      if (lastFocus) lastFocus.focus();
     }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeQuoteModal();
+    });
 
     window.onload = init;
   </script>
