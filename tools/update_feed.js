@@ -37,7 +37,7 @@ const rssContent = `<?xml version="1.0" encoding="UTF-8" ?>
   <channel>
     <title>大道至簡・金融一百零八講</title>
     <link>https://alexchiachi.github.io/dao-finance-108/</link>
-    <description>當金融遇見老莊、代碼與雙基地風土。前基金經理人的破妄與善活錄。</description>
+    <description>當金融遇見老莊、AI與雙基地風土。前基金經理人的破妄與善活錄。</description>
     <language>zh-TW</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     ${rssItems}
