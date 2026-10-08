@@ -169,20 +169,17 @@ const titles = [
   "終卷結語：大道至簡，在資本的大風大浪裡過清涼圓滿的一生"
 ];
 
-// Start base date: 2026-10-08
-const baseDate = new Date("2026-10-08T00:00:00+08:00");
+// 第 1–36 講為首發（2026-10-08 起已解鎖）；第 37 講起自 2026-10-09 起每天解鎖一篇
+const FIRST_DAILY_ID = 37;
+const FIRST_DAILY_DATE = Date.UTC(2026, 9, 9); // 以 UTC 計算日期，避免時區造成差一天
 
 const manifest = titles.map((title, idx) => {
   const id = idx + 1;
   const volObj = volumes.find(v => id >= v.range[0] && id <= v.range[1]);
-  
-  // Day 1 to 7 are unlocked today (2026-10-08)
-  // Day 8 onwards are unlocked on baseDate + (id - 7) days
-  let unlockDate = new Date(baseDate);
-  if (id > 7) {
-    unlockDate.setDate(unlockDate.getDate() + (id - 7));
-  }
-  const dateStr = unlockDate.toISOString().split('T')[0];
+
+  const dateStr = id < FIRST_DAILY_ID
+    ? "2026-10-08"
+    : new Date(FIRST_DAILY_DATE + (id - FIRST_DAILY_ID) * 86400000).toISOString().split('T')[0];
 
   return {
     id: id,
@@ -191,7 +188,7 @@ const manifest = titles.map((title, idx) => {
     volSubtitle: volObj.subtitle,
     title: title,
     releaseDate: dateStr,
-    isInitialBatch: id <= 7,
+    isInitialBatch: id < FIRST_DAILY_ID,
     image: `images/${String(id).padStart(3, '0')}_cover.jpg`
   };
 });
