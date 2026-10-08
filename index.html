@@ -101,6 +101,12 @@
     .vol-tab[aria-selected="true"] { background: #fff; color: #2A2520; box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 0 0 .5px rgba(0,0,0,.04); }
     .scroll-x { overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
     .scroll-x::-webkit-scrollbar { display: none; }
+    /* 邊緣淡出：提示分卷選單可橫向滑動（僅手機） */
+    @media (max-width: 639px) {
+      .fade-edges { --l: 0px; --r: 28px; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--l), #000 calc(100% - var(--r)), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 var(--l), #000 calc(100% - var(--r)), transparent 100%); }
+      .fade-edges.can-left { --l: 28px; }
+      .fade-edges.at-end { --r: 0px; }
+    }
 
     /* 念珠卡片 */
     .bead {
@@ -256,7 +262,7 @@
         </p>
       </div>
 
-      <div class="scroll-x -mx-5 px-5 sm:mx-0 sm:px-0 mb-8 sm:flex sm:justify-center">
+      <div id="tabs-scroll" class="scroll-x fade-edges -mx-5 px-5 sm:mx-0 sm:px-0 mb-6 sm:flex sm:justify-center">
         <div class="segmented" id="volume-tabs" role="tablist" aria-label="分卷篩選">
           <button type="button" role="tab" aria-selected="true" onclick="filterVolume(0)" class="vol-tab">全部</button>
           <button type="button" role="tab" aria-selected="false" onclick="filterVolume(1)" class="vol-tab">破妄卷</button>
@@ -267,7 +273,10 @@
           <button type="button" role="tab" aria-selected="false" onclick="filterVolume(6)" class="vol-tab">善活卷</button>
         </div>
       </div>
-      <p id="vol-caption" class="text-center text-[13px] text-soft mb-8" aria-live="polite">全部 108 講</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1 mb-8 text-[13px] text-soft" aria-live="polite">
+        <p id="vol-caption">全部 108 講</p>
+        <button id="lock-toggle" type="button" onclick="toggleLocked()" aria-pressed="false" class="link-arrow !text-[13px]"></button>
+      </div>
 
       <div id="beads-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <!-- 由 JavaScript 動態渲染 -->
@@ -308,6 +317,7 @@
     let manifestData = typeof MANIFEST_DATA !== 'undefined' ? MANIFEST_DATA : [];
     let currentArticleId = 0;
     let selectedVolume = 0;
+    let showLocked = false;
 
     // 時間膠囊錨點：以訪客真實時間判斷解鎖
     function getTodayString() {
@@ -328,6 +338,7 @@
       }
       
       loadArticle(latestUnlockedId());
+      updateTabFade();
     }
 
     // 預設開啟最新一講：優先取「已解鎖且文稿已入庫」者
@@ -344,15 +355,34 @@
       return today >= article.releaseDate; // 到了發布日期自動解鎖
     }
 
-    const VOL_LABELS = ['全部 108 講', '第一卷 · 破妄卷（1–18）', '第二卷 · 真容卷（19–36）', '第三卷 · 節氣卷（37–54）', '第四卷 · 守御卷（55–72）', '第五卷 · 無我卷（73–90）', '第六卷 · 善活卷（91–108）'];
+    const VOL_LABELS = ['全部', '第一卷 · 破妄卷（1–18）', '第二卷 · 真容卷（19–36）', '第三卷 · 節氣卷（37–54）', '第四卷 · 守御卷（55–72）', '第五卷 · 無我卷（73–90）', '第六卷 · 善活卷（91–108）'];
 
     function renderBeads() {
       const grid = document.getElementById('beads-grid');
       grid.innerHTML = '';
 
-      const filtered = selectedVolume === 0
+      const inVolume = selectedVolume === 0
         ? manifestData
         : manifestData.filter(a => a.vol === selectedVolume);
+      const lockedList = inVolume.filter(a => !isUnlocked(a));
+      const filtered = showLocked ? inVolume : inVolume.filter(isUnlocked);
+
+      // 統計與切換按鈕
+      const total = inVolume.length;
+      document.getElementById('vol-caption').innerText =
+        `${VOL_LABELS[selectedVolume]} · 已解鎖 ${total - lockedList.length} / ${total}`;
+      const tg = document.getElementById('lock-toggle');
+      tg.hidden = lockedList.length === 0;
+      tg.setAttribute('aria-pressed', String(showLocked));
+      tg.innerText = showLocked ? '收合未解鎖 ‹' : `顯示 ${lockedList.length} 講未解鎖 ›`;
+
+      if (filtered.length === 0) {
+        const next = lockedList.map(a => a.releaseDate).sort()[0];
+        grid.innerHTML = `<div class="col-span-full text-center py-14 text-soft text-sm">
+          <p class="font-serif text-lg text-ink mb-1">本卷尚待點亮</p>
+          <p>預計 ${next} 起陸續解鎖</p></div>`;
+        return;
+      }
 
       filtered.forEach(art => {
         const unlocked = isUnlocked(art);
@@ -398,9 +428,24 @@
       document.querySelectorAll('.vol-tab').forEach((btn, idx) => {
         btn.setAttribute('aria-selected', idx === vol ? 'true' : 'false');
       });
-      document.getElementById('vol-caption').innerText = VOL_LABELS[vol];
+      const tab = document.querySelectorAll('.vol-tab')[vol];
+      if (tab) tab.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
       renderBeads();
     }
+
+    function toggleLocked() {
+      showLocked = !showLocked;
+      renderBeads();
+    }
+
+    // 分卷選單的邊緣淡出狀態
+    function updateTabFade() {
+      const el = document.getElementById('tabs-scroll');
+      el.classList.toggle('can-left', el.scrollLeft > 4);
+      el.classList.toggle('at-end', el.scrollLeft + el.clientWidth >= el.scrollWidth - 4);
+    }
+    document.getElementById('tabs-scroll').addEventListener('scroll', updateTabFade, { passive: true });
+    window.addEventListener('resize', updateTabFade);
 
     function stepArticle(delta) {
       const ids = manifestData.filter(isUnlocked).map(a => a.id);
