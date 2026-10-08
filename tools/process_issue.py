@@ -103,10 +103,18 @@ def handle_article(title: str, body: str):
         # 取破妄鏡第一句或預設
         quote = "在資本的驚濤駭浪裡，守住身心的清寧，是任何人都奪不走的無價資產。"
 
-    # 構建 Markdown 內文（確保大道五鏡與虛構聲明）
+    release_date = art_meta["releaseDate"] if art_meta else "2026-10-08"
+    signature_footer = f"\n---\n\n**發布日期**：{release_date}  \n**署名**：大道至簡 簡家旗\n\n*（本文純屬虛構、若有雷同純屬巧合。）*"
+
+    # 構建 Markdown 內文（確保大道五鏡、署名與虛構聲明）
     has_five_mirrors = "【破妄鏡】" in body and "【生活行】" in body
     if has_five_mirrors:
         content_md = body.strip()
+        if "署名：大道至簡 簡家旗" not in content_md:
+            if "*（本文純屬虛構" in content_md:
+                content_md = re.sub(r"\n+---\n+\*\（本文純屬虛構[^\*]*\）\*", signature_footer, content_md)
+            else:
+                content_md += signature_footer
     else:
         # 自動包裝成五鏡框架
         content_md = f"""# 《大道至簡・金融一百零八講｜第{lecture_id}講》
@@ -138,10 +146,7 @@ def handle_article(title: str, body: str):
 
 ### 【生活行】
 知行合一。今天回到身體感知，深呼吸，喝一杯溫潤茶湯，感受脈搏與身心的踏實安頓。
-
----
-
-*（本文純屬虛構、若有雷同純屬巧合。）*
+{signature_footer}
 """
 
     # 更新 articles_data.js

@@ -167,8 +167,21 @@
           <!-- 內容將由 JavaScript 動態載入 -->
         </div>
 
+        <!-- 文章底部落款：發布日期與作者署名 -->
+        <div class="mt-12 pt-6 border-t border-tea/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-serif text-tea">
+          <div class="flex items-center space-x-2">
+            <span class="text-tea/70">📅 發布日期：</span>
+            <span id="art-colophon-date" class="font-medium text-ink">2026-10-07</span>
+          </div>
+          <div class="flex items-center space-x-2.5">
+            <span class="text-tea/70">署名：</span>
+            <span class="font-serif font-bold text-ink tracking-wider text-sm">大道至簡</span>
+            <span class="seal-stamp text-xs">簡家旗</span>
+          </div>
+        </div>
+
         <!-- 文章底部的互動按鈕：產生金句卡片 -->
-        <div class="mt-12 pt-8 border-t border-tea/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="mt-6 pt-6 border-t border-tea/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div class="text-xs text-tea font-serif">
             大道至簡 · 台灣南投與中國雲南雙基地真實
           </div>
@@ -366,6 +379,7 @@
       document.getElementById('art-vol-badge').innerText = art.volName;
       document.getElementById('art-id-badge').innerText = `第 ${String(art.id).padStart(3, '0')} 講`;
       document.getElementById('art-release-date').innerText = art.releaseDate;
+      document.getElementById('art-colophon-date').innerText = art.releaseDate;
       document.getElementById('art-title').innerText = art.title;
       document.getElementById('art-cover-img').src = art.image;
 
@@ -390,6 +404,8 @@
     function parseMarkdownToHtml(md) {
       // 剝除前兩行標題與封面圖（避免與舞台重複）
       let clean = md.replace(/^#\s+[^\n]+\n+##\s+[^\n]+\n+!\[[^\]]*\]\([^\)]*\)\n+/g, '');
+      // 剝除內文結尾落款（統一由下方專屬落款區塊高雅渲染）
+      clean = clean.replace(/\n+---\n+\*\*發布日期\*\*：[^\n]+\s*\n+\*\*署名\*\*：[^\n]+/g, '');
       
       return clean
         .replace(/### 【破妄鏡】/g, '<div class="my-6 p-5 bg-[#F4EDE0] border-l-4 border-seal rounded-r-lg"><h3 class="font-bold text-seal text-lg mb-2 font-serif flex items-center"><span>🪞 【破妄鏡】</span></h3><div class="text-ink/90 leading-relaxed font-serif">')
