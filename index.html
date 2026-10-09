@@ -424,7 +424,10 @@
       
       const routed = resolveRoute();
       document.getElementById('hero-unlocked').innerText = `已解鎖 ${manifestData.filter(isUnlocked).length} 講`;
-      loadArticle(routed || latestUnlockedId(), { history: (!location.hash || idFromHash()) ? 'replace' : undefined });
+      // 預設開啟最新一講，但不把講次寫進網址（否則重新整理／書籤會一直停在舊的一講）；
+      // 網址上指向未解鎖或不存在講次時，清掉這個無效的 #/NNN
+      loadArticle(routed || latestUnlockedId());
+      if (!routed && idFromHash()) history.replaceState(null, '', location.pathname + location.search);
       updateTabFade();
       if (routed) document.getElementById('article-stage').scrollIntoView();
     }
@@ -488,7 +491,9 @@
             <h4 class="font-serif font-bold text-[15px] text-ink line-clamp-3 leading-snug">${art.title}</h4>
           </div>
           <div class="mt-4 flex items-center justify-between text-xs">
-            <span class="text-soft">${art.isInitialBatch ? '首發篇章' : art.releaseDate}</span>
+            ${art.releaseDate === getTodayString() && !art.isInitialBatch
+              ? '<span class="text-seal font-semibold">● 今日新解鎖</span>'
+              : `<span class="text-soft">${art.isInitialBatch ? '首發篇章' : art.releaseDate}</span>`}
             <span class="text-seal font-medium">閱讀 ›</span>
           </div>
         `;

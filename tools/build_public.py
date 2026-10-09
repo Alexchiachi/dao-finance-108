@@ -11,6 +11,7 @@
 「已解鎖」與前端判斷一致：isInitialBatch 或 releaseDate <= 今天（UTC+8）。
 測試時可用環境變數 BUILD_DATE=YYYY-MM-DD 模擬日期。
 """
+import hashlib
 import json
 import os
 import re
@@ -76,6 +77,14 @@ def main():
 
     articles = read_js_object(ROOT / "articles_data.js", "ARTICLES_DATA")
     write_js(OUT / "articles_data.js", "ARTICLES_DATA", {k: v for k, v in articles.items() if int(k) in ids})
+
+    # 快取破壞：GitHub Pages 對靜態檔有約 10 分鐘快取，資料檔改名成帶內容雜湊的查詢字串，
+    # 讓每次部署後瀏覽器一定抓到新的 manifest / 文稿 / CSS
+    html = (OUT / "index.html").read_text(encoding="utf-8")
+    for rel in ("manifest_data.js", "articles_data.js", "assets/tailwind.css"):
+        digest = hashlib.sha1((OUT / rel).read_bytes()).hexdigest()[:10]
+        html = html.replace(f'"{rel}"', f'"{rel}?v={digest}"')
+    (OUT / "index.html").write_text(html, encoding="utf-8")
 
     (OUT / "images").mkdir()
     for img in (ROOT / "images").iterdir():
