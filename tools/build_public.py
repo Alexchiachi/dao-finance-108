@@ -4,8 +4,8 @@
 客戶端的日期檢查只能控制畫面；只要文稿還在公開檔案裡，任何人都能直接讀 articles_data.js
 或 /articles/*.md。因此部署前由本腳本過濾：
   - manifest.json / manifest_data.js：只留已解鎖講次
-  - articles_data.js：只留已解鎖講次的文稿
-  - images/：只留已解鎖講次的封面（加 og.jpg）
+  - content/NNN.json：已解鎖講次的文稿，每講一個小檔，頁面依需要才載入（不再出貨整包 articles_data.js）
+  - images/：只留已解鎖講次的封面 WebP（缺 WebP 時才帶 jpg；另有 og.jpg）
   - 不發布 articles/（Markdown 原稿）、tools/、.github/、node_modules 等
 
 「已解鎖」與前端判斷一致：isInitialBatch 或 releaseDate <= 今天（UTC+8）。
@@ -72,16 +72,26 @@ def main():
     for name in TOP_LEVEL_DIRS:
         shutil.copytree(ROOT / name, OUT / name)
 
+    # 每講一個小檔 content/NNN.json（只含 id/quote/content），頁面讀到哪一講才下載；
+    # 內容雜湊 ch 寫進 manifest，檔案沒變時瀏覽器可沿用快取
+    articles = read_js_object(ROOT / "articles_data.js", "ARTICLES_DATA")
+    (OUT / "content").mkdir()
+    for item in unlocked:
+        art = articles.get(str(item["id"]))
+        if not art:
+            continue
+        payload = json.dumps({"id": art["id"], "quote": art["quote"], "content": art["content"]}, ensure_ascii=False, separators=(",", ":"))
+        (OUT / "content" / f"{item['id']:03d}.json").write_text(payload, encoding="utf-8")
+        item["ch"] = hashlib.sha1(payload.encode("utf-8")).hexdigest()[:10]
+
     (OUT / "manifest.json").write_text(json.dumps(unlocked, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     write_js(OUT / "manifest_data.js", "MANIFEST_DATA", unlocked)
-
-    articles = read_js_object(ROOT / "articles_data.js", "ARTICLES_DATA")
-    write_js(OUT / "articles_data.js", "ARTICLES_DATA", {k: v for k, v in articles.items() if int(k) in ids})
 
     # 快取破壞：GitHub Pages 對靜態檔有約 10 分鐘快取，資料檔改名成帶內容雜湊的查詢字串，
     # 讓每次部署後瀏覽器一定抓到新的 manifest / 文稿 / CSS
     html = (OUT / "index.html").read_text(encoding="utf-8")
-    for rel in ("manifest_data.js", "articles_data.js", "assets/tailwind.css"):
+    html = html.replace('  <script src="articles_data.js"></script>\n', "", 1)  # 正式站改為依需要載入 content/*.json
+    for rel in ("manifest_data.js", "assets/tailwind.css"):
         digest = hashlib.sha1((OUT / rel).read_bytes()).hexdigest()[:10]
         html = html.replace(f'"{rel}"', f'"{rel}?v={digest}"')
     (OUT / "index.html").write_text(html, encoding="utf-8")
@@ -89,7 +99,12 @@ def main():
     (OUT / "images").mkdir()
     for img in (ROOT / "images").iterdir():
         m = re.match(r"(\d{3})_cover\.", img.name)
-        if (m and int(m.group(1)) in ids) or img.name == "og.jpg":
+        if img.name == "og.jpg":
+            shutil.copy2(img, OUT / "images" / img.name)
+        elif m and int(m.group(1)) in ids:
+            # 有 WebP 時不再打包原始 jpg（頁面只載入 .webp；jpg 僅在缺 WebP 時當備援）
+            if img.suffix == ".jpg" and img.with_suffix(".webp").exists():
+                continue
             shutil.copy2(img, OUT / "images" / img.name)
 
     print(f"[build_public] {today}: 發布 {len(ids)} / {len(manifest)} 講 -> {OUT}")

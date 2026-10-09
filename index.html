@@ -26,7 +26,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 
   <!-- Tailwind（預先編譯，原始碼見 tailwind.config.js；重建指令：npm run build:css） -->
   <link rel="stylesheet" href="assets/tailwind.css">
@@ -426,15 +426,15 @@
       document.getElementById('hero-unlocked').innerText = `已解鎖 ${manifestData.filter(isUnlocked).length} 講`;
       // 預設開啟最新一講，但不把講次寫進網址（否則重新整理／書籤會一直停在舊的一講）；
       // 網址上指向未解鎖或不存在講次時，清掉這個無效的 #/NNN
-      loadArticle(routed || latestUnlockedId());
+      const first = loadArticle(routed || latestUnlockedId());
       if (!routed && idFromHash()) history.replaceState(null, '', location.pathname + location.search);
       updateTabFade();
-      if (routed) document.getElementById('article-stage').scrollIntoView();
+      if (routed) first.then(() => document.getElementById('article-stage').scrollIntoView());
     }
 
     // 預設開啟最新一講：優先取「已解鎖且文稿已入庫」者
     function latestUnlockedId() {
-      const hasBody = a => typeof ARTICLES_DATA !== 'undefined' && ARTICLES_DATA[a.id];
+      const hasBody = a => typeof ARTICLES_DATA === 'undefined' || ARTICLES_DATA[a.id];
       const open = manifestData.filter(isUnlocked);
       const pick = open.filter(hasBody).pop() || open.pop() || manifestData[0];
       return pick ? pick.id : 1;
@@ -528,6 +528,29 @@
       document.getElementById('article-stage').scrollIntoView({ behavior: 'smooth' });
     }
 
+    // ---------- 文章內容：依需要載入（正式站每講一個小檔 content/NNN.json；本機開發則用 articles_data.js） ----------
+    const contentCache = new Map();
+    function getArticle(art) {
+      const id = art.id;
+      if (typeof ARTICLES_DATA !== 'undefined' && ARTICLES_DATA[id]) return Promise.resolve(ARTICLES_DATA[id]);
+      if (!contentCache.has(id)) {
+        const url = `content/${String(id).padStart(3, '0')}.json${art.ch ? '?v=' + art.ch : ''}`;
+        contentCache.set(id, fetch(url).then(r => {
+          if (!r.ok) throw new Error(r.status);
+          return r.json();
+        }).catch(e => { contentCache.delete(id); throw e; }));
+      }
+      return contentCache.get(id);
+    }
+    // 閒置時預先抓下一講，按「下一講」時幾乎瞬間顯示
+    function prefetchNext(id) {
+      const ids = manifestData.filter(isUnlocked).map(a => a.id);
+      const next = manifestData.find(a => a.id === ids[ids.indexOf(id) + 1]);
+      if (!next) return;
+      const run = () => getArticle(next).catch(() => {});
+      'requestIdleCallback' in window ? requestIdleCallback(run, { timeout: 3000 }) : setTimeout(run, 800);
+    }
+
     // ---- 路由：#/007 對應第 007 講，可分享、可用上一頁
     const SITE_TITLE = '大道至簡・金融一百零八講';
     const articleHash = id => `#/${String(id).padStart(3, '0')}`;
@@ -590,22 +613,29 @@
       document.getElementById('next-btn').disabled = pos < 0 || pos >= unlockedIds.length - 1;
       document.querySelectorAll('#prev-btn, #next-btn').forEach(b => b.classList.toggle('opacity-40', b.disabled));
 
-      // 載入文章內容
+      // 載入文章內容（先顯示骨架，內容到了再換上；切換太快時只認最後一次）
       const bodyEl = document.getElementById('art-body');
-      if (typeof ARTICLES_DATA !== 'undefined' && ARTICLES_DATA[id]) {
-        const fullContent = ARTICLES_DATA[id].content;
-        bodyEl.innerHTML = parseMarkdownToHtml(fullContent);
+      bodyEl.innerHTML = '<div class="space-y-4 animate-pulse" aria-hidden="true"><div class="h-5 rounded bg-tea/10 w-11/12"></div><div class="h-5 rounded bg-tea/10 w-full"></div><div class="h-5 rounded bg-tea/10 w-4/5"></div><div class="h-5 rounded bg-tea/10 w-10/12"></div></div>';
+      bodyEl.setAttribute('aria-busy', 'true');
+      const done = getArticle(art).then(data => {
+        if (currentArticleId !== id) return;
+        bodyEl.innerHTML = parseMarkdownToHtml(data.content);
         bodyEl.classList.remove('fade-in'); void bodyEl.offsetWidth; bodyEl.classList.add('fade-in');
-      } else {
+        prefetchNext(id);
+      }).catch(() => {
+        if (currentArticleId !== id) return;
         bodyEl.innerHTML = `
           <div class="p-8 text-center bg-paper rounded-2xl">
-            <p class="text-soft font-serif text-sm">本講文稿整理中，稍後補上。</p>
+            <p class="text-soft font-serif text-sm">本講文稿載入失敗或整理中，請稍後重新整理。</p>
           </div>
         `;
-      }
+      }).finally(() => {
+        if (currentArticleId === id) { bodyEl.removeAttribute('aria-busy'); queueProgress(); }
+      });
 
       renderBeads();
       queueProgress();
+      return done;
     }
 
     // 極簡 Markdown 轉 HTML 渲染器
@@ -737,8 +767,7 @@
 
     async function renderQuoteCard() {
       const art = manifestData.find(a => a.id === currentArticleId);
-      const quote = (typeof ARTICLES_DATA !== 'undefined' && ARTICLES_DATA[currentArticleId])
-        ? ARTICLES_DATA[currentArticleId].quote : DEFAULT_QUOTE;
+      const quote = await getArticle(art).then(d => d.quote).catch(() => DEFAULT_QUOTE) || DEFAULT_QUOTE;
       const canvas = document.getElementById('quote-canvas');
       canvas.setAttribute('aria-label', `金句圖卡：${quote}`);
       try { await Promise.all(['700', '900', '500', '400'].map(w => document.fonts.load(`${w} 40px "Noto Serif TC"`, quote + art.title))); } catch (e) {}
