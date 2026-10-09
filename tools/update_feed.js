@@ -25,7 +25,7 @@ unlockedArticles.forEach(art => {
   rssItems += `
     <item>
       <title><![CDATA[第 ${String(art.id).padStart(3, '0')} 講｜${art.title}]]></title>
-      <link>https://alexchiachi.github.io/dao-finance-108/#/${String(art.id).padStart(3, '0')}</link>
+      <link>https://alexchiachi.github.io/dao-finance-108/a/${String(art.id).padStart(3, '0')}/</link>
       <guid>https://alexchiachi.github.io/dao-finance-108/#article-${art.id}</guid>
       <pubDate>${pubDate}</pubDate>
       <description><![CDATA[${art.volName} · 台灣南投與中國雲南雙基地風土 · 大道至簡金融一百零八講]]></description>
@@ -60,7 +60,7 @@ let urlEntries = `
 unlockedArticles.forEach(art => {
   urlEntries += `
   <url>
-    <loc>https://alexchiachi.github.io/dao-finance-108/#/${String(art.id).padStart(3, '0')}</loc>
+    <loc>https://alexchiachi.github.io/dao-finance-108/a/${String(art.id).padStart(3, '0')}/</loc>
     <lastmod>${art.releaseDate}</lastmod>
     <changefreq>never</changefreq>
     <priority>0.8</priority>

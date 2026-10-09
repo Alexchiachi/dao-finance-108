@@ -66,3 +66,4 @@
 - **文章依需要載入**：正式站不再載入整包 `articles_data.js`，而是每講一個 `content/NNN.json`（建置時產生），打開哪一講才下載，並在閒置時預抓下一講。本機直接開 `index.html` 仍用 `articles_data.js`，不需任何額外步驟。
 - **部署包瘦身**：有 WebP 的封面不再打包原始 jpg（部署包約 15MB）。
 - **目錄**：預設每次顯示 12 講（「全部」由新到舊、各卷由小到大），可「顯示更多」；有搜尋框（標題或講次數字）；會記住使用者上次主動讀的講次並顯示「繼續閱讀」。
+- **每講獨立靜態頁**：部署時 `tools/build_pages.js` 為每個已解鎖講次產生 `a/NNN/index.html`（正文預先渲染、各自的標題／描述／分享圖／結構化資料與 canonical），並預先渲染首頁的最新一講、產生 `404.html`。網址格式 `…/a/009/`；舊的 `#/009`、`#article-9` 連結會自動導向。`sitemap.xml` 與 RSS 都改用這些網址。本機直接開 `index.html` 仍走 `#/NNN`，不需要任何額外步驟。建置順序：`schedule.py --write` → `update_feed.js` → `build_public.py` → `build_pages.js`。

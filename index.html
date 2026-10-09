@@ -6,6 +6,7 @@
   <title>大道至簡・金融一百零八講｜前基金經理人的破妄與善活錄</title>
   <meta name="description" content="當金融遇見老莊、AI與雙基地風土。以冷酷專業刺破金融虛妄，以人性故事看見黑暗與微光，以老莊耗散回歸第一性原理，以矽基理性觀照碳基生命，以南投與雲南雙基地真實風土安頓身心。">
   
+  <meta name="site-base" content="./">
   <meta name="theme-color" content="#FAF6EF" id="theme-color">
   <script>
     // 在繪製前套用已儲存的主題，避免閃白
@@ -186,7 +187,7 @@
 
     /* 念珠卡片 */
     .bead {
-      text-align: left; width: 100%; border: 0; font: inherit; color: inherit;
+      text-decoration: none; text-align: left; width: 100%; border: 0; font: inherit; color: inherit;
       transition: transform .4s var(--spring), box-shadow .4s var(--spring);
     }
     .bead.is-open { cursor: pointer; }
@@ -295,9 +296,7 @@
             <time id="art-release-date" class="text-soft">2026-10-08</time>
           </div>
 
-          <h2 id="art-title" class="font-serif text-ink mb-9">
-            被槓桿撕裂的靈魂：在帳戶歸零的那一夜，照見的人性
-          </h2>
+          <h2 id="art-title" class="font-serif text-ink mb-9"><!--T--><span class="title-main">被槓桿撕裂的靈魂</span><!--/T--></h2>
         </div>
 
         <figure class="px-4 sm:px-10 mb-10">
@@ -315,9 +314,7 @@
               <button type="button" class="fs-btn text-[19px]" data-fs="1.2" aria-pressed="false" aria-label="文字大">字</button>
             </div>
           </div>
-          <div id="art-body" class="prose-zh font-serif text-ink space-y-8">
-            <!-- 內容將由 JavaScript 動態載入 -->
-          </div>
+          <div id="art-body" class="prose-zh font-serif text-ink space-y-8"><!--B--><!-- 內容由 JavaScript 動態載入（正式站的 a/NNN/ 頁面已預先渲染） --><!--/B--></div>
 
           <div class="mt-12 pt-6 border-t border-ink/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-soft">
             <div class="flex items-center gap-2">
@@ -412,6 +409,7 @@
     </div>
   </div>
 
+  <script src="assets/render.js"></script>
   <script src="manifest_data.js"></script>
   <script src="articles_data.js"></script>
   <script>
@@ -430,7 +428,7 @@
     async function init() {
       if (manifestData.length === 0) {
         try {
-          const res = await fetch('manifest.json');
+          const res = await fetch(assetUrl('manifest.json'));
           manifestData = await res.json();
         } catch (e) {
           console.warn("無法取得遠端 manifest.json，使用本地回退", e);
@@ -441,8 +439,9 @@
       document.getElementById('hero-unlocked').innerText = `已解鎖 ${manifestData.filter(isUnlocked).length} 講`;
       // 預設開啟最新一講，但不把講次寫進網址（否則重新整理／書籤會一直停在舊的一講）；
       // 網址上指向未解鎖或不存在講次時，清掉這個無效的 #/NNN
-      const first = loadArticle(routed || latestUnlockedId(), { remember: !!routed });
-      if (!routed && idFromHash()) history.replaceState(null, '', location.pathname + location.search);
+      // 舊版 #/NNN 連結在正式站改寫成真實網址 a/NNN/
+      const first = loadArticle(routed || latestUnlockedId(), { remember: !!routed, history: (SITE_STATIC && routed && !idFromPath()) ? 'replace' : undefined });
+      if (!routed && idFromLocation()) history.replaceState(null, '', SITE_STATIC ? SITE_ROOT : location.pathname + location.search);
       updateTabFade();
       if (routed) first.then(() => document.getElementById('article-stage').scrollIntoView());
     }
@@ -503,16 +502,18 @@
       const shown = list.slice(0, visibleCount);
       const frag = document.createDocumentFragment();
       shown.forEach(art => {
-        const card = document.createElement('button');
-        card.type = 'button';
+        const card = document.createElement('a');
+        card.href = articleHref(art.id);
         card.className = `bead card-surface is-open rounded-2xl p-5 flex flex-col justify-between min-h-[132px] ${
           art.id === currentArticleId ? 'is-current' : ''}`;
         card.setAttribute('aria-label', `閱讀第 ${art.id} 講：${art.title}`);
         if (art.id === currentArticleId) card.setAttribute('aria-current', 'true');
-        card.onclick = () => {
+        card.addEventListener('click', e => {
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;   // 新分頁開啟等操作交給瀏覽器
+          e.preventDefault();
           loadArticle(art.id, { history: 'push' });
           document.getElementById('article-stage').scrollIntoView({ behavior: 'smooth' });
-        };
+        });
 
         const idPad = String(art.id).padStart(3, '0');
         card.innerHTML = `
@@ -540,10 +541,10 @@
     }
 
     document.getElementById('load-more').addEventListener('click', () => {
-      const first = document.querySelectorAll('#beads-grid > button').length; // 新增的第一張卡片，供鍵盤焦點使用
+      const first = document.querySelectorAll('#beads-grid > a').length; // 新增的第一張卡片，供鍵盤焦點使用
       visibleCount += PAGE_SIZE;
       renderBeads();
-      const cards = document.querySelectorAll('#beads-grid > button');
+      const cards = document.querySelectorAll('#beads-grid > a');
       if (cards[first]) cards[first].focus({ preventScroll: true });
     });
 
@@ -610,7 +611,7 @@
       const id = art.id;
       if (typeof ARTICLES_DATA !== 'undefined' && ARTICLES_DATA[id]) return Promise.resolve(ARTICLES_DATA[id]);
       if (!contentCache.has(id)) {
-        const url = `content/${String(id).padStart(3, '0')}.json${art.ch ? '?v=' + art.ch : ''}`;
+        const url = assetUrl(`content/${pad3(id)}.json${art.ch ? '?v=' + art.ch : ''}`);
         contentCache.set(id, fetch(url).then(r => {
           if (!r.ok) throw new Error(r.status);
           return r.json();
@@ -627,49 +628,47 @@
       'requestIdleCallback' in window ? requestIdleCallback(run, { timeout: 3000 }) : setTimeout(run, 800);
     }
 
-    // ---- 路由：#/007 對應第 007 講，可分享、可用上一頁
+    // ---- 路由
+    // 正式站（SITE_STATIC）：每講一個真實網址 /a/007/（建置時預先渲染，可被搜尋引擎收錄與分享）；
+    // 本機開發（沒有 a/ 頁面）：退回 #/007。舊連結 #/007、#article-7 兩種模式都相容。
     const SITE_TITLE = '大道至簡・金融一百零八講';
-    const articleHash = id => `#/${String(id).padStart(3, '0')}`;
+    const SITE_STATIC = !!window.SITE_STATIC;
+    const SITE_ROOT = new URL(document.querySelector('meta[name="site-base"]').content, location.href).pathname;
+    const assetUrl = p => SITE_ROOT + p;
+    const pad3 = id => String(id).padStart(3, '0');
+    const articleHash = id => `#/${pad3(id)}`;
+    const articlePath = id => `${SITE_ROOT}a/${pad3(id)}/`;
+    const articleHref = id => SITE_STATIC ? articlePath(id) : articleHash(id);
     function idFromHash() {
       const m = location.hash.match(/^#(?:\/|article-)(\d{1,3})$/); // 相容舊版 #article-N 連結
       return m ? parseInt(m[1], 10) : null;
     }
+    function idFromPath() {
+      const m = SITE_STATIC && location.pathname.match(/\/a\/(\d{3})\/?$/);
+      return m ? parseInt(m[1], 10) : null;
+    }
+    const idFromLocation = () => idFromPath() || idFromHash();
+    // 目前網址是否已是該講的「標準網址」（靜態模式看路徑，開發模式看 hash）
+    const isCanonicalRoute = id => (SITE_STATIC ? idFromPath() : idFromHash()) === id;
     function resolveRoute() {
-      const id = idFromHash();
+      const id = idFromLocation();
       const art = id && manifestData.find(a => a.id === id);
       return art && isUnlocked(art) ? id : null;
     }
 
-    // 標題排版：「主標：副標」→ 主標一行大字；副標依「，、」逐句換行並去掉標點
-    function renderTitle(el, title) {
-      const i = title.indexOf('：');
-      const main = i > 0 ? title.slice(0, i) : title;
-      const sub = i > 0 ? title.slice(i + 1) : '';
-      el.textContent = '';
-      const m = document.createElement('span');
-      m.className = 'title-main'; m.textContent = main;
-      el.appendChild(m);
-      const lines = sub.split(/[，、]/).map(t => t.trim()).filter(Boolean);
-      if (lines.length) {
-        const wrap = document.createElement('span');
-        wrap.className = 'title-sub';
-        lines.forEach(t => {
-          const l = document.createElement('span');
-          l.className = 'title-line'; l.textContent = t;
-          wrap.appendChild(l);
-        });
-        el.appendChild(wrap);
-      }
-    }
+    // 標題排版與 Markdown 轉換由 assets/render.js（與建置時預先渲染共用）提供
+    const renderTitle = (el, title) => { el.innerHTML = DaoRender.titleHtml(title); };
+    const parseMarkdownToHtml = DaoRender.parseMarkdown;
 
+    let prerenderUsed = false;
     function loadArticle(id, { history: mode, remember } = {}) {
       const art = manifestData.find(a => a.id === id);
       if (!art || !isUnlocked(art)) return;   // 未解鎖的講次一律不開啟
       currentArticleId = id;
       if (mode === 'push' || remember) saveLastRead(id);   // 只記主動選的講次，預設開最新一講不算
 
-      if (mode && idFromHash() !== id) {
-        history[mode === 'replace' ? 'replaceState' : 'pushState'](null, '', articleHash(id));
+      if (mode && !isCanonicalRoute(id)) {
+        history[mode === 'replace' ? 'replaceState' : 'pushState'](null, '', articleHref(id));
       }
       document.title = `第 ${String(id).padStart(3, '0')} 講｜${art.title}｜${SITE_TITLE}`;
 
@@ -680,8 +679,8 @@
       renderTitle(document.getElementById('art-title'), art.title);
       const img = document.getElementById('art-cover-img');
       // 優先載入壓縮後的 .webp；若尚未產生則回退原 jpg
-      img.onerror = () => { img.onerror = null; img.src = art.image; };
-      img.src = art.image.replace(/\.jpe?g$/i, '.webp');
+      img.onerror = () => { img.onerror = null; img.src = assetUrl(art.image); };
+      img.src = assetUrl(art.image.replace(/\.jpe?g$/i, '.webp'));
       img.alt = `第 ${art.id} 講封面：${art.title}`;
 
       const unlockedIds = manifestData.filter(isUnlocked).map(a => a.id);
@@ -690,51 +689,38 @@
       document.getElementById('next-btn').disabled = pos < 0 || pos >= unlockedIds.length - 1;
       document.querySelectorAll('#prev-btn, #next-btn').forEach(b => b.classList.toggle('opacity-40', b.disabled));
 
-      // 載入文章內容（先顯示骨架，內容到了再換上；切換太快時只認最後一次）
+      // 載入文章內容（先顯示骨架，內容到了再換上；切換太快時只認最後一次）。
+      // 靜態頁（a/NNN/）第一次載入時正文已預先渲染在 HTML 裡，直接沿用、不再下載。
       const bodyEl = document.getElementById('art-body');
-      bodyEl.innerHTML = '<div class="space-y-4 animate-pulse" aria-hidden="true"><div class="h-5 rounded bg-tea/10 w-11/12"></div><div class="h-5 rounded bg-tea/10 w-full"></div><div class="h-5 rounded bg-tea/10 w-4/5"></div><div class="h-5 rounded bg-tea/10 w-10/12"></div></div>';
-      bodyEl.setAttribute('aria-busy', 'true');
-      const done = getArticle(art).then(data => {
-        if (currentArticleId !== id) return;
-        bodyEl.innerHTML = parseMarkdownToHtml(data.content);
-        bodyEl.classList.remove('fade-in'); void bodyEl.offsetWidth; bodyEl.classList.add('fade-in');
+      let done;
+      if (window.PRERENDERED_ID === id && !prerenderUsed) {
+        prerenderUsed = true;
+        bodyEl.removeAttribute('aria-busy');
         prefetchNext(id);
-      }).catch(() => {
-        if (currentArticleId !== id) return;
-        bodyEl.innerHTML = `
-          <div class="p-8 text-center bg-paper rounded-2xl">
-            <p class="text-soft font-serif text-sm">本講文稿載入失敗或整理中，請稍後重新整理。</p>
-          </div>
-        `;
-      }).finally(() => {
-        if (currentArticleId === id) { bodyEl.removeAttribute('aria-busy'); queueProgress(); }
-      });
+        done = Promise.resolve();
+      } else {
+        bodyEl.innerHTML = '<div class="space-y-4 animate-pulse" aria-hidden="true"><div class="h-5 rounded bg-tea/10 w-11/12"></div><div class="h-5 rounded bg-tea/10 w-full"></div><div class="h-5 rounded bg-tea/10 w-4/5"></div><div class="h-5 rounded bg-tea/10 w-10/12"></div></div>';
+        bodyEl.setAttribute('aria-busy', 'true');
+        done = getArticle(art).then(data => {
+          if (currentArticleId !== id) return;
+          bodyEl.innerHTML = parseMarkdownToHtml(data.content);
+          bodyEl.classList.remove('fade-in'); void bodyEl.offsetWidth; bodyEl.classList.add('fade-in');
+          prefetchNext(id);
+        }).catch(() => {
+          if (currentArticleId !== id) return;
+          bodyEl.innerHTML = `
+            <div class="p-8 text-center bg-paper rounded-2xl">
+              <p class="text-soft font-serif text-sm">本講文稿載入失敗或整理中，請稍後重新整理。</p>
+            </div>
+          `;
+        }).finally(() => {
+          if (currentArticleId === id) { bodyEl.removeAttribute('aria-busy'); queueProgress(); }
+        });
+      }
 
       renderBeads();
       queueProgress();
       return done;
-    }
-
-    // 極簡 Markdown 轉 HTML 渲染器
-    function parseMarkdownToHtml(md) {
-      // 剝除前兩行標題與封面圖（避免與舞台重複）
-      let clean = md.replace(/^#\s+[^\n]+\n+##\s+[^\n]+\n+!\[[^\]]*\]\([^\)]*\)\n+/g, '');
-      // 剝除內文結尾落款（統一由下方專屬落款區塊高雅渲染）
-      clean = clean.replace(/\n+---\n+\*\*發布日期\*\*：[^\n]+\s*\n+\*\*署名\*\*：[^\n]+/g, '');
-      
-      clean = clean.replace(/^[ \t]*-{3,}[ \t]*$/gm, '').replace(/\n{3,}/g, '\n\n');
-
-      return clean
-        .replace(/### 【破妄鏡】/g, '<div class="my-8 p-6 sm:p-7 bg-wash1 rounded-2xl"><h3 class="text-seal text-sm eyebrow mb-3 font-sans">破妄鏡</h3><div class="text-ink/90 leading-[2] font-serif">')
-        .replace(/### 【真實的人性故事】/g, '</div></div><div class="my-8 p-6 sm:p-7 bg-wash2 ring-1 ring-tea/15 rounded-2xl"><h3 class="text-soft text-sm eyebrow mb-3 font-sans">真實的人性故事</h3><div class="text-ink space-y-4 leading-[2] font-serif">')
-        .replace(/### 【見真鏡】/g, '</div></div><div class="my-8 p-6 sm:p-7 bg-wash3 rounded-2xl"><h3 class="text-soft text-sm eyebrow mb-3 font-sans">見真鏡</h3><div class="text-ink/90 leading-[2] font-serif">')
-        .replace(/### 【AI 視角】/g, '</div></div><div class="my-8 p-6 sm:p-7 bg-wash4 rounded-2xl"><h3 class="text-soft text-sm eyebrow mb-3 font-sans">AI 視角</h3><div class="text-ink leading-[2] font-serif">')
-        .replace(/### 【生活行】/g, '</div></div><div class="my-8 p-6 sm:p-7 bg-wash5 rounded-2xl"><h3 class="text-moss text-sm eyebrow mb-3 font-sans">生活行</h3><div class="text-ink/90 leading-[2] font-serif">')
-        .replace(/\*\（本文純屬虛構[^\*]*\）\*/g, '</div></div><div class="mt-8 text-center text-xs text-soft italic font-serif">（本文純屬虛構、若有雷同純屬巧合。）</div>')
-        .replace(/\*\*([^\*]+)\*\*/g, '<strong class="font-bold text-ink">$1</strong>')
-        .replace(/\*([^\*]+)\*/g, '<em class="italic text-soft">$1</em>')
-        .replace(/\n\n/g, '<p class="my-4"></p>')
-        .replace(/\n/g, '<br>');
     }
 
     let lastFocus = null;
@@ -838,7 +824,7 @@
         const img = new Image();
         img.onload = () => resolve(img);
         img.onerror = () => resolve(null);
-        img.src = art.image.replace(/\.jpe?g$/i, '.webp');
+        img.src = assetUrl(art.image.replace(/\.jpe?g$/i, '.webp'));
       });
     }
 
@@ -964,10 +950,12 @@
     window.addEventListener('scroll', queueProgress, { passive: true });
     window.addEventListener('resize', queueProgress);
 
-    // 上一頁／下一頁：只處理 #/NNN；其他錨點（#beads-section 等）交給瀏覽器
+    // 上一頁／下一頁：依網址切換講次；退回沒有講次的網址（首頁）時顯示最新一講。
+    // 其他錨點（#beads-section 等）交給瀏覽器。
     window.addEventListener('popstate', () => {
-      const id = resolveRoute();
-      if (id && id !== currentArticleId) loadArticle(id, { remember: true });
+      const routed = resolveRoute();
+      const target = routed || ((!idFromLocation() && !location.hash.slice(1)) ? latestUnlockedId() : null);
+      if (target && target !== currentArticleId) loadArticle(target, { remember: !!routed });
     });
 
     window.onload = init;

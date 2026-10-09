@@ -25,7 +25,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from schedule import apply_schedule  # noqa: E402
 OUT = ROOT / "_site"
 
-TOP_LEVEL_FILES = ["index.html", "feed.xml", "sitemap.xml", ".nojekyll"]
+TOP_LEVEL_FILES = ["index.html", "feed.xml", "sitemap.xml", "robots.txt", ".nojekyll"]
 TOP_LEVEL_DIRS = ["assets"]
 
 
@@ -91,7 +91,7 @@ def main():
     # 讓每次部署後瀏覽器一定抓到新的 manifest / 文稿 / CSS
     html = (OUT / "index.html").read_text(encoding="utf-8")
     html = html.replace('  <script src="articles_data.js"></script>\n', "", 1)  # 正式站改為依需要載入 content/*.json
-    for rel in ("manifest_data.js", "assets/tailwind.css"):
+    for rel in ("manifest_data.js", "assets/tailwind.css", "assets/render.js"):
         digest = hashlib.sha1((OUT / rel).read_bytes()).hexdigest()[:10]
         html = html.replace(f'"{rel}"', f'"{rel}?v={digest}"')
     (OUT / "index.html").write_text(html, encoding="utf-8")

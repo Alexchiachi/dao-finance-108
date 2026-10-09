@@ -3,7 +3,7 @@
 const c = (name) => `rgb(var(--c-${name}) / <alpha-value>)`;
 
 module.exports = {
-  content: ['./index.html'],
+  content: ['./index.html', './assets/render.js', './tools/build_pages.js'],
   theme: {
     extend: {
       colors: {
