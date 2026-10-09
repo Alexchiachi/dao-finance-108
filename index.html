@@ -159,6 +159,10 @@
     .theme-btn .i-sun { display: none; }
     .theme-btn[aria-pressed="true"] .i-sun { display: block; }
     .theme-btn[aria-pressed="true"] .i-moon { display: none; }
+    .search-box { display: flex; align-items: center; gap: .6rem; height: 44px; padding: 0 16px; border-radius: 999px; background: rgb(var(--c-surface)); color: rgb(var(--c-ink) / .6); box-shadow: 0 0 0 1px rgb(var(--c-tea) / .25); transition: box-shadow .2s var(--ease); }
+    .search-box:focus-within { box-shadow: 0 0 0 2px rgb(var(--c-seal) / .7); }
+    .search-box input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; font-size: 15px; color: rgb(var(--c-ink)); }
+    .search-box input::placeholder { color: rgb(var(--c-ink) / .5); }
     .link-arrow { color: rgb(var(--c-seal)); font-size: 1rem; font-weight: 500; }
     .link-arrow:hover { text-decoration: underline; text-underline-offset: 4px; }
 
@@ -207,6 +211,7 @@
     #quote-modal .sheet { transform: scale(.94) translateY(12px); transition: transform .4s var(--spring); }
     #quote-modal.open .sheet { transform: none; }
 
+    [hidden] { display: none !important; }
     :focus-visible { outline: 3px solid rgb(var(--c-seal) / .55); outline-offset: 2px; border-radius: 8px; }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -362,10 +367,20 @@
           <button type="button" aria-pressed="false" onclick="filterVolume(6)" class="vol-tab">善活卷</button>
         </div>
       </div>
-      <p id="vol-caption" class="text-center mb-8 text-[13px] text-soft" aria-live="polite">全部</p>
+      <div class="max-w-md mx-auto mb-5">
+        <label class="search-box" for="search-input">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4"/></svg>
+          <input id="search-input" type="search" inputmode="search" enterkeyhint="search" autocomplete="off" placeholder="搜尋標題或講次，例如「槓桿」「36」" aria-label="搜尋講次">
+        </label>
+      </div>
+      <p id="vol-caption" class="text-center mb-2 text-[13px] text-soft" aria-live="polite">全部</p>
+      <p id="resume" class="text-center mb-6 text-[13px]" hidden></p>
 
-      <div id="beads-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div id="beads-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
         <!-- 由 JavaScript 動態渲染 -->
+      </div>
+      <div class="mt-8 text-center">
+        <button id="load-more" type="button" class="btn btn-ghost" hidden>顯示更多</button>
       </div>
 
     </div>
@@ -426,7 +441,7 @@
       document.getElementById('hero-unlocked').innerText = `已解鎖 ${manifestData.filter(isUnlocked).length} 講`;
       // 預設開啟最新一講，但不把講次寫進網址（否則重新整理／書籤會一直停在舊的一講）；
       // 網址上指向未解鎖或不存在講次時，清掉這個無效的 #/NNN
-      const first = loadArticle(routed || latestUnlockedId());
+      const first = loadArticle(routed || latestUnlockedId(), { remember: !!routed });
       if (!routed && idFromHash()) history.replaceState(null, '', location.pathname + location.search);
       updateTabFade();
       if (routed) first.then(() => document.getElementById('article-stage').scrollIntoView());
@@ -449,27 +464,45 @@
     const VOL_LABELS = ['全部', '第一卷 · 破妄卷（1–18）', '第二卷 · 真容卷（19–36）', '第三卷 · 節氣卷（37–54）', '第四卷 · 守御卷（55–72）', '第五卷 · 無我卷（73–90）', '第六卷 · 善活卷（91–108）'];
 
     const VOL_TOTALS = [108, 18, 18, 18, 18, 18, 18];
+    const PAGE_SIZE = 12;
+    let visibleCount = PAGE_SIZE;
+    let searchQuery = '';
 
-    // 只列出已解鎖的講次；未解鎖的完全不顯示（正式站的資料檔也已由 tools/build_public.py 濾除）
+    // 目錄只列出已解鎖的講次（未解鎖者完全不顯示；正式站的資料檔也已濾除）。
+    // 「全部」由新到舊（最新一講在最上面），各卷依講次由小到大；每次顯示 12 講，其餘按「顯示更多」。
     function renderBeads() {
       const grid = document.getElementById('beads-grid');
       grid.innerHTML = '';
 
-      const list = (selectedVolume === 0
+      const inVolume = (selectedVolume === 0
         ? manifestData
         : manifestData.filter(a => a.vol === selectedVolume)).filter(isUnlocked);
+      let list = selectedVolume === 0 ? inVolume.slice().reverse() : inVolume;
 
-      document.getElementById('vol-caption').innerText =
-        `${VOL_LABELS[selectedVolume]} · 已解鎖 ${list.length} / ${VOL_TOTALS[selectedVolume]}`;
+      const q = searchQuery.trim().toLowerCase();
+      if (q) {
+        const num = q.match(/^\d{1,3}$/) ? parseInt(q, 10) : null;
+        list = list.filter(a => a.title.toLowerCase().includes(q) || (num !== null && a.id === num));
+      }
 
+      const caption = q
+        ? `在「${VOL_LABELS[selectedVolume]}」找到 ${list.length} 講`
+        : `${VOL_LABELS[selectedVolume]} · 已解鎖 ${inVolume.length} / ${VOL_TOTALS[selectedVolume]}${selectedVolume === 0 ? ' · 由新到舊' : ''}`;
+      document.getElementById('vol-caption').innerText = caption;
+      renderResume();
+
+      const more = document.getElementById('load-more');
       if (list.length === 0) {
         grid.innerHTML = `<div class="col-span-full text-center py-14 text-soft text-sm">
-          <p class="font-serif text-lg text-ink mb-1">本卷尚待點亮</p>
-          <p>每天清晨解鎖新的一講</p></div>`;
+          <p class="font-serif text-lg text-ink mb-1">${q ? '找不到符合的講次' : '本卷尚待點亮'}</p>
+          <p>${q ? '換個關鍵字，或輸入講次數字' : '每天清晨解鎖新的一講'}</p></div>`;
+        more.hidden = true;
         return;
       }
 
-      list.forEach(art => {
+      const shown = list.slice(0, visibleCount);
+      const frag = document.createDocumentFragment();
+      shown.forEach(art => {
         const card = document.createElement('button');
         card.type = 'button';
         card.className = `bead card-surface is-open rounded-2xl p-5 flex flex-col justify-between min-h-[132px] ${
@@ -497,12 +530,55 @@
             <span class="text-seal font-medium">閱讀 ›</span>
           </div>
         `;
-        grid.appendChild(card);
+        frag.appendChild(card);
       });
+      grid.appendChild(frag);
+
+      const left = list.length - shown.length;
+      more.hidden = left <= 0;
+      more.innerText = `顯示更多（還有 ${left} 講）`;
+    }
+
+    document.getElementById('load-more').addEventListener('click', () => {
+      const first = document.querySelectorAll('#beads-grid > button').length; // 新增的第一張卡片，供鍵盤焦點使用
+      visibleCount += PAGE_SIZE;
+      renderBeads();
+      const cards = document.querySelectorAll('#beads-grid > button');
+      if (cards[first]) cards[first].focus({ preventScroll: true });
+    });
+
+    let searchTimer;
+    document.getElementById('search-input').addEventListener('input', e => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        searchQuery = e.target.value;
+        visibleCount = PAGE_SIZE;
+        renderBeads();
+      }, 150);
+    });
+
+    // ---------- 繼續閱讀：記住使用者上一次主動讀的講次 ----------
+    const LAST_KEY = 'dao108-last-read';
+    function saveLastRead(id) { try { localStorage.setItem(LAST_KEY, String(id)); } catch (e) {} }
+    function getLastRead() { try { return parseInt(localStorage.getItem(LAST_KEY), 10) || null; } catch (e) { return null; } }
+    function renderResume() {
+      const el = document.getElementById('resume');
+      const last = getLastRead();
+      const art = last && last !== currentArticleId && manifestData.find(a => a.id === last);
+      if (!art || !isUnlocked(art)) { el.hidden = true; return; }
+      el.hidden = false;
+      el.innerHTML = '';
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'link-arrow !text-[13px]';
+      btn.textContent = `繼續閱讀：第 ${String(art.id).padStart(3, '0')} 講 ${art.title.split('：')[0]} ›`;
+      btn.onclick = () => { loadArticle(art.id, { history: 'push' }); document.getElementById('article-stage').scrollIntoView({ behavior: 'smooth' }); };
+      el.appendChild(btn);
     }
 
     function filterVolume(vol) {
       selectedVolume = vol;
+      visibleCount = PAGE_SIZE;
       document.querySelectorAll('.vol-tab').forEach((btn, idx) => {
         btn.setAttribute('aria-pressed', idx === vol ? 'true' : 'false');
       });
@@ -586,10 +662,11 @@
       }
     }
 
-    function loadArticle(id, { history: mode } = {}) {
+    function loadArticle(id, { history: mode, remember } = {}) {
       const art = manifestData.find(a => a.id === id);
       if (!art || !isUnlocked(art)) return;   // 未解鎖的講次一律不開啟
       currentArticleId = id;
+      if (mode === 'push' || remember) saveLastRead(id);   // 只記主動選的講次，預設開最新一講不算
 
       if (mode && idFromHash() !== id) {
         history[mode === 'replace' ? 'replaceState' : 'pushState'](null, '', articleHash(id));
@@ -890,7 +967,7 @@
     // 上一頁／下一頁：只處理 #/NNN；其他錨點（#beads-section 等）交給瀏覽器
     window.addEventListener('popstate', () => {
       const id = resolveRoute();
-      if (id && id !== currentArticleId) loadArticle(id);
+      if (id && id !== currentArticleId) loadArticle(id, { remember: true });
     });
 
     window.onload = init;

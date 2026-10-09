@@ -65,3 +65,4 @@
 - **解鎖日程自動校正**：日程規則只寫在 `tools/schedule.py`。每次部署前 `daily-publish.yml` 會執行 `python3 tools/schedule.py --write` 校正 manifest，`build_public.py` 也會再校正一次，所以新增批次腳本即使自己指定了日期也不會影響上線結果。`python3 tools/schedule.py`（不加參數）可檢查是否一致。要讓某一講例外，加到 `OVERRIDES`。
 - **文章依需要載入**：正式站不再載入整包 `articles_data.js`，而是每講一個 `content/NNN.json`（建置時產生），打開哪一講才下載，並在閒置時預抓下一講。本機直接開 `index.html` 仍用 `articles_data.js`，不需任何額外步驟。
 - **部署包瘦身**：有 WebP 的封面不再打包原始 jpg（部署包約 15MB）。
+- **目錄**：預設每次顯示 12 講（「全部」由新到舊、各卷由小到大），可「顯示更多」；有搜尋框（標題或講次數字）；會記住使用者上次主動讀的講次並顯示「繼續閱讀」。
