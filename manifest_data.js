@@ -964,7 +964,7 @@ const MANIFEST_DATA = [
     "vol": 6,
     "volName": "第六卷：善活卷",
     "volSubtitle": "完成即退場 · 生命經濟學",
-    "title": "台灣南投的鄉土深根：高山茶樹教我們的百年耐力與節氣",
+    "title": "台灣南投的鄉土深根：高山茶樹啟示的百年耐力與節氣",
     "releaseDate": "2027-01-05",
     "isInitialBatch": false,
     "image": "images/097_cover.jpg"
@@ -1034,7 +1034,7 @@ const MANIFEST_DATA = [
     "vol": 6,
     "volName": "第六卷：善活卷",
     "volSubtitle": "完成即退場 · 生命經濟學",
-    "title": "宇宙尺度的十年：第二種心智童年時，我們留給它的精神家書",
+    "title": "宇宙尺度的十年：第二種心智童年時，留給它的精神家書",
     "releaseDate": "2027-01-12",
     "isInitialBatch": false,
     "image": "images/104_cover.jpg"
@@ -1054,7 +1054,7 @@ const MANIFEST_DATA = [
     "vol": 6,
     "volName": "第六卷：善活卷",
     "volSubtitle": "完成即退場 · 生命經濟學",
-    "title": "一生如一瞬：在一百三十八億年的星空下，我們在執著什麼？",
+    "title": "一生如一瞬：在一百三十八億年的星空下，凡軀在執著什麼？",
     "releaseDate": "2027-01-14",
     "isInitialBatch": false,
     "image": "images/106_cover.jpg"
